@@ -1,6 +1,4 @@
-Here you go — the full `README.md` content, ready to copy and paste directly:
 
----
 
 ````markdown
 # SupaKoto Website 🌐
