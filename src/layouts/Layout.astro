@@ -1,22 +1,89 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { t, isRTL } from '../i18n/utils';
+
+export interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+const currentLang = Astro.currentLocale || 'en';
+const rtl = isRTL(Astro);
+const siteTitle = t('site.title');
+const siteDescription = description || t('site.description');
+---
+
 <!doctype html>
-<html lang="en">
+<html lang={currentLang} dir={rtl ? 'rtl' : 'ltr'} class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="description" content={siteDescription} />
+		
+		<!-- Favicon and App Icons - SVG first approach -->
+		<link rel="icon" href="/icon-logo.svg" type="image/svg+xml" />
+		<!-- Only used by browsers that don't support SVG favicons -->
+		<link rel="alternate icon" href="/favicon.ico" type="image/x-icon" />
+		<!-- Apple Touch Icon for iOS devices -->
+		<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+		<link rel="manifest" href="/assets/site.webmanifest" />
+		<meta name="msapplication-config" content="/assets/browserconfig.xml" />
+		<meta name="msapplication-TileColor" content="#ffffff" />
+		<meta name="theme-color" content="#ffffff" />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={`${title} | ${siteTitle}`} />
+		<meta property="og:description" content={siteDescription} />
+		<meta property="og:image" content={new URL('/assets/og-image.png', Astro.url)} />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={`${title} | ${siteTitle}`} />
+		<meta property="twitter:description" content={siteDescription} />
+		<meta property="twitter:image" content={new URL('/assets/twitter-card.png', Astro.url)} />
+		
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title} | {siteTitle}</title>
+		<style is:global>
+			/* Add Noto Sans Arabic font */
+			@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+			
+			:root {
+				--accent: 136, 58, 234;
+				--accent-light: 224, 204, 250;
+				--accent-dark: 49, 10, 101;
+				--accent-gradient: linear-gradient(
+					45deg,
+					rgb(var(--accent)),
+					rgb(var(--accent-light)) 30%,
+					white 60%
+				);
+			}
+			
+			/* RTL Support */
+			[dir="rtl"] {
+				text-align: right;
+			}
+			
+			/* Arabic Font Support */
+			.font-arabic {
+				font-family: 'Noto Sans Arabic', 'Noto Kufi Arabic', sans-serif;
+			}
+		</style>
 	</head>
-	<body>
-		<slot />
+	<body class="min-h-screen flex flex-col bg-gray-50 text-gray-900 font-sans antialiased" class:list={[rtl && 'font-arabic']}>
+		<Header />
+		
+		<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+			<slot />
+		</main>
+		
+		<Footer />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

@@ -1,0 +1,56 @@
+{
+  "site": {
+    "title": "Supakoto",
+    "description": "Your premier destination for luxury automotive services and solutions"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "hero": {
+    "welcome": "Welcome to",
+    "tagline": "Your premier destination for luxury automotive services and solutions",
+    "experience": "Experience Automotive Excellence",
+    "description": "Discover our range of premium automotive services designed to exceed your expectations and elevate your driving experience.",
+    "services": "Our Services",
+    "contact": "Contact Us"
+  },
+  "features": {
+    "premium": {
+      "title": "Premium Services",
+      "description": "We pride ourselves on delivering top-notch automotive services that exceed your expectations.",
+      "link": "Learn more"
+    },
+    "locations": {
+      "title": "Luxury Locations",
+      "description": "Find us at premium, convenient locations across the region to serve your automotive needs.",
+      "link": "Find nearest"
+    },
+    "offers": {
+      "title": "Exclusive Offers",
+      "description": "Take advantage of our limited-time luxury automotive service offers and promotions.",
+      "link": "View offers"
+    }
+  },
+  "cta": {
+    "title": "Ready to Experience Luxury?",
+    "description": "Contact us today to learn more about our premium automotive services.",
+    "enquire": "Enquire Now",
+    "whatsapp": "Chat on WhatsApp"
+  },
+  "footer": {
+    "company": "Your premier destination for luxury automotive services and solutions. We're dedicated to providing exceptional experiences.",
+    "links": {
+      "services": "Services",
+      "about": "About Us",
+      "contact": "Contact",
+      "careers": "Careers",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "copyright": "© {year} Supakoto. All rights reserved."
+  }
+}

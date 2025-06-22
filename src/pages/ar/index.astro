@@ -1,9 +1,9 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { t, isRTL, getLocalizedUrl } from '../i18n/utils';
+import Layout from '../../layouts/Layout.astro';
+import { t, isRTL, getLocalizedUrl } from '../../i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
-const currentLang = Astro.currentLocale || 'en';
+const currentLang = Astro.currentLocale || 'ar';
 const rtl = isRTL(Astro);
 ---
 

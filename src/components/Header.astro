@@ -1,0 +1,125 @@
+---
+import { t, isRTL, getLocalizedUrl } from '../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+const currentLang = Astro.currentLocale || 'en';
+const rtl = isRTL(Astro);
+
+// Navigation links with translations
+const navLinks = [
+  { href: getRelativeLocaleUrl(currentLang, ''), text: t('nav.home') },
+  { href: getRelativeLocaleUrl(currentLang, 'about'), text: t('nav.about') },
+  { href: getRelativeLocaleUrl(currentLang, 'services'), text: t('nav.services') },
+  { href: getRelativeLocaleUrl(currentLang, 'locations'), text: t('nav.locations') },
+  { href: getRelativeLocaleUrl(currentLang, 'offers'), text: t('nav.offers') },
+  { href: getRelativeLocaleUrl(currentLang, 'faq'), text: t('nav.faq') },
+  { href: getRelativeLocaleUrl(currentLang, 'contact'), text: t('nav.contact') },
+];
+
+// Get current path for highlighting active link
+const currentPath = Astro.url.pathname;
+---
+
+<header class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-4 md:py-5">
+      <!-- Logo -->
+      <a href={getRelativeLocaleUrl(currentLang, '')} class="flex items-center group" aria-label="Supakoto Home">
+        <img src="/assets/logo.svg" alt="Supakoto Logo" class="h-10 md:h-12 transform transition-transform duration-300 group-hover:scale-105" width="auto" height="40" />
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center" class:list={[rtl ? 'space-x-reverse space-x-8' : 'space-x-8']}>
+        {navLinks.map(link => (
+          <a 
+            href={link.href} 
+            class={`text-gray-700 hover:text-blue-800 transition-colors ${
+              currentPath === link.href ? 'font-semibold text-blue-800' : ''
+            }`}
+          >
+            {link.text}
+          </a>
+        ))}
+        
+        <!-- Language Switcher -->
+        <div class="px-2">
+          <LanguageSwitcher />
+        </div>
+        
+        <!-- Call-to-action button -->
+        <a 
+          href={getRelativeLocaleUrl(currentLang, 'contact')} 
+          class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-md font-medium transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+        >
+          {t('cta.enquire')}
+        </a>
+      </nav>
+      
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none" aria-label="Toggle menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Mobile Navigation (hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-gray-100 mt-2 pt-2">
+      <nav class="flex flex-col space-y-4">
+        {navLinks.map(link => (
+          <a 
+            href={link.href} 
+            class={`text-gray-700 hover:text-blue-800 transition-colors ${
+              currentPath === link.href ? 'font-semibold text-blue-800' : ''
+            }`}
+          >
+            {link.text}
+          </a>
+        ))}
+        
+        <!-- Language Switcher -->
+        <div class="py-2">
+          <LanguageSwitcher />
+        </div>
+        
+        <!-- Call-to-action button -->
+        <a 
+          href={getRelativeLocaleUrl(currentLang, 'contact')} 
+          class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-md font-medium transition-all duration-300 text-center mt-4 shadow-md hover:shadow-lg flex items-center justify-center"
+        >
+          {t('cta.enquire')}
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle with smooth animation
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const header = document.querySelector('header');
+  
+  // Add shadow on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      header.classList.add('shadow-lg');
+    } else {
+      header.classList.remove('shadow-lg');
+    }
+  });
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      // Add a slight animation when opening/closing
+      if (!mobileMenu.classList.contains('hidden')) {
+        mobileMenu.style.opacity = '0';
+        setTimeout(() => {
+          mobileMenu.style.opacity = '1';
+        }, 10);
+      }
+    });
+  }
+</script>

@@ -1,48 +1,89 @@
-# Astro Starter Kit: Basics
+Here you go — the full `README.md` content, ready to copy and paste directly:
 
-```sh
-npm create astro@latest -- --template basics
+---
+
+````markdown
+# SupaKoto Website 🌐
+
+This is the official website for **SupaKoto**, the exclusive distributor of Takai Japanese Paint Protection Film (PPF) in Egypt and Dubai. Built using **Astro**, **TailwindCSS**, and **modern UI/UX principles**, the site delivers a sleek, bilingual experience with location-based content and future-ready infrastructure.
+
+---
+
+## 🚀 Features
+
+- ⚡ Fast, SEO-friendly static site with Astro
+- 🌍 Arabic + English support with full RTL layout
+- 📍 Region-aware routing for Egypt and Dubai
+- 🧩 Modular components (services, offers, branches)
+- 📱 Responsive dark-mode UI, optimized for mobile
+- 🧠 Built-in support for future PWA integration
+
+---
+
+## 📦 Tech Stack
+
+- [Astro](https://astro.build/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [astro-i18n](https://github.com/omrilotan/astro-i18n) (multilingual support)
+- [Noto Sans Arabic](https://fonts.google.com/specimen/Noto+Sans+Arabic) for sleek bilingual typography
+
+---
+
+## 🛠️ Setup & Dev
+
+```bash
+npm install
+npm run dev
+````
+
+Visit `http://localhost:4321` to preview the site.
+
+---
+
+## 📁 Folder Structure
+
+```plaintext
+src/
+├── components/        # UI components
+├── layouts/           # Page templates
+├── pages/             # Route definitions
+├── styles/            # Global styles (fonts, themes)
+└── i18n/              # Locale strings (Arabic + English)
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+---
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🌐 Deployment
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+Planned deployment on **Hostinger** with regional domains:
 
-## 🚀 Project Structure
+* 🇪🇬 [supakoto.net/egypt/](https://supakoto.net/egypt/)
+* 🇦🇪 [supakoto.net/dubai/](https://supakoto.net/dubai/)
 
-Inside of your Astro project, you'll see the following folders and files:
+---
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+## 🧑‍💼 Maintainer
+
+Developed and maintained by [@ibrahimdevop21](https://github.com/ibrahimdevop21)
+Marketing & tech lead for SupaKoto  🇪🇬 🇦🇪
+
+---
+
+## 📄 License
+
+MIT License © 2025 SupaKoto
+
 ```
+## 🚀 Deployment (Hostinger)
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+This project auto-deploys via Hostinger’s Git integration:
 
-## 🧞 Commands
+- GitHub repo linked via hPanel → Git
+- Branch: `main`
+- Deployment directory: `public_html/egypt/` or `public_html/dubai/`
+- Astro static build outputs to `/dist`
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+To redeploy:
+1. Push updates to GitHub.
+2. Go to hPanel → Git → [Your Repo] → Click “Pull”.
+```
