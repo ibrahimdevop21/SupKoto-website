@@ -24,7 +24,8 @@ The project follows a standard Astro structure with additional components:
 │   ├── components/
 │   │   ├── navbar/
 │   │   ├── ui/
-│   │   ├── Hero.astro
+│   │   ├── Header.astro
+│   │   ├── HeaderReact.tsx
 │   │   ├── HeroCarousel.astro
 │   │   └── HeroCarousel.tsx
 │   ├── i18n/
