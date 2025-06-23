@@ -1,0 +1,52 @@
+---
+import HeroCarouselReact from './HeroCarousel';
+import { getCurrentLocale, isRTL } from '../i18n/utils';
+
+const lang = getCurrentLocale(Astro);
+const rtl = isRTL(Astro);
+---
+
+<HeroCarouselReact client:load currentLocale={lang} isRTL={rtl} />
+
+<style is:global>
+  /* Custom Swiper Styles */
+  .swiper-pagination-bullet {
+    background: white !important;
+    opacity: 0.6 !important;
+  }
+  
+  .swiper-pagination-bullet-active {
+    opacity: 1 !important;
+    background: white !important;
+  }
+  
+  /* Hide default navigation arrows */
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    display: none;
+  }
+  
+  /* Animation for slides */
+  .swiper-slide-active h2 {
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  
+  .swiper-slide-active p {
+    animation: fadeInUp 0.8s 0.3s ease forwards;
+  }
+  
+  .swiper-slide-active .flex {
+    animation: fadeInUp 0.8s 0.6s ease forwards;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

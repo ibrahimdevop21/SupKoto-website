@@ -1,87 +1,75 @@
+# SupaKoto - Premium Automotive Services
 
+SupaKoto is a luxury automotive services website built with Astro, React, and Tailwind CSS. The site features a modern, responsive design with support for both English and Arabic (RTL) languages.
 
-````markdown
-# SupaKoto Website 🌐
+## ✨ Features
 
-This is the official website for **SupaKoto**, the exclusive distributor of Takai Japanese Paint Protection Film (PPF) in Egypt and Dubai. Built using **Astro**, **TailwindCSS**, and **modern UI/UX principles**, the site delivers a sleek, bilingual experience with location-based content and future-ready infrastructure.
+- Bilingual support (English and Arabic)
+- RTL layout support
+- Responsive design for all devices
+- Interactive hero carousel using SwiperJS
+- Modern UI with Tailwind CSS
+- React components for interactive elements
 
----
+## 🚀 Project Structure
 
-## 🚀 Features
+The project follows a standard Astro structure with additional components:
 
-- ⚡ Fast, SEO-friendly static site with Astro
-- 🌍 Arabic + English support with full RTL layout
-- 📍 Region-aware routing for Egypt and Dubai
-- 🧩 Modular components (services, offers, branches)
-- 📱 Responsive dark-mode UI, optimized for mobile
-- 🧠 Built-in support for future PWA integration
+```text
+/
+├── public/
+│   ├── assets/
+│   └── images/
+├── src/
+│   ├── components/
+│   │   ├── navbar/
+│   │   ├── ui/
+│   │   ├── Hero.astro
+│   │   ├── HeroCarousel.astro
+│   │   └── HeroCarousel.tsx
+│   ├── i18n/
+│   │   └── utils.ts
+│   ├── layouts/
+│   │   └── Layout.astro
+│   ├── lib/
+│   │   └── utils.ts
+│   ├── pages/
+│   │   ├── [...locale]/
+│   │   └── index.astro
+│   └── styles/
+│       └── global.css
+└── package.json
+```
 
----
+## 🧞 Commands
 
-## 📦 Tech Stack
+All commands are run from the root of the project, from a terminal:
 
-- [Astro](https://astro.build/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [astro-i18n](https://github.com/omrilotan/astro-i18n) (multilingual support)
-- [Noto Sans Arabic](https://fonts.google.com/specimen/Noto+Sans+Arabic) for sleek bilingual typography
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
----
+## 🚀 Deployment to Vercel
 
-## 🛠️ Setup & Dev
+This project is configured for easy deployment to Vercel:
+
+1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
+2. Import the project in the Vercel dashboard
+3. Vercel will automatically detect Astro and use the correct build settings
+4. Your site will be deployed and available at a Vercel URL
+
+### Manual Deployment
+
+You can also deploy manually using the Vercel CLI:
 
 ```bash
-npm install
-npm run dev
-````
-
-Visit `http://localhost:4321` to preview the site.
-
----
-
-## 📁 Folder Structure
-
-```plaintext
-src/
-├── components/        # UI components
-├── layouts/           # Page templates
-├── pages/             # Route definitions
-├── styles/            # Global styles (fonts, themes)
-└── i18n/              # Locale strings (Arabic + English)
+npm run build
+vercel --prod
 ```
 
----
-
-## 🌐 Deployment
-
-Planned deployment on **Hostinger** with regional domains:
-
-* 🇪🇬 [supakoto.net/egypt/](https://supakoto.net/egypt/)
-* 🇦🇪 [supakoto.net/dubai/](https://supakoto.net/dubai/)
-
----
-
-## 🧑‍💼 Maintainer
-
-Developed and maintained by [@ibrahimdevop21](https://github.com/ibrahimdevop21)
-Marketing & tech lead for SupaKoto  🇪🇬 🇦🇪
-
----
-
-## 📄 License
-
-MIT License © 2025 SupaKoto
-
-```
-## 🚀 Deployment (Hostinger)
-
-This project auto-deploys via Hostinger’s Git integration:
-
-- GitHub repo linked via hPanel → Git
-- Branch: `main`
-- Deployment directory: `public_html/egypt/` or `public_html/dubai/`
-- Astro static build outputs to `/dist`
-
-To redeploy:
-1. Push updates to GitHub.
-2. Go to hPanel → Git → [Your Repo] → Click “Pull”.
-```
+Or deploy directly from the Vercel dashboard by uploading the project files.

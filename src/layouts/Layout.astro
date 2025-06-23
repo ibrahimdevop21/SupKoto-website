@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 import { t, isRTL } from '../i18n/utils';
 
 export interface Props {
@@ -22,6 +22,11 @@ const siteDescription = description || t('site.description');
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="description" content={siteDescription} />
+		
+		<!-- Font preconnect for performance -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 		
 		<!-- Favicon and App Icons - SVG first approach -->
 		<link rel="icon" href="/icon-logo.svg" type="image/svg+xml" />
@@ -51,7 +56,7 @@ const siteDescription = description || t('site.description');
 		<meta name="generator" content={Astro.generator} />
 		<title>{title} | {siteTitle}</title>
 		<style is:global>
-			/* Add Noto Sans Arabic font */
+			/* Import Arabic font */
 			@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 			
 			:root {
@@ -64,6 +69,11 @@ const siteDescription = description || t('site.description');
 					rgb(var(--accent-light)) 30%,
 					white 60%
 				);
+			}
+			
+			/* Base font styling */
+			html, body {
+				font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 			}
 			
 			/* RTL Support */
@@ -79,6 +89,9 @@ const siteDescription = description || t('site.description');
 	</head>
 	<body class="min-h-screen flex flex-col bg-gray-50 text-gray-900 font-sans antialiased" class:list={[rtl && 'font-arabic']}>
 		<Header />
+		
+		<!-- Full-width slot for hero sections and other full-width components -->
+		<slot name="hero" />
 		
 		<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 			<slot />
