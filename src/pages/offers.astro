@@ -41,35 +41,35 @@ const offers = [
 <Layout title="Special Offers">
 	<section class="py-12">
 		<div class="text-center mb-12">
-			<h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Special Offers</h1>
-			<p class="text-xl text-gray-600 max-w-3xl mx-auto">Take advantage of our limited-time promotions and discounts</p>
+			<h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">Special Offers</h1>
+			<p class="text-xl text-muted-foreground max-w-3xl mx-auto">Take advantage of our limited-time promotions and discounts</p>
 		</div>
 		
 		<!-- Offers Overview -->
-		<div class="bg-white rounded-lg shadow-md p-8 mb-12">
-			<h2 class="text-3xl font-bold mb-6 text-blue-800">Current Promotions</h2>
-			<p class="text-gray-600 mb-6">
+		<div class="bg-card rounded-lg shadow-md p-8 mb-12">
+			<h2 class="text-3xl font-bold mb-6 text-primary">Current Promotions</h2>
+			<p class="text-muted-foreground mb-6">
 				At Supakoto, we're committed to providing exceptional value. Check out our current offers below and don't miss out on these opportunities to save.
 			</p>
 		</div>
 		
 		<!-- Featured Offer -->
-		<div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg p-8 mb-12">
+		<div class="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-lg p-8 mb-12">
 			<div class="md:flex items-center">
 				<div class="md:w-2/3 mb-6 md:mb-0 md:pr-8">
-					<span class="inline-block bg-yellow-400 text-blue-900 font-bold px-4 py-1 rounded-full mb-4">FEATURED OFFER</span>
+					<span class="inline-block bg-accent text-accent-foreground font-bold px-4 py-1 rounded-full mb-4">FEATURED OFFER</span>
 					<h3 class="text-3xl font-bold mb-4">Limited Time Promotion</h3>
 					<p class="mb-6 text-lg">
 						Book any premium service this month and receive a complimentary consultation session worth $150. 
 						This exclusive offer is only available for a limited time.
 					</p>
 					<div class="flex flex-wrap gap-4">
-						<a href="/contact" class="bg-white text-blue-800 hover:bg-gray-100 px-6 py-3 rounded-md font-medium transition-colors">Book Now</a>
-						<a href="/services" class="bg-transparent hover:bg-blue-700 border border-white px-6 py-3 rounded-md font-medium transition-colors">View Services</a>
+						<a href="/contact" class="bg-background text-primary hover:bg-background/90 px-6 py-3 rounded-md font-medium transition-colors">Book Now</a>
+						<a href="/services" class="bg-transparent hover:bg-primary-foreground/10 border border-primary-foreground px-6 py-3 rounded-md font-medium transition-colors">View Services</a>
 					</div>
 				</div>
 				<div class="md:w-1/3 flex justify-center">
-					<div class="bg-white bg-opacity-20 p-6 rounded-lg text-center">
+					<div class="bg-primary-foreground/20 p-6 rounded-lg text-center">
 						<p class="text-sm mb-2">Use Code</p>
 						<p class="text-3xl font-bold mb-2">PREMIUM50</p>
 						<p class="text-sm">Valid until July 31, 2025</p>
@@ -81,60 +81,60 @@ const offers = [
 		<!-- Offers Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
 			{offers.map(offer => (
-				<div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+				<div class="bg-card p-6 rounded-lg shadow-md border border-border">
 					<div class="flex justify-between items-start mb-4">
-						<h3 class="text-2xl font-semibold text-blue-800">{offer.title}</h3>
-						<span class="bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-md">{offer.discount}</span>
+						<h3 class="text-2xl font-semibold text-primary">{offer.title}</h3>
+						<span class="bg-primary/10 text-primary font-bold px-3 py-1 rounded-md">{offer.discount}</span>
 					</div>
 					
-					<p class="text-gray-600 mb-6">{offer.description}</p>
+					<p class="text-muted-foreground mb-6">{offer.description}</p>
 					
-					<div class="bg-gray-50 p-4 rounded-md mb-6">
+					<div class="bg-muted p-4 rounded-md mb-6">
 						<div class="flex justify-between items-center">
 							<div>
-								<p class="text-sm text-gray-500 mb-1">Promo Code:</p>
-								<p class="font-mono font-bold text-lg">{offer.code}</p>
+								<p class="text-sm text-muted-foreground mb-1">Promo Code:</p>
+								<p class="font-mono font-bold text-lg text-card-foreground">{offer.code}</p>
 							</div>
-							<button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Copy Code</button>
+							<button class="text-primary hover:text-primary/80 text-sm font-medium">Copy Code</button>
 						</div>
 					</div>
 					
 					<div class="flex justify-between items-center">
-						<p class="text-sm text-gray-500">Valid until: <span class="font-medium">{offer.validUntil}</span></p>
-						<a href="/contact" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors">Redeem Now</a>
+						<p class="text-sm text-muted-foreground">Valid until: <span class="font-medium text-card-foreground">{offer.validUntil}</span></p>
+						<a href="/contact" class="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-md text-sm transition-colors">Redeem Now</a>
 					</div>
 				</div>
 			))}
 		</div>
 		
 		<!-- Newsletter Signup -->
-		<div class="bg-gray-100 rounded-lg p-8 text-center mb-12">
-			<h2 class="text-2xl font-bold mb-4">Never Miss an Offer</h2>
-			<p class="mb-6 max-w-2xl mx-auto">Subscribe to our newsletter to stay updated on our latest promotions and exclusive deals.</p>
+		<div class="bg-muted rounded-lg p-8 text-center mb-12">
+			<h2 class="text-2xl font-bold mb-4 text-foreground">Never Miss an Offer</h2>
+			<p class="mb-6 max-w-2xl mx-auto text-muted-foreground">Subscribe to our newsletter to stay updated on our latest promotions and exclusive deals.</p>
 			
 			<form class="max-w-md mx-auto">
 				<div class="flex flex-col sm:flex-row gap-4">
 					<input 
 						type="email" 
 						placeholder="Your email address" 
-						class="flex-grow px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+						class="flex-grow px-4 py-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
 						required
 					/>
 					<button 
 						type="submit" 
-						class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition-colors"
+						class="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-md font-medium transition-colors"
 					>
 						Subscribe
 					</button>
 				</div>
-				<p class="text-xs text-gray-500 mt-3">By subscribing, you agree to receive marketing emails from Supakoto. You can unsubscribe at any time.</p>
+				<p class="text-xs text-muted-foreground/70 mt-3">By subscribing, you agree to receive marketing emails from Supakoto. You can unsubscribe at any time.</p>
 			</form>
 		</div>
 		
 		<!-- Terms & Conditions -->
-		<div class="bg-white rounded-lg shadow-md p-8">
-			<h2 class="text-2xl font-bold mb-4 text-blue-800">Terms & Conditions</h2>
-			<div class="prose max-w-none text-gray-600">
+		<div class="bg-card rounded-lg shadow-md p-8">
+			<h2 class="text-2xl font-bold mb-4 text-primary">Terms & Conditions</h2>
+			<div class="prose max-w-none text-muted-foreground">
 				<p class="mb-4">
 					All offers are subject to the following terms and conditions:
 				</p>
@@ -146,7 +146,7 @@ const offers = [
 					<li>Additional terms may apply to specific offers as indicated in their descriptions.</li>
 				</ul>
 				<p>
-					For any questions regarding our promotions, please <a href="/contact" class="text-blue-600 hover:text-blue-800">contact us</a>.
+					For any questions regarding our promotions, please <a href="/contact" class="text-primary hover:text-primary/80">contact us</a>.
 				</p>
 			</div>
 		</div>

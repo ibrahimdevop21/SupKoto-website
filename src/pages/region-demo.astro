@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RegionalOffers from '../components/RegionalOffers';
+---
+
+<Layout title="Region Toggle Demo">
+  
+  <main class="pt-[80px] min-h-screen bg-background text-foreground">
+    <div class="max-w-7xl mx-auto px-4 py-12">
+      <h1 class="text-4xl font-bold mb-8 text-center">Region-Based Content Demo</h1>
+      
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6">Regional Offers</h2>
+        <RegionalOffers client:load />
+      </div>
+      
+      <div class="bg-card rounded-lg p-6 mb-12 text-card-foreground">
+        <h2 class="text-2xl font-semibold mb-4">How It Works</h2>
+        <p class="mb-4">
+          This demo showcases our region-based content system. Try switching between Egypt and Dubai using the region toggle in the header.
+        </p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+          <li>The system auto-detects your region on first visit</li>
+          <li>Your selection is saved in localStorage for future visits</li>
+          <li>Content, offers, and pricing dynamically update based on your selected region</li>
+          <li>The toggle works seamlessly with RTL languages and mobile devices</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</Layout>

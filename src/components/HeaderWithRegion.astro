@@ -1,0 +1,12 @@
+---
+import HeaderReactWithRegion from './HeaderReactWithRegion';
+import { getCurrentLocale, isRTL } from '../i18n/utils';
+import { RegionProvider } from '../context/RegionContext';
+
+const lang = getCurrentLocale(Astro);
+const rtl = isRTL(Astro);
+---
+
+<RegionProvider client:load>
+  <HeaderReactWithRegion client:load currentLocale={lang} isRTL={rtl} />
+</RegionProvider>

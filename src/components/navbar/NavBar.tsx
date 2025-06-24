@@ -31,7 +31,7 @@ export default function NavBar({ currentLocale, isRTL }: NavBarProps) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-black/60 backdrop-blur-md border-b border-gray-800/50 shadow-md">
+    <header className="sticky top-0 z-50 w-full bg-background/60 backdrop-blur-md border-b border-border shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
         {/* Logo */}
         <a href={getLocalizedUrl('')} className="flex items-center group" aria-label="Supakoto Home">

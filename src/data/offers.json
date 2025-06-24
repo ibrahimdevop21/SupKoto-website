@@ -1,0 +1,70 @@
+{
+  "egypt": [
+    {
+      "id": "eg-offer-1",
+      "title": {
+        "en": "Premium Paint Protection Package",
+        "ar": "باقة حماية الطلاء المميزة"
+      },
+      "description": {
+        "en": "Full vehicle coverage with our premium PPF technology",
+        "ar": "تغطية كاملة للسيارة بتقنية فيلم الحماية المتطورة"
+      },
+      "price": 5000,
+      "discountPrice": 4500,
+      "currency": "EGP",
+      "image": "/images/offers/ppf-package.webp",
+      "validUntil": "2025-08-30"
+    },
+    {
+      "id": "eg-offer-2",
+      "title": {
+        "en": "Ceramic Coating Special",
+        "ar": "عرض خاص للطلاء السيراميك"
+      },
+      "description": {
+        "en": "Professional ceramic coating with 3-year warranty",
+        "ar": "طلاء سيراميك احترافي مع ضمان لمدة 3 سنوات"
+      },
+      "price": 3500,
+      "discountPrice": 3000,
+      "currency": "EGP",
+      "image": "/images/offers/ceramic-coating.webp",
+      "validUntil": "2025-07-15"
+    }
+  ],
+  "dubai": [
+    {
+      "id": "du-offer-1",
+      "title": {
+        "en": "Premium Paint Protection Package",
+        "ar": "باقة حماية الطلاء المميزة"
+      },
+      "description": {
+        "en": "Full vehicle coverage with our premium PPF technology",
+        "ar": "تغطية كاملة للسيارة بتقنية فيلم الحماية المتطورة"
+      },
+      "price": 5000,
+      "discountPrice": 4500,
+      "currency": "AED",
+      "image": "/images/offers/ppf-package.webp",
+      "validUntil": "2025-08-30"
+    },
+    {
+      "id": "du-offer-2",
+      "title": {
+        "en": "Luxury Detailing Package",
+        "ar": "باقة التفاصيل الفاخرة"
+      },
+      "description": {
+        "en": "Complete interior and exterior detailing for luxury vehicles",
+        "ar": "تفاصيل كاملة للداخل والخارج للسيارات الفاخرة"
+      },
+      "price": 2500,
+      "discountPrice": 2200,
+      "currency": "AED",
+      "image": "/images/offers/luxury-detailing.webp",
+      "validUntil": "2025-07-30"
+    }
+  ]
+}
