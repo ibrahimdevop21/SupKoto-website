@@ -100,7 +100,7 @@ export default function HeroCarousel({ currentLocale, isRTL }: HeroCarouselProps
                 alt={slide.title[isArabic ? 'ar' : 'en']}
                 className="absolute inset-0 w-full h-full object-cover"
                 loading={slide.id === 1 ? "eager" : "lazy"}
-                fetchPriority={slide.id === 1 ? "high" : "auto"}
+                {...(slide.id === 1 ? { 'fetchpriority': 'high' } : {})}
               />
               <div className={`absolute inset-0 bg-gradient-to-r ${isArabic ? 'from-background/90 to-transparent' : 'from-background/90 to-transparent'}`}>
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
