@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { t, isRTL, getLocalizedUrl } from '../../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const currentLang = Astro.currentLocale || 'ar';
+const rtl = isRTL(Astro);
+---
+
+<Layout title={t('nav.about', { default: 'عن سوباكوتو' })}>
+	<section class="py-12">
+		<div class="text-center mb-12">
+			<h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('nav.about', { default: 'عن سوباكوتو' })}</h1>
+			<p class="text-xl text-muted-foreground max-w-3xl mx-auto">تعرفوا على شركتنا ورؤيتنا وقيمنا</p>
+		</div>
+		
+		<!-- Company Overview -->
+		<div class="bg-card rounded-lg shadow-md p-8 mb-12">
+			<h2 class="text-3xl font-bold mb-6 text-primary">قصتنا</h2>
+			<div class="prose max-w-none">
+				<p class="mb-4">
+					تأسست سوباكوتو برؤية واضحة: تقديم خدمات وحلول استثنائية لعملائنا في مجال العناية بالسيارات الفاخرة.
+					منذ تأسيسنا، نمت شركتنا لتصبح اسماً موثوقاً به في هذا المجال المتخصص.
+				</p>
+				<p class="mb-4">
+					يضم فريقنا من المحترفين المتخصصين سنوات من الخبرة والمهارة في كل مشروع نقوم به.
+					نؤمن ببناء علاقات دائمة مع عملائنا من خلال الشفافية والموثوقية والتميز في الأداء.
+				</p>
+				<p>
+					اليوم، تواصل سوباكوتو الابتكار والتوسع، مع وضع قيمنا الأساسية في مقدمة كل ما نقوم به.
+				</p>
+			</div>
+		</div>
+		
+		<!-- Mission & Values -->
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+			<!-- Mission -->
+			<div class="bg-card p-6 rounded-lg shadow-md">
+				<h3 class="text-2xl font-semibold mb-4 text-primary">رسالتنا</h3>
+				<p class="text-muted-foreground mb-4">
+					تقديم حلول مبتكرة تتجاوز توقعات العملاء مع الحفاظ على أعلى معايير الجودة والخدمة في مجال العناية بالسيارات الفاخرة.
+				</p>
+				<p class="text-muted-foreground">
+					نسعى جاهدين لإحداث تأثير إيجابي على عملائنا ومجتمعنا وصناعتنا من خلال التزامنا بالتميز والريادة.
+				</p>
+			</div>
+			
+			<!-- Values -->
+			<div class="bg-card p-6 rounded-lg shadow-md">
+				<h3 class="text-2xl font-semibold mb-4 text-primary">قيمنا</h3>
+				<ul class="space-y-2 text-muted-foreground">
+					<li class="flex items-start">
+						<span class="text-primary ml-0 mr-2 rtl:mr-0 rtl:ml-2">✓</span>
+						<span><strong>النزاهة:</strong> نعمل بصدق وشفافية في جميع تعاملاتنا.</span>
+					</li>
+					<li class="flex items-start">
+						<span class="text-primary ml-0 mr-2 rtl:mr-0 rtl:ml-2">✓</span>
+						<span><strong>التميز:</strong> نسعى لتحقيق أعلى المعايير في كل ما نقوم به.</span>
+					</li>
+					<li class="flex items-start">
+						<span class="text-primary ml-0 mr-2 rtl:mr-0 rtl:ml-2">✓</span>
+						<span><strong>الابتكار:</strong> نبحث باستمرار عن طرق جديدة وأفضل لخدمة عملائنا.</span>
+					</li>
+					<li class="flex items-start">
+						<span class="text-primary ml-0 mr-2 rtl:mr-0 rtl:ml-2">✓</span>
+						<span><strong>الاحترام:</strong> نقدر التنوع ونتعامل مع الجميع بكرامة واحترام.</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<!-- Team Section Placeholder -->
+		<div class="bg-muted rounded-lg p-8 text-center mb-12">
+			<h2 class="text-3xl font-bold mb-6 text-foreground">فريق القيادة</h2>
+			<p class="mb-8 max-w-2xl mx-auto text-muted-foreground">تعرفوا على المحترفين المتخصصين الذين يقودون سوباكوتو برؤية وخبرة متميزة.</p>
+			
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				<!-- Team Member 1 -->
+				<div class="bg-card p-6 rounded-lg shadow-md">
+					<div class="w-32 h-32 bg-muted rounded-full mx-auto mb-4"></div>
+					<h3 class="text-xl font-semibold text-card-foreground">سارة الخالدي</h3>
+					<p class="text-primary mb-2">الرئيس التنفيذي</p>
+					<p class="text-muted-foreground text-sm">بخبرة تزيد عن 15 عاماً في هذا المجال، تقود سارة شركتنا برؤية ونزاهة.</p>
+				</div>
+				
+				<!-- Team Member 2 -->
+				<div class="bg-card p-6 rounded-lg shadow-md">
+					<div class="w-32 h-32 bg-muted rounded-full mx-auto mb-4"></div>
+					<h3 class="text-xl font-semibold text-card-foreground">محمد العبدالله</h3>
+					<p class="text-primary mb-2">رئيس العمليات</p>
+					<p class="text-muted-foreground text-sm">يضمن محمد سير عملياتنا بسلاسة وكفاءة لتقديم خدمة استثنائية.</p>
+				</div>
+				
+				<!-- Team Member 3 -->
+				<div class="bg-card p-6 rounded-lg shadow-md">
+					<div class="w-32 h-32 bg-muted rounded-full mx-auto mb-4"></div>
+					<h3 class="text-xl font-semibold text-card-foreground">أحمد الراشد</h3>
+					<p class="text-primary mb-2">رئيس قسم التكنولوجيا</p>
+					<p class="text-muted-foreground text-sm">يقود أحمد الابتكار والتقدم التكنولوجي في جميع خدماتنا.</p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Call to Action -->
+		<div class="bg-primary text-primary-foreground rounded-lg p-8 text-center">
+			<h2 class="text-2xl font-bold mb-4">انضموا إلى فريقنا</h2>
+			<p class="mb-6 max-w-2xl mx-auto">نبحث دائماً عن أفراد موهوبين للانضمام إلى فريقنا المتنامي.</p>
+			<a href={getRelativeLocaleUrl(currentLang, 'careers')} class="bg-card text-primary hover:bg-card/80 px-6 py-3 rounded-md font-medium transition-colors">الوظائف المتاحة</a>
+		</div>
+	</section>
+</Layout>

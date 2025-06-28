@@ -1,0 +1,194 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { t, isRTL, getLocalizedUrl } from '../../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const currentLang = Astro.currentLocale || 'ar';
+const rtl = isRTL(Astro);
+
+// FAQ data
+const faqs = [
+  {
+    question: "ما هي الخدمات التي تقدمها سوباكوتو؟",
+    answer: "تقدم سوباكوتو مجموعة واسعة من الخدمات المتميزة بما في ذلك العناية بالسيارات الفاخرة، وخدمات الصيانة المتخصصة، والتفاصيل الداخلية والخارجية. يمكنكم زيارة صفحة خدماتنا للاطلاع على القائمة الكاملة والأوصاف التفصيلية."
+  },
+  {
+    question: "كيف يمكنني حجز موعد؟",
+    answer: "يمكنكم حجز موعد عن طريق الاتصال بمكتبنا، أو استخدام نظام الحجز عبر الإنترنت في صفحة التواصل، أو زيارة أحد فروعنا شخصياً."
+  },
+  {
+    question: "ما هي ساعات العمل لديكم؟",
+    answer: "تختلف ساعات العمل حسب الموقع. بشكل عام، نعمل من الأحد إلى الخميس من الساعة 9:00 صباحاً حتى 6:00 مساءً. بعض المواقع توفر ساعات عمل إضافية وخدمة في عطلة نهاية الأسبوع. يرجى مراجعة صفحة الفروع للاطلاع على الساعات المحددة."
+  },
+  {
+    question: "هل تقدمون أي خصومات أو عروض ترويجية؟",
+    answer: "نعم، نقدم بانتظام عروضاً خاصة وخصومات حصرية. يمكنكم زيارة صفحة العروض للاطلاع على العروض الحالية أو الاشتراك في نشرتنا الإخبارية للبقاء على اطلاع بأحدث العروض."
+  },
+  {
+    question: "ما هي طرق الدفع المقبولة لديكم؟",
+    answer: "نقبل جميع بطاقات الائتمان الرئيسية، وبطاقات الخصم، والدفع النقدي، وطرق الدفع الرقمية بما في ذلك Apple Pay. كما توفر بعض الفروع خطط دفع لخدمات معينة."
+  },
+  {
+    question: "ما هي سياسة الإلغاء لديكم؟",
+    answer: "نطلب إشعاراً بالإلغاء قبل 24 ساعة على الأقل. قد تخضع عمليات الإلغاء التي تتم قبل أقل من 24 ساعة لرسوم إلغاء. يتم النظر في حالات الطوارئ على أساس كل حالة على حدة."
+  },
+  {
+    question: "هل تقدمون خدمات للشركات أم للأفراد فقط؟",
+    answer: "نقدم خدماتنا لكل من الأفراد والشركات. لدينا باقات متخصصة للشركات ويمكننا إنشاء حلول مخصصة تناسب احتياجات مؤسستكم."
+  },
+  {
+    question: "ما مدى خبرة فريق العمل لديكم؟",
+    answer: "جميع أعضاء فريقنا هم محترفون مدربون تدريباً عالياً ولديهم خبرة واسعة في مجالات تخصصهم. نحافظ على معايير صارمة للتوظيف ونوفر التطوير المهني المستمر."
+  },
+  {
+    question: "هل تقدمون أي ضمانات على خدماتكم؟",
+    answer: "نعم، نحن نضمن جودة خدماتنا. إذا لم تكونوا راضين تماماً، يرجى إعلامنا في غضون 7 أيام وسنعمل على معالجة مخاوفكم أو تقديم التعويض المناسب."
+  },
+  {
+    question: "هل هناك أي متطلبات تحضيرية قبل تلقي خدماتكم؟",
+    answer: "تختلف متطلبات التحضير حسب الخدمة المحددة. عند حجز موعد، سنقدم لكم تعليمات مفصلة حول أي تحضيرات ضرورية لضمان أفضل نتيجة ممكنة."
+  }
+];
+
+// FAQ categories for filtering
+const categories = [
+  "الكل",
+  "الخدمات",
+  "المواعيد",
+  "المدفوعات",
+  "السياسات"
+];
+---
+
+<Layout title={t('nav.faq', { default: 'استفسارات شائعة' })}>
+	<section class="py-12">
+		<div class="text-center mb-12">
+			<h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('nav.faq', { default: 'استفسارات شائعة' })}</h1>
+			<p class="text-xl text-muted-foreground max-w-3xl mx-auto">اطلعوا على إجابات للأسئلة الشائعة حول خدماتنا وسياساتنا</p>
+		</div>
+		
+		<!-- Search and Filter -->
+		<div class="bg-card rounded-lg shadow-md p-8 mb-12">
+			<div class="max-w-3xl mx-auto">
+				<!-- Search -->
+				<div class="mb-8">
+					<label for="faq-search" class="block text-card-foreground font-medium mb-2">ابحث عن سؤال</label>
+					<div class="relative">
+						<input 
+							type="text" 
+							id="faq-search" 
+							placeholder="اكتب سؤالك هنا..." 
+							class="w-full px-4 py-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+						/>
+						<button class="absolute left-3 rtl:left-3 rtl:right-auto right-auto top-3 text-muted-foreground">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+							</svg>
+						</button>
+					</div>
+				</div>
+				
+				<!-- Categories -->
+				<div class="flex flex-wrap gap-2">
+					{categories.map((category, index) => (
+						<button 
+							class={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+								index === 0 
+									? 'bg-primary text-primary-foreground' 
+									: 'bg-muted text-muted-foreground hover:bg-muted/80'
+							}`}
+						>
+							{category}
+						</button>
+					))}
+				</div>
+			</div>
+		</div>
+		
+		<!-- FAQ Accordion -->
+		<div class="max-w-3xl mx-auto mb-12">
+			{faqs.map((faq, index) => (
+				<div class="mb-4">
+					<div class="border border-border rounded-lg overflow-hidden">
+						<button 
+							class="faq-question w-full flex justify-between items-center bg-card p-5 text-right rtl:text-right ltr:text-left"
+							aria-expanded="false"
+							aria-controls={`faq-answer-${index}`}
+						>
+							<span class="font-medium text-lg text-card-foreground">{faq.question}</span>
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-muted-foreground faq-icon">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+							</svg>
+						</button>
+						<div 
+							id={`faq-answer-${index}`} 
+							class="faq-answer hidden border-t border-border p-5 bg-muted"
+						>
+							<p class="text-muted-foreground">{faq.answer}</p>
+						</div>
+					</div>
+				</div>
+			))}
+		</div>
+		
+		<!-- Still Have Questions -->
+		<div class="bg-primary text-primary-foreground rounded-lg p-8 text-center">
+			<h2 class="text-2xl font-bold mb-4">هل لديكم المزيد من الأسئلة؟</h2>
+			<p class="mb-6 max-w-2xl mx-auto">فريقنا جاهز لمساعدتكم. تواصلوا معنا مباشرة وسنكون سعداء بتقديم المساعدة.</p>
+			<div class="flex flex-wrap justify-center gap-4">
+				<a href={getRelativeLocaleUrl(currentLang, 'contact')} class="bg-background text-primary hover:bg-background/90 px-6 py-3 rounded-md font-medium transition-colors">تواصلوا معنا</a>
+				<a href="tel:+97141234567" class="bg-transparent hover:bg-primary-foreground/10 border border-primary-foreground px-6 py-3 rounded-md font-medium transition-colors">
+					اتصلوا بنا
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	// FAQ Accordion functionality
+	document.addEventListener('DOMContentLoaded', () => {
+		const faqQuestions = document.querySelectorAll('.faq-question');
+		
+		faqQuestions.forEach(question => {
+			question.addEventListener('click', () => {
+				const answer = question.nextElementSibling;
+				const icon = question.querySelector('.faq-icon');
+				
+				// Toggle answer visibility
+				answer.classList.toggle('hidden');
+				
+				// Update aria-expanded
+				const isExpanded = answer.classList.contains('hidden') ? 'false' : 'true';
+				question.setAttribute('aria-expanded', isExpanded);
+				
+				// Rotate icon
+				if (isExpanded === 'true') {
+					icon.classList.add('rotate-180');
+				} else {
+					icon.classList.remove('rotate-180');
+				}
+			});
+		});
+		
+		// Search functionality
+		const searchInput = document.getElementById('faq-search');
+		if (searchInput) {
+			searchInput.addEventListener('input', (e) => {
+				const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+				
+				faqQuestions.forEach(question => {
+					const faqItem = question.closest('.mb-4');
+					const questionText = question.querySelector('span')?.textContent?.toLowerCase() || '';
+					const answerText = question.nextElementSibling?.textContent?.toLowerCase() || '';
+					
+					if (faqItem && (questionText.includes(searchTerm) || answerText.includes(searchTerm))) {
+						(faqItem as HTMLElement).style.display = 'block';
+					} else if (faqItem) {
+						(faqItem as HTMLElement).style.display = 'none';
+					}
+				});
+			});
+		}
+	});
+</script>

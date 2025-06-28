@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { t, isRTL, getLocalizedUrl } from '../../i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const currentLang = Astro.currentLocale || 'ar';
+const rtl = isRTL(Astro);
+---
+
+<Layout title={t('nav.services', { default: 'خدماتنا المتميزة' })}>
+	<section class="py-12">
+		<div class="text-center mb-12">
+			<h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('nav.services', { default: 'خدماتنا المتميزة' })}</h1>
+			<p class="text-xl text-muted-foreground max-w-3xl mx-auto">اكتشفوا باقة خدماتنا الاحترافية المتكاملة</p>
+		</div>
+		
+		<!-- Services Overview -->
+		<div class="bg-card rounded-lg shadow-md p-8 mb-12">
+			<h2 class="text-3xl font-bold mb-6 text-primary">كيف يمكننا مساعدتكم</h2>
+			<p class="text-muted-foreground mb-6">
+				في سوباكوتو، نقدم مجموعة واسعة من الخدمات المصممة لتلبية احتياجاتكم الخاصة. فريقنا من الخبراء ملتزم بتقديم نتائج استثنائية مع كل مشروع.
+			</p>
+		</div>
+		
+		<!-- Services Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+			<!-- Service 1 -->
+			<div class="bg-card p-6 rounded-lg shadow-md">
+				<div class="bg-primary/10 text-primary p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+					</svg>
+				</div>
+				<h3 class="text-xl font-semibold mb-3 text-card-foreground">حماية الطلاء المتطورة</h3>
+				<p class="text-muted-foreground mb-4">حلول متطورة لحماية طلاء سيارتكم الفاخرة من الخدوش والعوامل الخارجية مع ضمان الحفاظ على رونقها لسنوات.</p>
+				<a href={getRelativeLocaleUrl(currentLang, 'services/service-one')} class="text-primary hover:text-primary/80 font-medium inline-flex items-center group">
+					المزيد من التفاصيل
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+						{rtl ? '←' : '→'}
+					</span>
+				</a>
+			</div>
+			
+			<!-- Service 2 -->
+			<div class="bg-card p-6 rounded-lg shadow-md">
+				<div class="bg-primary/10 text-primary p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+					</svg>
+				</div>
+				<h3 class="text-xl font-semibold mb-3 text-card-foreground">التلميع والتنظيف الاحترافي</h3>
+				<p class="text-muted-foreground mb-4">خدمات تلميع وتنظيف متخصصة تعيد لسيارتكم بريقها الأصلي وتحافظ على جمالها الخارجي والداخلي.</p>
+				<a href={getRelativeLocaleUrl(currentLang, 'services/service-two')} class="text-primary hover:text-primary/80 font-medium inline-flex items-center group">
+					المزيد من التفاصيل
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+						{rtl ? '←' : '→'}
+					</span>
+				</a>
+			</div>
+			
+			<!-- Service 3 -->
+			<div class="bg-card p-6 rounded-lg shadow-md">
+				<div class="bg-primary/10 text-primary p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+					</svg>
+				</div>
+				<h3 class="text-xl font-semibold mb-3 text-card-foreground">العناية التفصيلية</h3>
+				<p class="text-muted-foreground mb-4">عناية شاملة بأدق التفاصيل لسيارتكم الفاخرة من الداخل والخارج باستخدام أحدث التقنيات والمنتجات العالمية.</p>
+				<a href={getRelativeLocaleUrl(currentLang, 'services/service-three')} class="text-primary hover:text-primary/80 font-medium inline-flex items-center group">
+					المزيد من التفاصيل
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+						{rtl ? '←' : '→'}
+					</span>
+				</a>
+			</div>
+			
+			<!-- Service 4 -->
+			<div class="bg-card p-6 rounded-lg shadow-md">
+				<div class="bg-primary/10 text-primary p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+					</svg>
+				</div>
+				<h3 class="text-xl font-semibold mb-3 text-card-foreground">الصيانة الدورية</h3>
+				<p class="text-muted-foreground mb-4">برامج صيانة دورية متكاملة للحفاظ على أداء سيارتكم الفاخرة بأعلى مستويات الكفاءة والموثوقية.</p>
+				<a href={getRelativeLocaleUrl(currentLang, 'services/service-four')} class="text-primary hover:text-primary/80 font-medium inline-flex items-center group">
+					المزيد من التفاصيل
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+						{rtl ? '←' : '→'}
+					</span>
+				</a>
+			</div>
+			
+			<!-- Service 5 -->
+			<div class="bg-card p-6 rounded-lg shadow-md">
+				<div class="bg-primary/10 text-primary p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+					</svg>
+				</div>
+				<h3 class="text-xl font-semibold mb-3 text-card-foreground">التخصيص والتعديل</h3>
+				<p class="text-muted-foreground mb-4">خدمات تخصيص وتعديل فريدة تعكس شخصيتكم وتضفي لمسة تميز خاصة على سيارتكم الفاخرة.</p>
+				<a href={getRelativeLocaleUrl(currentLang, 'services/service-five')} class="text-primary hover:text-primary/80 font-medium inline-flex items-center group">
+					المزيد من التفاصيل
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+						{rtl ? '←' : '→'}
+					</span>
+				</a>
+			</div>
+			
+			<!-- Service 6 -->
+			<div class="bg-card p-6 rounded-lg shadow-md">
+				<div class="bg-primary/10 text-primary p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+					</svg>
+				</div>
+				<h3 class="text-xl font-semibold mb-3 text-card-foreground">الضمانات والحماية</h3>
+				<p class="text-muted-foreground mb-4">باقات ضمان وحماية شاملة تمنحكم راحة البال وتحمي استثماركم في سيارتكم الفاخرة على المدى الطويل.</p>
+				<a href={getRelativeLocaleUrl(currentLang, 'services/service-six')} class="text-primary hover:text-primary/80 font-medium inline-flex items-center group">
+					المزيد من التفاصيل
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+						{rtl ? '←' : '→'}
+					</span>
+				</a>
+			</div>
+		</div>
+		
+		<!-- Process Section -->
+		<div class="bg-muted rounded-lg p-8 mb-12">
+			<h2 class="text-3xl font-bold mb-8 text-center text-foreground">منهجية العمل</h2>
+			
+			<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+				<!-- Step 1 -->
+				<div class="text-center">
+					<div class="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">١</div>
+					<h3 class="text-xl font-semibold mb-2 text-card-foreground">الاستشارة</h3>
+					<p class="text-muted-foreground">نبدأ بفهم احتياجاتكم ومتطلباتكم الخاصة بشكل دقيق.</p>
+				</div>
+				
+				<!-- Step 2 -->
+				<div class="text-center">
+					<div class="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">٢</div>
+					<h3 class="text-xl font-semibold mb-2 text-card-foreground">التخطيط</h3>
+					<p class="text-muted-foreground">يقوم فريقنا بتطوير خطة مخصصة لمعالجة تحدياتكم الفريدة.</p>
+				</div>
+				
+				<!-- Step 3 -->
+				<div class="text-center">
+					<div class="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">٣</div>
+					<h3 class="text-xl font-semibold mb-2 text-card-foreground">التنفيذ</h3>
+					<p class="text-muted-foreground">ننفذ الخطة بدقة واهتمام بأدق التفاصيل لضمان أفضل النتائج.</p>
+				</div>
+				
+				<!-- Step 4 -->
+				<div class="text-center">
+					<div class="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">٤</div>
+					<h3 class="text-xl font-semibold mb-2 text-card-foreground">المتابعة</h3>
+					<p class="text-muted-foreground">نضمن رضاكم التام ونقدم الدعم المستمر حسب الحاجة.</p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Call to Action -->
+		<div class="bg-primary text-primary-foreground rounded-lg p-8 text-center">
+			<h2 class="text-2xl font-bold mb-4">هل أنتم جاهزون للبدء؟</h2>
+			<p class="mb-6 max-w-2xl mx-auto">تواصلوا معنا اليوم لمناقشة كيف يمكن لخدماتنا أن تلبي احتياجاتكم الخاصة.</p>
+			<a href={getRelativeLocaleUrl(currentLang, 'contact')} class="bg-card text-primary hover:bg-card/80 px-6 py-3 rounded-md font-medium transition-colors">تواصلوا معنا</a>
+		</div>
+	</section>
+</Layout>
