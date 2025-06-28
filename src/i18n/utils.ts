@@ -51,13 +51,20 @@ const translations = {
     footer: {
       company: 'Your premier destination for luxury automotive services and solutions. We\'re dedicated to providing exceptional experiences.',
       copyright: '© {year} Supakoto. All rights reserved.',
+      connect: 'Connect With Us',
+      cta: {
+        title: 'Ready to Protect Your Car?',
+        subtitle: 'Premium protection solutions for your vehicle',
+        button: 'Book a Free Consultation'
+      },
       links: {
         services: 'Services',
         about: 'About',
         careers: 'Careers',
         contact: 'Contact Us',
         privacy: 'Privacy Policy',
-        terms: 'Terms of Service'
+        terms: 'Terms of Service',
+        support: 'Support'
       }
     },
     language: {
@@ -68,58 +75,65 @@ const translations = {
   ar: {
     site: {
       title: 'سوباكوتو',
-      description: 'وجهتك المميزة لخدمات وحلول السيارات الفاخرة'
+      description: 'وجهتكم الأولى للعناية الاستثنائية بالسيارات الفاخرة'
     },
     nav: {
       home: 'الرئيسية',
-      about: 'من نحن',
-      services: 'خدماتنا',
-      locations: 'المواقع',
-      offers: 'العروض',
-      faq: 'الأسئلة الشائعة',
-      contact: 'اتصل بنا'
+      about: 'عن سوباكوتو',
+      services: 'خدماتنا المتميزة',
+      locations: 'فروعنا',
+      offers: 'العروض الحصرية',
+      faq: 'استفسارات شائعة',
+      contact: 'تواصل معنا'
     },
     hero: {
-      welcome: 'مرحبًا بك في',
-      tagline: 'وجهتك المميزة لخدمات وحلول السيارات الفاخرة',
-      experience: 'اختبر التميز في عالم السيارات',
-      description: 'اكتشف مجموعة خدماتنا المتميزة للسيارات المصممة لتتجاوز توقعاتك وترتقي بتجربة القيادة لديك.',
-      services: 'خدماتنا',
-      contact: 'اتصل بنا'
+      welcome: 'أهلاً بكم في',
+      tagline: 'عالم من الرفاهية والتميز لسياراتكم الفاخرة',
+      experience: 'ارتقوا بتجربة قيادتكم معنا',
+      description: 'نقدم لكم باقة من الخدمات الاستثنائية المصممة خصيصاً لتتجاوز توقعاتكم وترتقي بتجربة قيادتكم إلى آفاق جديدة من الرفاهية.',
+      services: 'استكشفوا خدماتنا',
+      contact: 'تواصلوا معنا'
     },
     features: {
       premium: {
-        title: 'خدمات متميزة',
-        description: 'نفتخر بتقديم خدمات سيارات عالية الجودة تتجاوز توقعاتك.',
-        link: 'اعرف المزيد'
+        title: 'خدمات استثنائية',
+        description: 'نفخر بتقديم أرقى مستويات العناية بسياراتكم الفاخرة بأيدي خبراء متخصصين.',
+        link: 'المزيد من التفاصيل'
       },
       locations: {
-        title: 'مواقع فاخرة',
-        description: 'تجدنا في مواقع متميزة ومريحة في جميع أنحاء المنطقة لتلبية احتياجات سيارتك.',
-        link: 'ابحث عن الأقرب'
+        title: 'فروع راقية',
+        description: 'نتواجد في أرقى المواقع الاستراتيجية في مختلف أنحاء المنطقة لنكون دائماً في خدمتكم.',
+        link: 'الفرع الأقرب إليكم'
       },
       offers: {
         title: 'عروض حصرية',
-        description: 'استفد من عروضنا وترويجاتنا المحدودة لخدمات السيارات الفاخرة.',
-        link: 'مشاهدة العروض'
+        description: 'استمتعوا بباقة من العروض الحصرية والمزايا الاستثنائية المصممة خصيصاً لعملائنا المميزين.',
+        link: 'العروض الحالية'
       }
     },
     cta: {
-      title: 'هل أنت مستعد لتجربة الفخامة؟',
-      description: 'اتصل بنا اليوم لمعرفة المزيد عن خدمات السيارات المتميزة لدينا.',
-      enquire: 'استفسر الآن',
-      whatsapp: 'تواصل عبر واتساب'
+      title: 'هل تتطلعون لتجربة استثنائية؟',
+      description: 'تواصلوا معنا اليوم لاكتشاف عالم من الخدمات الراقية لسياراتكم الفاخرة.',
+      enquire: 'طلب استشارة',
+      whatsapp: 'محادثة مباشرة'
     },
     footer: {
-      company: 'وجهتك المميزة لخدمات وحلول السيارات الفاخرة. نحن ملتزمون بتقديم تجارب استثنائية.',
+      company: 'نقدم لكم أرقى خدمات العناية بالسيارات الفاخرة بمعايير عالمية وخبرات استثنائية.',
       copyright: '© {year} سوباكوتو. جميع الحقوق محفوظة.',
+      connect: 'تابعونا',
+      cta: {
+        title: 'حافظوا على رونق سياراتكم الفاخرة',
+        subtitle: 'حلول حماية متطورة بتقنيات عالمية',
+        button: 'احجزوا استشارة مجانية'
+      },
       links: {
-        services: 'الخدمات',
-        about: 'من نحن',
-        careers: 'وظائف',
-        contact: 'اتصل بنا',
+        services: 'خدماتنا',
+        about: 'عن سوباكوتو',
+        careers: 'انضموا إلينا',
+        contact: 'تواصلوا معنا',
         privacy: 'سياسة الخصوصية',
-        terms: 'شروط الخدمة'
+        terms: 'الشروط والأحكام',
+        support: 'الدعم الفني'
       }
     },
     language: {
