@@ -1,0 +1,8 @@
+---
+import PartnersComponent from './Partners';
+import { isRTL } from '../i18n/utils';
+
+const rtl = isRTL(Astro);
+---
+
+<PartnersComponent isArabic={rtl} client:visible />

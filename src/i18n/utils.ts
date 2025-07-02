@@ -42,6 +42,9 @@ const translations = {
         link: 'View offers'
       }
     },
+    partners: {
+      title: 'Proudly Partnered With'
+    },
     cta: {
       title: 'Ready to Experience Luxury?',
       description: 'Contact us today to learn more about our premium automotive services.',
@@ -110,6 +113,9 @@ const translations = {
         description: 'استمتعوا بباقة من العروض الحصرية والمزايا الاستثنائية المصممة خصيصاً لعملائنا المميزين.',
         link: 'العروض الحالية'
       }
+    },
+    partners: {
+      title: 'نفتخر بشراكتنا مع'
     },
     cta: {
       title: 'هل تتطلعون لتجربة استثنائية؟',
@@ -185,15 +191,30 @@ export function t(key: string, params?: Record<string, string | number>): string
 export function getLocalizedUrl(path: string, locale?: string, Astro?: AstroGlobal) {
   const targetLocale = locale || getCurrentLocale(Astro);
   const defaultLocale = 'en';
+  const supportedLocales = ['en', 'ar'];
+  
+  // Handle empty path
+  if (!path || path === '/') {
+    return targetLocale === defaultLocale ? '/' : `/${targetLocale}/`;
+  }
   
   // Remove leading slash if present
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  let cleanPath = path.startsWith('/') ? path.slice(1) : path;
   
-  // For default locale, don't add prefix
+  // Check if path already has a locale prefix
+  for (const loc of supportedLocales) {
+    if (cleanPath.startsWith(`${loc}/`) || cleanPath === loc) {
+      // Remove the existing locale prefix
+      cleanPath = cleanPath === loc ? '' : cleanPath.substring(loc.length + 1);
+      break;
+    }
+  }
+  
+  // For default locale, don't add prefix unless it's the root path
   if (targetLocale === defaultLocale) {
-    return `/${cleanPath}`;
+    return cleanPath ? `/${cleanPath}` : '/';
   }
   
   // For other locales, add prefix
-  return `/${targetLocale}/${cleanPath}`;
+  return cleanPath ? `/${targetLocale}/${cleanPath}` : `/${targetLocale}/`;
 }
