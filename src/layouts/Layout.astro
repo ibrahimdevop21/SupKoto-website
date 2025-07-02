@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import HeaderWithRegion from '../components/HeaderWithRegion.astro';
+import Preload from '../components/Preload.astro';
 import { t, isRTL } from '../i18n/utils';
 
 export interface Props {
@@ -22,6 +23,9 @@ const siteDescription = description || t('site.description');
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="description" content={siteDescription} />
+		
+		<!-- Preload critical resources -->
+		<Preload />
 		
 		<!-- Font preconnect for performance -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">

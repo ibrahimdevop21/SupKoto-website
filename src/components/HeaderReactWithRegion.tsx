@@ -149,29 +149,29 @@ export default function HeaderReactWithRegion({ currentLocale, isRTL }: HeaderRe
     // Default values for server-side rendering
     let path = '';
     const alternateLocale = getAlternateLocale();
-    const currentLocalePath = `/${currentLocale}/`;
     
     // Only access window on client side
     if (typeof window !== 'undefined') {
       path = window.location.pathname;
       
-      // If we're on the default locale (en) without a prefix
-      if (currentLocale === 'en' && !path.startsWith('/ar/')) {
-        return `/${alternateLocale}${path}`;
+      // If we're at the root
+      if (path === '/' || path === '/en/' || path === '/ar/') {
+        return `/${alternateLocale}/`;
       }
       
-      // If we're on a localized path
-      if (path.startsWith(currentLocalePath)) {
-        // Replace the locale prefix
-        return path.replace(currentLocalePath, `/${alternateLocale}/`);
+      // Handle paths that might already have a language prefix
+      if (path.startsWith('/en/') || path.startsWith('/ar/')) {
+        // Extract the part after the language code
+        const pathWithoutLocale = path.substring(3); // Remove '/xx/'
+        return `/${alternateLocale}${pathWithoutLocale}`;
       }
       
-      // Fallback for any other case
+      // Default case - path without language prefix
       return `/${alternateLocale}${path}`;
     }
     
     // Fallback for server-side rendering
-    return `/${alternateLocale}`;
+    return `/${alternateLocale}/`;
   };
   
   return (

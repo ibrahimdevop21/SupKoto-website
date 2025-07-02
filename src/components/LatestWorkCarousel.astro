@@ -1,0 +1,8 @@
+---
+import LatestWorkCarouselComponent from './LatestWorkCarousel';
+import { isRTL } from '../i18n/utils';
+
+const rtl = isRTL(Astro);
+---
+
+<LatestWorkCarouselComponent isArabic={rtl} client:load />

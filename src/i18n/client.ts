@@ -18,6 +18,9 @@ const translations = {
       faq: 'FAQ',
       contact: 'Contact'
     },
+    partners: {
+      title: 'Proudly Partnered With'
+    },
     cta: {
       enquire: 'Enquire Now',
       contact: 'Contact Us',
@@ -37,6 +40,9 @@ const translations = {
       offers: 'العروض',
       faq: 'الأسئلة الشائعة',
       contact: 'اتصل بنا'
+    },
+    partners: {
+      title: 'نفتخر بشراكتنا مع'
     },
     cta: {
       enquire: 'استفسر الآن',

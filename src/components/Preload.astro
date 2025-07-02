@@ -1,0 +1,30 @@
+---
+// Preload critical resources to improve performance
+---
+
+<Fragment>
+  <!-- Preload critical resources for better performance -->
+  
+  <!-- Preload hero images -->
+  <link
+    rel="preload"
+    href="/images/optimized/hero-mobile.webp"
+    as="image"
+    media="(max-width: 640px)"
+    fetchpriority="high"
+  />
+  <link
+    rel="preload"
+    href="/images/optimized/hero-tablet.webp"
+    as="image"
+    media="(min-width: 641px) and (max-width: 1023px)"
+    fetchpriority="high"
+  />
+  <link
+    rel="preload"
+    href="/images/optimized/hero-desktop.webp"
+    as="image"
+    media="(min-width: 1024px)"
+    fetchpriority="high"
+  />
+</Fragment>
