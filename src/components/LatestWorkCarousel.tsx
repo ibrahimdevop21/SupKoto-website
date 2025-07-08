@@ -115,20 +115,22 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
   return (
     <section 
       ref={sectionRef} 
-      className={`py-20 overflow-hidden transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      className={`overflow-hidden transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       aria-labelledby="latest-work-heading"
     >
-      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1440px] mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 md:mb-16 lg:mb-20">
           <h2 
             id="latest-work-heading"
-            className={`text-3xl font-bold text-white mb-4 ${isArabic ? 'font-arabic' : ''}`}
+            className={`text-3xl md:text-4xl font-bold text-white mb-4 ${isArabic ? 'font-arabic' : ''}`}
           >
             {isArabic ? 'أحدث أعمالنا' : 'Latest Work'}
           </h2>
-          <div className="flex justify-center">
-            <div className="h-1 w-16 bg-primary rounded-full"></div>
+          <div className="flex justify-center items-center space-x-3 mb-4">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-neutral-400"></div>
+            <div className="h-1 w-16 bg-red-500 rounded-full animate-pulse"></div>
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-neutral-400"></div>
           </div>
         </div>
         

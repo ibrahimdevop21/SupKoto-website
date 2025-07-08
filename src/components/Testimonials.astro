@@ -1,0 +1,8 @@
+---
+import TestimonialsReact from './Testimonials';
+import { isRTL } from '../i18n/utils';
+
+const rtl = isRTL(Astro);
+---
+
+<TestimonialsReact isArabic={rtl} client:visible />

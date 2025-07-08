@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import HeroCarousel from '../../components/HeroCarousel.astro';
+import Testimonials from '../../components/Testimonials.astro';
 import { t, isRTL, getLocalizedUrl } from '../../i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -20,7 +21,7 @@ const rtl = isRTL(Astro);
 				<p class="text-gray-600 mb-5 leading-relaxed">{t('features.premium.description')}</p>
 				<a href={getRelativeLocaleUrl(currentLang, 'services')} class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center group">
 					{t('features.premium.link')} 
-					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 ml-1 rtl:mr-1 rtl:ml-0">
 						{rtl ? '←' : '→'}
 					</span>
 				</a>
@@ -32,7 +33,7 @@ const rtl = isRTL(Astro);
 				<p class="text-gray-600 mb-5 leading-relaxed">{t('features.locations.description')}</p>
 				<a href={getRelativeLocaleUrl(currentLang, 'locations')} class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center group">
 					{t('features.locations.link')} 
-					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 ml-1 rtl:mr-1 rtl:ml-0">
 						{rtl ? '←' : '→'}
 					</span>
 				</a>
@@ -44,7 +45,7 @@ const rtl = isRTL(Astro);
 				<p class="text-gray-600 mb-5 leading-relaxed">{t('features.offers.description')}</p>
 				<a href={getRelativeLocaleUrl(currentLang, 'offers')} class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center group">
 					{t('features.offers.link')} 
-					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:group-hover:translate-x-0 ml-1 rtl:mr-1 rtl:ml-0">
+					<span class="transform transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 ml-1 rtl:mr-1 rtl:ml-0">
 						{rtl ? '←' : '→'}
 					</span>
 				</a>
@@ -64,6 +65,11 @@ const rtl = isRTL(Astro);
 					{t('cta.whatsapp')}
 				</a>
 			</div>
+		</div>
+		
+		<!-- Testimonials Section -->
+		<div class="mt-16">
+			<Testimonials />
 		</div>
 	</section>
 </Layout>

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslations } from '../i18n/client';
+import '../styles/partners-animations.css';
 
 interface Partner {
   name: string;
@@ -14,7 +15,7 @@ interface PartnersProps {
 
 const Partners: React.FC<PartnersProps> = ({ isArabic = false }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
   const t = useTranslations(isArabic ? 'ar' : 'en');
   
   // Partner data
@@ -45,22 +46,17 @@ const Partners: React.FC<PartnersProps> = ({ isArabic = false }) => {
     }
   ];
   
-  // Staggered animation on scroll
+  // Intersection observer for scroll animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Animate cards in sequence
-            partners.forEach((_, index) => {
-              setTimeout(() => {
-                setVisibleCards(prev => [...prev, index]);
-              }, index * 150);
-            });
+            setIsVisible(true);
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
     
     if (sectionRef.current) {
@@ -75,96 +71,102 @@ const Partners: React.FC<PartnersProps> = ({ isArabic = false }) => {
   }, []);
   
   return (
-    <section className="relative py-20 overflow-hidden" aria-labelledby="partners-heading">
-      {/* Subtle vertical gradient that blends with page */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0d0d0d] to-transparent"></div>
-        {/* Subtle bottom fade for smooth section transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
-      </div>
+    <>
       
-      {/* Very subtle texture overlay */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
-        }}></div>
-      </div>
-      
-      {/* Content container - seamlessly integrated */}
-      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div ref={sectionRef} className="max-w-full">
-          {/* Clean, premium section heading */}
-          <div className="text-center mb-16">
+      <section 
+        ref={sectionRef} 
+        className="overflow-hidden py-16 md:py-20 lg:py-24"
+        aria-labelledby="partners-heading"
+      >
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Enhanced section heading */}
+          <div className={`text-center mb-12 md:mb-16 lg:mb-20 ${isVisible ? 'animate-fadeInUp' : 'opacity-0'}`}>
             <div className="inline-block">
               <h2 
                 id="partners-heading"
-                className={`text-3xl md:text-4xl font-bold text-white mb-4 ${isArabic ? 'font-arabic' : ''}`}
+                className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 ${isArabic ? 'font-arabic' : ''} bg-gradient-to-r from-white via-[#ffd9dc] to-white bg-clip-text text-transparent`}
               >
                 {t('partners.title')}
               </h2>
-              <div className="flex justify-center items-center space-x-3 mb-2">
-                <div className="h-px w-12 bg-gradient-to-r from-transparent to-neutral-400"></div>
-                <div className="h-1 w-16 bg-primary rounded-full"></div>
-                <div className="h-px w-12 bg-gradient-to-l from-transparent to-neutral-400"></div>
+              
+              {/* Animated decorative line */}
+              <div className="flex justify-center items-center space-x-4 mb-4">
+                <div className="h-px w-16 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                <div className="relative">
+                  <div className="h-1 w-20 bg-[#bf1e2e] rounded-full"></div>
+                  <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-full animate-shimmer"></div>
+                </div>
+                <div className="h-px w-16 bg-gradient-to-l from-transparent via-white/30 to-transparent"></div>
               </div>
+              
+              <p className="text-neutral-300 text-lg max-w-2xl mx-auto">
+                {t('partners.subtitle') || 'Trusted by leading automotive brands worldwide'}
+              </p>
             </div>
           </div>
           
-          {/* Enhanced partners grid */}
+          {/* Premium partners grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
             {partners.map((partner, index) => (
               <div 
                 key={partner.name}
-                className={`group relative transform transition-all duration-700 ease-out ${
-                  visibleCards.includes(index) 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-8'
+                className={`group relative ${
+                  isVisible ? `animate-slideInScale stagger-${index + 1}` : 'opacity-0'
                 }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
               >
-                {/* Premium card with subtle effects */}
-                <div className="relative bg-neutral-800/80 backdrop-blur-sm rounded-xl p-8 h-40 flex items-center justify-center
-                            border border-neutral-700/50 shadow-lg
-                            hover:bg-neutral-800 hover:border-neutral-600 hover:shadow-xl
-                            transition-all duration-500 ease-out
-                            hover:scale-105 hover:-translate-y-1">
-                  
-                  {/* Subtle border glow on hover */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
-                  
-                  {/* Partner logo */}
-                  <div className="relative z-10 w-full h-full flex items-center justify-center">
-                    <img
-                      src={partner.logo}
-                      alt={partner.alt}
-                      className="h-12 md:h-16 max-w-[85%] object-contain transition-all duration-500 ease-out
-                               group-hover:scale-110"
-                      loading="lazy"
-                      width="auto"
-                      height="64"
-                    />
+                <a 
+                  href={partner.website || '#'} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block h-full"
+                >
+                  <div className="relative h-44 rounded-2xl overflow-hidden glass-morphism hover-lift group-hover:border-[#bf1e2e]/50">
+                    {/* Animated background gradient */}
+                    <div className="absolute inset-0 animate-rotateGradient opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+                    
+                    {/* Floating glow orbs */}
+                    <div className="absolute top-4 right-4 w-8 h-8 bg-[#bf1e2e]/20 rounded-full blur-lg animate-floatGlow"></div>
+                    <div className="absolute bottom-4 left-4 w-6 h-6 bg-white/10 rounded-full blur-md animate-floatGlow" style={{ animationDelay: '1s' }}></div>
+                    
+                    {/* Partner logo with enhanced effects */}
+                    <div className="relative z-10 h-full flex items-center justify-center p-8">
+                      <div className="logo-container w-full h-full flex items-center justify-center">
+                        <img
+                          src={partner.logo}
+                          alt={partner.alt}
+                          className="h-16 md:h-18 max-w-[90%] object-contain mx-auto filter drop-shadow-lg transition-all duration-500 ease-out group-hover:scale-110 group-hover:brightness-110 group-hover:contrast-110"
+                          loading="lazy"
+                          width="auto"
+                          height="72"
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Hover overlay with enhanced effects */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-tr from-[#bf1e2e]/10 via-transparent to-white/10 transition-opacity duration-500"></div>
+                    
+                    {/* Bottom gradient overlay */}
+                    <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    {/* Partner name with smooth reveal */}
+                    <div className="absolute bottom-0 inset-x-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                      <div className="text-center">
+                        <h3 className="text-white text-sm font-semibold tracking-wide drop-shadow-md">
+                          {partner.name}
+                        </h3>
+                      </div>
+                    </div>
+                    
+                    {/* Subtle border animation */}
+                    <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#bf1e2e]/20 transition-all duration-500"></div>
                   </div>
-                  
-                  {/* Subtle inner shadow */}
-                  <div className="absolute inset-0 rounded-xl shadow-inner opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
-                </div>
-                
-                {/* Clean, minimal tooltip */}
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 translate-y-0
-                              opacity-0 group-hover:opacity-100 group-hover:translate-y-2
-                              transition-all duration-300 ease-out pointer-events-none z-20">
-                  <div className="bg-black/90 text-white text-xs px-3 py-1 rounded-full shadow-lg
-                                border border-neutral-800 whitespace-nowrap">
-                    <div className="font-medium">{partner.name}</div>
-                  </div>
-                </div>
+                </a>
               </div>
             ))}
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

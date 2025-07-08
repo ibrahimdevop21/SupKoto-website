@@ -57,11 +57,57 @@ export default {
 		  md: 'calc(var(--radius) - 2px)',
 		  sm: 'calc(var(--radius) - 4px)',
 		},
+		animation: {
+		  'gradient-x': 'gradient-x 8s ease infinite',
+		  'gradient-conic': 'gradient-conic 8s ease infinite',
+		  'gradient-pulse': 'gradient-pulse 6s ease-in-out infinite',
+		  'gradient-shine': 'gradient-shine 3s ease infinite',
+		},
+		keyframes: {
+		  'gradient-x': {
+			'0%, 100%': { backgroundPosition: '0% 50%' },
+			'50%': { backgroundPosition: '100% 50%' },
+		  },
+		  'gradient-conic': {
+			'0%': { backgroundPosition: '0% 0%' },
+			'50%': { backgroundPosition: '100% 100%' },
+			'100%': { backgroundPosition: '0% 0%' },
+		  },
+		  'gradient-pulse': {
+			'0%, 100%': { opacity: 0.6, transform: 'scale(1)' },
+			'50%': { opacity: 1, transform: 'scale(1.05)' },
+		  },
+		  'gradient-shine': {
+			'0%': { backgroundPosition: '200% 0' },
+			'100%': { backgroundPosition: '-200% 0' },
+		  },
+		},
+		extend: {
+		  transitionDelay: {
+			'300': '300ms',
+			'600': '600ms',
+			'900': '900ms',
+		  },
+		},
 	  },
 	},
 	plugins: [
 	  require('tailwindcss-rtl'),
 	  require('tailwindcss-animate'),
+	  function({ addUtilities }) {
+		const newUtilities = {
+		  '.animation-delay-300': {
+			'animation-delay': '300ms',
+		  },
+		  '.animation-delay-600': {
+			'animation-delay': '600ms',
+		  },
+		  '.animation-delay-900': {
+			'animation-delay': '900ms',
+		  },
+		}
+		addUtilities(newUtilities)
+	  },
 	],
   }
   

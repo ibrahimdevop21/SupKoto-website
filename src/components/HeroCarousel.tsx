@@ -212,7 +212,7 @@ export default function HeroCarousel({ currentLocale, isRTL }: HeroCarouselProps
                   <img
                     src={slide.image}
                     alt={slide.title[isArabic ? 'ar' : 'en']}
-                    className="absolute inset-0 w-full h-full md:object-fill object-cover"
+                    className="absolute inset-0 w-full h-full md:object-cover object-fills"
                     width="1280"
                     height="720"
                     loading={index === 0 ? "eager" : "lazy"}
