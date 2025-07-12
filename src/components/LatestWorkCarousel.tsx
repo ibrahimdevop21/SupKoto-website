@@ -62,10 +62,11 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); // Set to true by default
   
-  const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla]);
-  const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla]);
+  // In RTL mode, we need to swap the scroll direction to maintain visual consistency
+  const scrollPrev = useCallback(() => embla && (isArabic ? embla.scrollNext() : embla.scrollPrev()), [embla, isArabic]);
+  const scrollNext = useCallback(() => embla && (isArabic ? embla.scrollPrev() : embla.scrollNext()), [embla, isArabic]);
   
   const onSelect = useCallback(() => {
     if (!embla) return;
@@ -115,20 +116,22 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
   return (
     <section 
       ref={sectionRef} 
-      className={`py-20 overflow-hidden transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      className="overflow-hidden opacity-100"
       aria-labelledby="latest-work-heading"
     >
-      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1440px] mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 md:mb-16 lg:mb-20">
           <h2 
             id="latest-work-heading"
-            className={`text-3xl font-bold text-white mb-4 ${isArabic ? 'font-arabic' : ''}`}
+            className={`text-3xl md:text-4xl font-bold text-white mb-4 ${isArabic ? 'font-arabic' : ''}`}
           >
             {isArabic ? 'أحدث أعمالنا' : 'Latest Work'}
           </h2>
-          <div className="flex justify-center">
-            <div className="h-1 w-16 bg-primary rounded-full"></div>
+          <div className="flex justify-center items-center space-x-3 mb-4">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-neutral-400"></div>
+            <div className="h-1 w-16 bg-red-500 rounded-full animate-pulse"></div>
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-neutral-400"></div>
           </div>
         </div>
         
@@ -167,12 +170,12 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
           {/* Navigation Buttons */}
           <button
             className={`absolute top-1/2 -translate-y-1/2 left-2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center border border-white/10 transition-all duration-300 ${
-              prevBtnEnabled 
+              isArabic ? nextBtnEnabled : prevBtnEnabled 
                 ? 'opacity-100 hover:bg-black/70' 
                 : 'opacity-30 cursor-not-allowed'
-            } ${isArabic ? 'rotate-180' : ''}`}
+            }`}
             onClick={scrollPrev}
-            disabled={!prevBtnEnabled}
+            disabled={isArabic ? !nextBtnEnabled : !prevBtnEnabled}
             aria-label="Previous slide"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
@@ -182,12 +185,12 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
           
           <button
             className={`absolute top-1/2 -translate-y-1/2 right-2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center border border-white/10 transition-all duration-300 ${
-              nextBtnEnabled 
+              isArabic ? prevBtnEnabled : nextBtnEnabled 
                 ? 'opacity-100 hover:bg-black/70' 
                 : 'opacity-30 cursor-not-allowed'
-            } ${isArabic ? 'rotate-180' : ''}`}
+            }`}
             onClick={scrollNext}
-            disabled={!nextBtnEnabled}
+            disabled={isArabic ? !prevBtnEnabled : !nextBtnEnabled}
             aria-label="Next slide"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">

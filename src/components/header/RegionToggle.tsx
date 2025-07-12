@@ -1,33 +1,29 @@
+/**
+ * RegionToggle component for switching regions.
+ * Used in the header. Supports dropdown and switch UI.
+ */
 import React from 'react';
-import { useRegion } from '../context/RegionContext';
-import { regions } from '../data/regions';
-import type { Region } from '../data/regions';
+import { useRegion } from '../../context/RegionContext';
+import { regions } from '../../data/regions';
+import type { Region } from '../../data/regions';
 
+/**
+ * RegionToggle Component
+ * Allows users to switch between regions. Supports dropdown and switch UI.
+ */
 interface RegionToggleProps {
   className?: string;
   variant?: 'dropdown' | 'switch';
 }
 
-/**
- * RegionToggle Component
- * 
- * A component that allows users to switch between different regions.
- * Supports both dropdown and switch variants.
- * 
- * @param {string} className - Additional CSS classes
- * @param {string} variant - 'dropdown' or 'switch' UI variant
- */
-const RegionToggle: React.FC<RegionToggleProps> = ({ 
-  className = '', 
-  variant = 'dropdown' 
-}) => {
+const RegionToggle: React.FC<RegionToggleProps> = ({ className = '', variant = 'dropdown' }) => {
   const { currentRegion, setRegion } = useRegion();
-  
+
   // Handle region change
   const handleRegionChange = (region: Region) => {
     setRegion(region);
   };
-  
+
   // For dropdown variant
   if (variant === 'dropdown') {
     return (
@@ -52,7 +48,7 @@ const RegionToggle: React.FC<RegionToggleProps> = ({
       </div>
     );
   }
-  
+
   // For switch variant
   return (
     <div className={`inline-flex rounded-md shadow-sm ${className}`} role="group">
@@ -60,19 +56,9 @@ const RegionToggle: React.FC<RegionToggleProps> = ({
         <button
           key={id}
           type="button"
+          className={`px-4 py-2 border border-border bg-card text-card-foreground hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary first:rounded-l-md last:rounded-r-md rtl:first:rounded-r-md rtl:last:rounded-l-md ${currentRegion === id ? 'bg-primary text-primary-foreground' : ''}`}
+          aria-pressed={currentRegion === id}
           onClick={() => handleRegionChange(id as Region)}
-          className={`
-            px-4 py-2 text-sm font-medium
-            ${id === Object.keys(regions)[0] ? 'rounded-l-md rtl:rounded-l-none rtl:rounded-r-md' : ''}
-            ${id === Object.keys(regions)[Object.keys(regions).length - 1] ? 'rounded-r-md rtl:rounded-r-none rtl:rounded-l-md' : ''}
-            ${currentRegion === id 
-              ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
-              : 'bg-card text-card-foreground hover:bg-card/80'
-            }
-            border border-border
-            focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500
-            transition-colors duration-200
-          `}
         >
           {config.name}
         </button>

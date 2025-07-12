@@ -5,4 +5,4 @@ import { isRTL } from '../i18n/utils';
 const rtl = isRTL(Astro);
 ---
 
-<PartnersComponent isArabic={rtl} client:visible />
+<PartnersComponent isArabic={rtl} client:only="react" />

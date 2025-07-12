@@ -1,8 +1,11 @@
 ---
 import LatestWorkCarouselComponent from './LatestWorkCarousel';
+import VisibleWrapper from './VisibleWrapper';
 import { isRTL } from '../i18n/utils';
 
 const rtl = isRTL(Astro);
 ---
 
-<LatestWorkCarouselComponent isArabic={rtl} client:load />
+<div class="opacity-100" style="opacity: 1;">
+  <LatestWorkCarouselComponent isArabic={rtl} client:only="react" />
+</div>

@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import HeroCarousel from '../components/HeroCarousel.astro';
 import Partners from '../components/Partners.astro';
 import LatestWorkCarousel from '../components/LatestWorkCarousel.astro';
+import Testimonials from '../components/Testimonials.astro';
 import { t, isRTL, getLocalizedUrl } from '../i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -12,13 +13,22 @@ const rtl = isRTL(Astro);
 
 <Layout title={t('nav.home')}>
 	<HeroCarousel slot="hero" />
-	<section class="py-12 md:py-16">
-		<!-- Partners Section -->
-		<Partners />
+	
+	<!-- Main content with consistent spacing -->
+	<section class="py-16 md:py-20 lg:py-24">
+		<!-- Partners Section with proper spacing -->
+		<div class="mb-24 md:mb-32">
+			<Partners />
+		</div>
 		
-		<!-- Latest Work Section -->
-		<div class="mt-16">
+		<!-- Latest Work Section with proper spacing -->
+		<div class="mb-24 md:mb-32">
 			<LatestWorkCarousel />
+		</div>
+		
+		<!-- Testimonials Section -->
+		<div>
+			<Testimonials />
 		</div>
 	</section>
 </Layout>
