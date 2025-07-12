@@ -16,6 +16,18 @@
     "noImplicitReturns": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.astro", "src/**/*.ts", "src/**/*.tsx", "src/**/*.jsx"],
-  "exclude": ["dist", "node_modules", "src/components/Header.astro", "src/components/HeaderWithRegion.astro"]
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.tsx", 
+    "src/**/*.jsx",
+    "src/pages/**/*.astro",
+    "src/layouts/**/*.astro"
+  ],
+  "exclude": [
+    "dist", 
+    "node_modules", 
+    "src/components/_deprecated/**/*", 
+    "src/components/_deprecated_archive/**/*", 
+    "**/node_modules/**"
+  ]
 }

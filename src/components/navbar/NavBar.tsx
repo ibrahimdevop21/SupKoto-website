@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import NavLink from "./NavLink";
-import AppButton from "../ui/AppButton";
+import { Button } from "../ui/button";
 import MobileMenu from "./MobileMenu";
 import { useTranslations, useLocalizedUrl } from "../../i18n/client";
 
@@ -30,14 +30,14 @@ export default function NavBar({ currentLocale, isRTL }: NavBarProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/60 backdrop-blur-md border-b border-border shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-3 md:py-4 flex justify-between items-center">
         {/* Logo */}
         <a href={getLocalizedUrl('')} className="flex items-center group" aria-label="Supakoto Home">
           <img src="/assets/logo.svg" alt="Supakoto Logo" className="h-8 md:h-10 transform transition-transform duration-300 group-hover:scale-105" width="auto" height="36" />
         </a>
 
         {/* Desktop Links */}
-        <nav className={`hidden lg:flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-4`}>
+        <nav className={`hidden lg:flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-6 md:space-x-8`}>
           {navLinks.map((link) => (
             <NavLink 
               key={link.text} 
@@ -46,7 +46,7 @@ export default function NavBar({ currentLocale, isRTL }: NavBarProps) {
               isActive={currentPath === link.href}
             />
           ))}
-          <AppButton>{t('cta.enquire')}</AppButton>
+          <Button className="rounded-xl px-5 py-2 text-sm font-medium">{t('cta.enquire')}</Button>
         </nav>
 
         {/* Mobile Menu */}

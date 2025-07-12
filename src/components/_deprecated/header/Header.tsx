@@ -97,8 +97,8 @@ export default function Header({ currentLocale, isRTL }: HeaderProps) {
   ];
 
   return (
-    <header className="w-full bg-background border-b border-border fixed top-0 left-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+    <header className="w-full bg-background/90 backdrop-blur-md border-b border-border fixed top-0 left-0 z-40 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-18">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 text-xl font-bold text-primary">
           <span className="sr-only">Supakoto</span>
@@ -106,13 +106,13 @@ export default function Header({ currentLocale, isRTL }: HeaderProps) {
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-6 items-center rtl:flex-row-reverse">
+        <nav className="hidden md:flex gap-6 lg:gap-8 items-center rtl:flex-row-reverse">
           {navLinks.map(link => (
             <a
               key={link.href}
               href={link.href}
               className={
-                'px-3 py-2 rounded-md text-base font-medium transition-colors ' +
+                'px-3 py-2.5 rounded-md text-sm font-medium transition-colors ' +
                 (currentPath === link.href ? 'bg-primary text-primary-foreground' : 'hover:bg-primary/10 text-foreground')
               }
             >
@@ -121,7 +121,7 @@ export default function Header({ currentLocale, isRTL }: HeaderProps) {
           ))}
           <a
             href="/contact"
-            className="ml-4 px-4 py-2 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors rtl:ml-0 rtl:mr-4"
+            className="ml-6 px-5 py-2.5 rounded-md bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors rtl:ml-0 rtl:mr-6"
           >
             {translations[currentLocale]?.enquire || 'Enquire Now'}
           </a>
@@ -145,7 +145,7 @@ export default function Header({ currentLocale, isRTL }: HeaderProps) {
 
       {/* Mobile Nav */}
       {isOpen && (
-        <div ref={menuRef} className="md:hidden bg-background border-t border-border px-4 py-6 space-y-4 shadow-lg absolute top-20 left-0 w-full z-50">
+        <div ref={menuRef} className="md:hidden bg-background/95 backdrop-blur-md border-t border-border px-4 py-8 space-y-5 shadow-lg absolute top-16 left-0 w-full z-50">
           {navLinks.map(link => (
             <a
               key={link.href}

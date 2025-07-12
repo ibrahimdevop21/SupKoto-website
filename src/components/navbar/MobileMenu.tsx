@@ -31,8 +31,8 @@ export default function MobileMenu({ navLinks, currentPath, isRTL, enquireText }
 
       {isOpen && (
         <div className="fixed inset-x-0 top-16 bg-background/90 backdrop-blur-md shadow-lg z-50 border-b border-border">
-          <div className="max-w-7xl mx-auto px-4 py-4">
-            <div className="flex flex-col space-y-3">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            <div className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <NavLink 
                   key={link.text} 

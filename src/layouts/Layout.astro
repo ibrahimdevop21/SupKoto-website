@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import '../styles/rtl-support.css';
 import Footer from '../components/Footer.astro';
-import Header from '../components/header/Header.astro';
+import NavBar from '../components/navbar/NavBar.astro';
 
 import Preload from '../components/Preload.astro';
 import { t, isRTL } from '../i18n/utils';
@@ -94,7 +94,7 @@ const siteDescription = description || t('site.description');
 		</style>
 	</head>
 	<body class="min-h-screen flex flex-col bg-background text-foreground font-sans antialiased" class:list={[rtl && 'font-arabic']}>
-		<Header />
+		<NavBar />
 		
 		<!-- Full-width slot for hero sections and other full-width components -->
 		<slot name="hero" />
