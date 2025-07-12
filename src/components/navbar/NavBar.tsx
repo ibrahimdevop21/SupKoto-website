@@ -16,10 +16,8 @@ export default function NavBar({ currentLocale, isRTL }: NavBarProps) {
   // Navigation links with translations
   const navLinks = [
     { href: getLocalizedUrl(''), text: t('nav.home') },
-    { href: getLocalizedUrl('about'), text: t('nav.about') },
     { href: getLocalizedUrl('services'), text: t('nav.services') },
-    { href: getLocalizedUrl('locations'), text: t('nav.locations') },
-    { href: getLocalizedUrl('offers'), text: t('nav.offers') },
+    { href: getLocalizedUrl('about'), text: t('nav.about') },
     { href: getLocalizedUrl('contact'), text: t('nav.contact') },
   ];
 

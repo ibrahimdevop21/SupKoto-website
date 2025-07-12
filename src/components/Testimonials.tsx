@@ -31,11 +31,12 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
   const [visibleTestimonials, setVisibleTestimonials] = useState<number[]>([]);
   const [expandedTestimonials, setExpandedTestimonials] = useState<number[]>([]);
   const [screenWidth, setScreenWidth] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); // Set to true by default
   
   // Carousel navigation functions
-  const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [embla]);
-  const scrollNext = useCallback(() => embla && embla.scrollNext(), [embla]);
+  // In RTL mode, we need to swap the scroll direction to maintain visual consistency
+  const scrollPrev = useCallback(() => embla && (isArabic ? embla.scrollNext() : embla.scrollPrev()), [embla, isArabic]);
+  const scrollNext = useCallback(() => embla && (isArabic ? embla.scrollPrev() : embla.scrollNext()), [embla, isArabic]);
   
   const onSelect = useCallback(() => {
     if (!embla) return;
@@ -57,15 +58,18 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
     };
   }, [embla, onSelect]);
 
-  // Mock translation function - replace with your actual implementation
+  // Import translation function from i18n utils
   const t = (key: string) => {
-    const translations: { [key: string]: string } = {
-      'testimonials.subtitle': 'What Our Clients Say',
-      'testimonials.description': 'Read what our clients have to say about their experience with our services.',
-      'testimonials.readMore': 'Read More',
-      'testimonials.readLess': 'Read Less',
-    };
-    return translations[key] || key;
+    try {
+      // Access the global translation function if available
+      if (typeof window !== 'undefined' && (window as any).__TRANSLATIONS__) {
+        const translations = (window as any).__TRANSLATIONS__;
+        return translations[key] || key;
+      }
+      return key;
+    } catch (e) {
+      return key;
+    }
   };
 
   // Function to toggle expanded state of a testimonial
@@ -133,7 +137,7 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
       id: 2,
       name: 'Mahmoud Fathy',
       branch: 'Al Sheikh Zayed',
-      content: "انا سعيد بتجربتي مع سوباكوتو … وان شاءالله تتكرر في السيارات القادمة … مستوى عالي من الاحترافية والمهنية في التعامل و الدقة في المواعيد والاسعار مناسبة جدا وكذلك المصداقية في المنتج من خلال التاكيد على انه اصلي بالسريال من الشركة المصنعة و كذلك المتابعة وخدمة ما بعد البيع …. كل شئ كان ممتازت",
+      content: "انا سعيد بتجربتي مع سوباكوتو … ان شاءالله تتكرر في السيارات القادمة … مستوى عالي من الاحترافية والمهنية في التعامل و الدقة في المواعيد والاسعار مناسبة جدا وكذلك المصداقية في المنتج من خلال التاكيد على انه اصلي بالسريال من الشركة المصنعة و كذلك المتابعة وخدمة ما بعد البيع …. كل شئ كان ممتازت",
       image: '',
       rating: 5
     },
@@ -204,7 +208,7 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
   return (
     <section 
       ref={sectionRef} 
-      className={`overflow-hidden transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      className="overflow-hidden opacity-100"
       aria-labelledby="testimonials-heading"
     >
       <div className="w-full max-w-[1440px] mx-auto">
@@ -214,7 +218,7 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
             id="testimonials-heading"
             className={`text-3xl md:text-4xl font-bold mb-4 text-white ${isArabic ? 'font-arabic' : ''}`}
           >
-            Client Testimonials
+            {t('testimonials.subtitle')}
           </h2>
           <div className="flex justify-center items-center space-x-3 mb-4">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-neutral-400"></div>
@@ -285,11 +289,11 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
                           </h4>
                           <p className="text-neutral-300 text-xs sm:text-sm">
                             <span className="text-red-400 flex items-center branch-location">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 rtl:ml-1 rtl:mr-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                               </svg>
-                              {testimonial.branch}
+                              {t('testimonials.location')}: {testimonial.branch}
                             </span>
                           </p>
                         </div>
@@ -304,12 +308,12 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
           {/* Navigation Buttons */}
           <button
             className={`absolute top-1/2 -translate-y-1/2 left-2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center border border-white/10 transition-all duration-300 ${
-              prevBtnEnabled 
+              isArabic ? nextBtnEnabled : prevBtnEnabled 
                 ? 'opacity-100 hover:bg-black/70' 
                 : 'opacity-30 cursor-not-allowed'
-            } ${isArabic ? 'rotate-180' : ''}`}
+            }`}
             onClick={scrollPrev}
-            disabled={!prevBtnEnabled}
+            disabled={isArabic ? !nextBtnEnabled : !prevBtnEnabled}
             aria-label="Previous testimonial"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
@@ -319,12 +323,12 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
           
           <button
             className={`absolute top-1/2 -translate-y-1/2 right-2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center border border-white/10 transition-all duration-300 ${
-              nextBtnEnabled 
+              isArabic ? prevBtnEnabled : nextBtnEnabled 
                 ? 'opacity-100 hover:bg-black/70' 
                 : 'opacity-30 cursor-not-allowed'
-            } ${isArabic ? 'rotate-180' : ''}`}
+            }`}
             onClick={scrollNext}
-            disabled={!nextBtnEnabled}
+            disabled={isArabic ? !prevBtnEnabled : !nextBtnEnabled}
             aria-label="Next testimonial"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">

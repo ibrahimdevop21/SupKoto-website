@@ -1,12 +1,12 @@
 ---
-import HeaderReactWithRegion from './HeaderReactWithRegion';
-import { getCurrentLocale, isRTL } from '../i18n/utils';
-import { RegionProvider } from '../context/RegionContext';
-
-const lang = getCurrentLocale(Astro);
-const rtl = isRTL(Astro);
+// This is a placeholder file to satisfy TypeScript imports
+// The actual Header component is now at /src/components/header/Header.astro
 ---
 
-<RegionProvider client:load>
-  <HeaderReactWithRegion client:load currentLocale={lang} isRTL={rtl} />
-</RegionProvider>
+<script>
+  console.warn('This is a placeholder HeaderWithRegion.astro. Please use Header.astro from /components/header/ instead.');
+</script>
+
+<div class="error-placeholder">
+  This is a placeholder component. Please use the Header component from /components/header/ instead.
+</div>

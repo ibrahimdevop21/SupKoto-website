@@ -17,5 +17,5 @@
     "skipLibCheck": true
   },
   "include": ["src/**/*.astro", "src/**/*.ts", "src/**/*.tsx", "src/**/*.jsx"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "src/components/Header.astro", "src/components/HeaderWithRegion.astro"]
 }

@@ -41,6 +41,13 @@
     "enquire": "Enquire Now",
     "whatsapp": "Chat on WhatsApp"
   },
+  "testimonials": {
+    "subtitle": "Client Testimonials",
+    "description": "Read what our clients have to say about their experience with our services.",
+    "readMore": "Read More",
+    "readLess": "Read Less",
+    "location": "Branch"
+  },
   "footer": {
     "company": "Your premier destination for luxury automotive services and solutions. We're dedicated to providing exceptional experiences.",
     "links": {
@@ -52,5 +59,37 @@
       "terms": "Terms of Service"
     },
     "copyright": "© {year} Supakoto. All rights reserved."
+  },
+  "contact": {
+    "page_title": "Contact Us - Supakoto",
+    "heading": "Contact Us",
+    "subheading": "We'd love to hear from you. Reach out to us with any questions or inquiries.",
+    "our_locations": "Our Locations",
+    "get_in_touch": "Get in Touch",
+    "our_branches": "Our Branches",
+    "form": {
+      "name": "Your Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "message": "Your Message",
+      "submit": "Send Message",
+      "required": "Required field",
+      "invalid_email": "Please enter a valid email address",
+      "invalid_phone": "Please enter a valid phone number",
+      "success": "Thank you! Your message has been sent successfully.",
+      "error": "An error occurred. Please try again later.",
+      "sending": "Sending..."
+    },
+    "branch": {
+      "address": "Address",
+      "phone": "Phone",
+      "hours": "Working Hours",
+      "whatsapp": "Chat on WhatsApp"
+    },
+    "faq": {
+      "heading": "Frequently Asked Questions",
+      "subheading": "Find answers to common questions about our services.",
+      "contact_support": "Can't find what you're looking for? Contact our support team."
+    }
   }
 }

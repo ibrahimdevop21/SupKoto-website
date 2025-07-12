@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Placeholder location data
+// Location data with coordinates
 const locations = [
   {
     id: 1,
@@ -10,7 +10,9 @@ const locations = [
     phone: "+1 (555) 123-4567",
     email: "downtown@supakoto.com",
     hours: "Monday - Friday: 9:00 AM - 6:00 PM",
-    description: "Our flagship location offering our full range of services."
+    description: "Our flagship location offering our full range of services.",
+    lat: 31.9539, // Amman coordinates
+    lng: 35.9106
   },
   {
     id: 2,
@@ -19,7 +21,9 @@ const locations = [
     phone: "+1 (555) 234-5678",
     email: "westside@supakoto.com",
     hours: "Monday - Saturday: 8:00 AM - 7:00 PM",
-    description: "Convenient location serving the western part of the city."
+    description: "Convenient location serving the western part of the city.",
+    lat: 31.9400, // Slightly west of Amman
+    lng: 35.8900
   },
   {
     id: 3,
@@ -28,7 +32,9 @@ const locations = [
     phone: "+1 (555) 345-6789",
     email: "eastside@supakoto.com",
     hours: "Monday - Friday: 9:00 AM - 6:00 PM, Saturday: 10:00 AM - 4:00 PM",
-    description: "Our newest location with state-of-the-art facilities."
+    description: "Our newest location with state-of-the-art facilities.",
+    lat: 31.9600, // Slightly east of Amman
+    lng: 35.9300
   },
   {
     id: 4,
@@ -37,7 +43,31 @@ const locations = [
     phone: "+1 (555) 456-7890",
     email: "northside@supakoto.com",
     hours: "Monday - Friday: 8:30 AM - 5:30 PM",
-    description: "Serving the northern communities with dedicated service."
+    description: "Serving the northern communities with dedicated service.",
+    lat: 31.9700, // Slightly north of Amman
+    lng: 35.9100
+  },
+  {
+    id: 5,
+    name: "Supakoto Aqaba",
+    address: "25 Beach Road, Aqaba",
+    phone: "+962 (3) 201-4567",
+    email: "aqaba@supakoto.com",
+    hours: "Sunday - Thursday: 9:00 AM - 6:00 PM",
+    description: "Our southern branch serving Aqaba and surrounding areas.",
+    lat: 29.5267, // Aqaba coordinates
+    lng: 35.0078
+  },
+  {
+    id: 6,
+    name: "Supakoto Irbid",
+    address: "45 University Street, Irbid",
+    phone: "+962 (2) 725-8901",
+    email: "irbid@supakoto.com",
+    hours: "Sunday - Thursday: 8:30 AM - 5:30 PM",
+    description: "Serving the northern region of Jordan.",
+    lat: 32.5568, // Irbid coordinates
+    lng: 35.8469
   }
 ];
 ---
@@ -57,17 +87,54 @@ const locations = [
 			</p>
 		</div>
 		
-		<!-- Map Placeholder -->
-		<div class="bg-muted h-96 rounded-lg mb-12 flex items-center justify-center">
-			<div class="text-center">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 mx-auto text-muted-foreground mb-4">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-					<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-				</svg>
-				<p class="text-muted-foreground font-medium">Interactive Map Coming Soon</p>
-				<p class="text-muted-foreground/70 text-sm">Find our locations easily with our interactive map</p>
-			</div>
+		<!-- Interactive Map -->
+		<div id="map" class="h-96 rounded-lg mb-12 overflow-hidden shadow-lg">
+			<!-- Map will be rendered here -->
 		</div>
+		
+		<!-- Leaflet CSS and JS -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+		<script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+		
+		<script is:inline define:vars={{ locations }}>
+			// Initialize the map
+			document.addEventListener('DOMContentLoaded', () => {
+				// Center the map on Jordan
+				const map = L.map('map').setView([31.9539, 35.9106], 8);
+				
+				// Add OpenStreetMap tiles
+				L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					maxZoom: 19,
+					attribution: '© OpenStreetMap contributors'
+				}).addTo(map);
+				
+				// Custom icon for markers
+				const customIcon = L.icon({
+					iconUrl: '/icons/map-marker.svg',
+					iconSize: [32, 32],
+					iconAnchor: [16, 32],
+					popupAnchor: [0, -32]
+				});
+				
+				// Add markers for each location
+				locations.forEach(location => {
+					const marker = L.marker([location.lat, location.lng], { icon: customIcon }).addTo(map);
+					
+					// Create popup content
+					const popupContent = `
+						<div class="popup-content">
+							<h3 class="font-bold text-lg">${location.name}</h3>
+							<p class="text-sm">${location.address}</p>
+							<p class="text-sm mt-2">${location.phone}</p>
+							<a href="/locations/${location.id}" class="text-primary text-sm font-medium block mt-2">View details →</a>
+						</div>
+					`;
+					
+					// Bind popup to marker
+					marker.bindPopup(popupContent);
+				});
+			});
+		</script>
 		
 		<!-- Locations Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
