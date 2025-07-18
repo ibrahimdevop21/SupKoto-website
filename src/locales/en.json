@@ -8,6 +8,9 @@
     "services": "Services",
     "about": "About",
     "contact": "Contact",
+    "locations": "Locations",
+    "offers": "Offers",
+    "faq": "FAQ",
     "language": "Language"
   },
   "hero": {
@@ -64,6 +67,7 @@
     "page_title": "Contact Us - Supakoto",
     "heading": "Contact Us",
     "subheading": "We'd love to hear from you. Reach out to us with any questions or inquiries.",
+    "description": "Get in touch with our team today. We're here to help answer your questions and provide the support you need.",
     "our_locations": "Our Locations",
     "get_in_touch": "Get in Touch",
     "our_branches": "Our Branches",
@@ -89,7 +93,48 @@
     "faq": {
       "heading": "Frequently Asked Questions",
       "subheading": "Find answers to common questions about our services.",
+      "description": "Find answers to common questions about our services.",
+      "view_all": "View All FAQs",
       "contact_support": "Can't find what you're looking for? Contact our support team."
     }
+  },
+  "about": {
+    "page_title": "About Us - Supakoto",
+    "heading": "About Supakoto",
+    "subheading": "Learn more about our company, mission, and values",
+    "description": "Supakoto is a leading company dedicated to providing exceptional services and solutions. We pride ourselves on our commitment to excellence and customer satisfaction.",
+    "our_story": "Our Story",
+    "story_content": "Supakoto was founded with a simple mission: to provide exceptional services and solutions to our clients. Since our establishment, we have grown to become a trusted name in the industry.",
+    "mission": "Our Mission",
+    "mission_content": "To deliver exceptional value through innovative solutions and outstanding customer service.",
+    "values": "Our Values",
+    "values_content": "We believe in integrity, excellence, and putting our customers first in everything we do.",
+    "leadership_team": "Leadership Team",
+    "leadership_description": "Meet the dedicated professionals who lead Supakoto with vision and expertise."
+  },
+  "services": {
+    "page_title": "Services - Supakoto",
+    "heading": "Our Services",
+    "subheading": "Discover our comprehensive range of professional services",
+    "how_we_help": "How We Can Help You",
+    "description": "We offer a wide range of professional services designed to meet your specific needs and exceed your expectations."
+  },
+  "faq": {
+    "page_title": "FAQ - Supakoto",
+    "heading": "Frequently Asked Questions",
+    "subheading": "Find answers to common questions",
+    "description": "Here are some of the most frequently asked questions about our services."
+  },
+  "locations": {
+    "page_title": "Locations - Supakoto",
+    "heading": "Our Locations",
+    "subheading": "Find us near you",
+    "description": "Visit us at one of our convenient locations."
+  },
+  "offers": {
+    "page_title": "Special Offers - Supakoto",
+    "heading": "Special Offers",
+    "subheading": "Discover our latest deals and promotions",
+    "description": "Take advantage of our current special offers and save on our premium services."
   }
 }

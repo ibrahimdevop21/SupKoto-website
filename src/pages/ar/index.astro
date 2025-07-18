@@ -4,21 +4,22 @@ import HeroCarousel from '../../components/HeroCarousel.astro';
 import Partners from '../../components/Partners.astro';
 import LatestWorkCarousel from '../../components/LatestWorkCarousel.astro';
 import Testimonials from '../../components/Testimonials.astro';
-import { t, isRTL, getLocalizedUrl } from '../../i18n/utils';
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { t } from '../../i18n/index';
 
+// For locale-specific pages, we know the locale from the folder structure
 const currentLang = Astro.currentLocale || 'ar';
-const rtl = isRTL(Astro);
+// Arabic is RTL, so rtl is true
+const rtl = currentLang === 'ar';
 ---
 
-<Layout title={t('nav.home')}>
+<Layout title={t('nav.home', {}, Astro)}>
 	<HeroCarousel slot="hero" />
 	
 	<!-- Main content with consistent spacing -->
 	<section class="py-16 md:py-20 lg:py-24">
 		<!-- Partners Section with proper spacing -->
 		<div class="mb-24 md:mb-32">
-			<Partners currentLocale="ar" isArabic={true} />
+			<Partners />
 		</div>
 		
 		<!-- Latest Work Section with proper spacing -->

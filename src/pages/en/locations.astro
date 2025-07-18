@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import { t } from '../../i18n/index';
 
 // For locale-specific pages, we know the locale from the folder structure
-const currentLang = Astro.currentLocale || 'ar';
-// Arabic is RTL, so rtl is true
+const currentLang = Astro.currentLocale || 'en';
+// English is LTR, so rtl is false
 const rtl = currentLang === 'ar';
 ---
 

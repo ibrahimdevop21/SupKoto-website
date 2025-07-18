@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from './ui/button';
-import { getLocalizedUrl } from '../i18n/utils';
+import { useLocalizedUrl } from '../i18n/react';
 import EmblaCarousel from './shared/EmblaCarousel';
 import CarouselSlide from './shared/CarouselSlide';
 
@@ -92,8 +92,10 @@ const slides: SlideContent[] = [
   }
 ];
 
-export default function HeroCarousel({ currentLocale, isRTL }: HeroCarouselProps) {
+const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => {
   const isArabic = isRTL;
+  const getLocalizedUrl = useLocalizedUrl(currentLocale as 'en' | 'ar');
+
   return (
     <div className="relative overflow-hidden hero-carousel">
       <EmblaCarousel
@@ -142,7 +144,7 @@ export default function HeroCarousel({ currentLocale, isRTL }: HeroCarouselProps
                     className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-md font-medium transition-colors"
                     asChild
                   >
-                    <a href={getLocalizedUrl(slide.ctaLink, currentLocale)}>
+                    <a href={getLocalizedUrl(slide.ctaLink)}>
                       {isArabic ? 'اكتشف المزيد' : 'Learn More'}
                     </a>
                   </Button>
@@ -154,4 +156,6 @@ export default function HeroCarousel({ currentLocale, isRTL }: HeroCarouselProps
       </EmblaCarousel>
     </div>
   );
-}
+};
+
+export default HeroCarousel;

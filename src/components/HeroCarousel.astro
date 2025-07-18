@@ -1,9 +1,9 @@
 ---
 import HeroCarouselReact from './HeroCarousel';
-import { getCurrentLocale, isRTL } from '../i18n/utils';
 
-const lang = getCurrentLocale(Astro);
-const rtl = isRTL(Astro);
+// Use Astro's built-in i18n system
+const lang = Astro.currentLocale || 'en';
+const rtl = lang === 'ar';
 ---
 
 <HeroCarouselReact client:load currentLocale={lang} isRTL={rtl} />

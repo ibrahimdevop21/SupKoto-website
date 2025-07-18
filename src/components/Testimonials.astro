@@ -1,8 +1,8 @@
 ---
 import TestimonialsReact from './Testimonials';
-import { isRTL } from '../i18n/utils';
 
-const rtl = isRTL(Astro);
+// Use Astro's built-in i18n system
+const rtl = Astro.currentLocale === 'ar';
 ---
 
 <div class="opacity-100" style="opacity: 1;">

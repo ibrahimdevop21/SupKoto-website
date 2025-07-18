@@ -18,13 +18,16 @@ export default defineConfig({
       svg: true,
     })
   ],
-  // Add built-in i18n routing
+  // Built-in i18n configuration
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'ar'],
     routing: {
-      prefixDefaultLocale: false,     // no /en/ prefix on default (English)
-      redirectToDefaultLocale: true,  // redirect / to /en/
+      prefixDefaultLocale: true,      // add /en/ prefix for default locale
+      strategy: 'pathname',           // use pathname strategy for locale detection
+    },
+    fallback: {
+      ar: 'en'                       // fallback to English for missing Arabic translations
     }
   },
   // Performance optimizations
