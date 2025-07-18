@@ -1,8 +1,8 @@
 ---
 import PartnersComponent from './Partners';
-import { isRTL } from '../i18n/utils';
 
-const rtl = isRTL(Astro);
+// Use Astro's built-in i18n system
+const rtl = Astro.currentLocale === 'ar';
 ---
 
 <PartnersComponent isArabic={rtl} client:only="react" />

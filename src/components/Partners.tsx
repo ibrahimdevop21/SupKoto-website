@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslations } from '../i18n/client';
+import { useTranslations } from '../i18n/react';
 import '../styles/partners-animations.css';
 
 interface Partner {
@@ -19,7 +19,7 @@ const Partners: React.FC<PartnersProps> = ({ isArabic = false, currentLocale }) 
   const rtl = isArabic || currentLocale === 'ar';
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true); // Set to true by default
-  const t = useTranslations(currentLocale || (isArabic ? 'ar' : 'en'));
+  const t = useTranslations((currentLocale || (isArabic ? 'ar' : 'en')) as 'en' | 'ar');
   
   // Partner data
   const partners: Partner[] = [
