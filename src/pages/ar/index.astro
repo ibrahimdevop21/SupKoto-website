@@ -12,7 +12,7 @@ const currentLang = Astro.currentLocale || 'ar';
 const rtl = currentLang === 'ar';
 ---
 
-<Layout title={t('nav.home', {}, Astro)}>
+<Layout title={t('pages.home.title')}>
 	<HeroCarousel slot="hero" />
 	
 	<!-- Main content with consistent spacing -->

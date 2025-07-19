@@ -1,9 +1,5 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n';
-
-// Redirect to the default locale (en)
-// This page will be handled by Astro's i18n routing configuration
-// which will redirect to /en/ based on the config settings
-const defaultLocale = 'en';
-return Astro.redirect(getRelativeLocaleUrl(defaultLocale, ''));
+// This page is necessary to redirect the root path to the default locale.
+// With `prefixDefaultLocale: true`, the root will redirect to /en/
+return Astro.redirect('/en');
 ---

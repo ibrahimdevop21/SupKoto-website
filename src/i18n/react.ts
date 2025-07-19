@@ -26,7 +26,15 @@ export function useLocalizedUrl(locale: Locale = 'en') {
 export function useSwitchLocalePath() {
   return (currentPath: string, targetLocale: Locale) => {
     // Extract the path without locale prefix
-    const pathWithoutLocale = currentPath.replace(/^\/[a-z]{2}\//, '');
+    let pathWithoutLocale = currentPath.replace(/^\/[a-z]{2}(\/|$)/, '/');
+    
+    // Remove leading slash for consistency
+    pathWithoutLocale = pathWithoutLocale.startsWith('/') ? pathWithoutLocale.slice(1) : pathWithoutLocale;
+    
+    // Handle root path
+    if (pathWithoutLocale === '' || pathWithoutLocale === '/') {
+      return `/${targetLocale}/`;
+    }
     
     // Return new path with target locale
     return `/${targetLocale}/${pathWithoutLocale}`;

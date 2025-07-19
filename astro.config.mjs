@@ -2,10 +2,16 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import compress from 'astro-compress';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
+    icon({
+      include: {
+        mdi: ["*"],
+      }
+    }),
     tailwind({
       applyBaseStyles: false
     }),
@@ -25,6 +31,10 @@ export default defineConfig({
     routing: {
       prefixDefaultLocale: true,      // add /en/ prefix for default locale
       strategy: 'pathname',           // use pathname strategy for locale detection
+      exclude: {
+        ar: ['en/**'],
+        en: ['ar/**']
+      }
     },
     fallback: {
       ar: 'en'                       // fallback to English for missing Arabic translations

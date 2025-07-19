@@ -20,7 +20,9 @@
     "src/**/*.ts", 
     "src/**/*.tsx", 
     "src/**/*.jsx",
-    "src/pages/**/*.astro",
+    "src/pages/en/**/*.astro",
+    "src/pages/ar/**/*.astro",
+    "src/pages/index.astro",
     "src/layouts/**/*.astro"
   ],
   "exclude": [

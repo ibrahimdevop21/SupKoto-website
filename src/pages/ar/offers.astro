@@ -8,13 +8,15 @@ const currentLang = Astro.currentLocale || 'ar';
 const rtl = currentLang === 'ar';
 ---
 
-<Layout title={t('offers.page_title', {}, Astro)}>
- class="py-12">
-class="text-center mb-12">
-class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('offers.heading', {}, Astro)}</h1>
-class="text-xl text-muted-foreground max-w-3xl mx-auto">{t('offers.subheading', {}, Astro)}</p>
-class="container mx-auto px-4">
-class="text-center text-muted-foreground">
-', {}, Astro)}
->
+<Layout title={t('pages.offers.title')}>
+  <section class="py-16 md:py-24">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('offers.heading')}</h1>
+      <p class="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">{t('offers.subheading')}</p>
+      <div class="text-center text-muted-foreground">
+        <p>{t('offers.description')}</p>
+        <p class="mt-8"><em>قريباً المزيد من العروض...</em></p>
+      </div>
+    </div>
+  </section>
 </Layout>
