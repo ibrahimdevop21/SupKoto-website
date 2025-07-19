@@ -13,6 +13,10 @@
     "faq": "FAQ",
     "language": "Language"
   },
+  "language": {
+    "en": "English",
+    "ar": "العربية"
+  },
   "hero": {
     "welcome": "Welcome to",
     "tagline": "Your premier destination for luxury automotive services and solutions",
@@ -52,19 +56,19 @@
     "location": "Branch"
   },
   "footer": {
-    "company": "Your premier destination for luxury automotive services and solutions. We're dedicated to providing exceptional experiences.",
-    "links": {
-      "services": "Services",
-      "about": "About Us",
-      "contact": "Contact",
-      "careers": "Careers",
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service"
-    },
-    "copyright": "© {year} Supakoto. All rights reserved."
+    "title": "Footer",
+    "tagline": "Driving excellence with premium protection and unparalleled customization.",
+    "company_section_title": "Company",
+    "support_section_title": "Support",
+    "contact_section_title": "Get in Touch",
+    "contact_address_dubai": "Jebel Ali Industrial 1, Dubai, UAE",
+    "contact_address_egypt": "Nasr City, Auto Mall, Cairo, Egypt",
+    "contact_phone_dubai": "+971 50 123 4567",
+    "contact_phone_egypt": "+20 100 456 7890",
+    "contact_email": "info@supakoto.com",
+    "copyright": "All rights reserved."
   },
   "contact": {
-    "page_title": "Contact Us - Supakoto",
     "heading": "Contact Us",
     "subheading": "We'd love to hear from you. Reach out to us with any questions or inquiries.",
     "description": "Get in touch with our team today. We're here to help answer your questions and provide the support you need.",
@@ -99,7 +103,6 @@
     }
   },
   "about": {
-    "page_title": "About Us - Supakoto",
     "heading": "About Supakoto",
     "subheading": "Learn more about our company, mission, and values",
     "description": "Supakoto is a leading company dedicated to providing exceptional services and solutions. We pride ourselves on our commitment to excellence and customer satisfaction.",
@@ -113,28 +116,67 @@
     "leadership_description": "Meet the dedicated professionals who lead Supakoto with vision and expertise."
   },
   "services": {
-    "page_title": "Services - Supakoto",
     "heading": "Our Services",
     "subheading": "Discover our comprehensive range of professional services",
     "how_we_help": "How We Can Help You",
     "description": "We offer a wide range of professional services designed to meet your specific needs and exceed your expectations."
   },
+  "gallery": {
+    "heading": "Our Work Gallery",
+    "subheading": "Explore our finest work in luxury car detailing and protection services",
+    "description": "Discover our portfolio of premium automotive services and transformations."
+  },
+  "partners": {
+    "title": "Trusted by the Best",
+    "subtitle": "We partner with leading brands to bring you the highest quality."
+  },
   "faq": {
-    "page_title": "FAQ - Supakoto",
     "heading": "Frequently Asked Questions",
     "subheading": "Find answers to common questions",
     "description": "Here are some of the most frequently asked questions about our services."
   },
   "locations": {
-    "page_title": "Locations - Supakoto",
     "heading": "Our Locations",
     "subheading": "Find us near you",
     "description": "Visit us at one of our convenient locations."
   },
   "offers": {
-    "page_title": "Special Offers - Supakoto",
     "heading": "Special Offers",
     "subheading": "Discover our latest deals and promotions",
     "description": "Take advantage of our current special offers and save on our premium services."
+  },
+  "pages": {
+    "home": {
+      "title": "Home - Supakoto",
+      "description": "Your premier destination for luxury automotive services and solutions"
+    },
+    "about": {
+      "title": "About Us - Supakoto",
+      "description": "Learn more about our company, mission, and values"
+    },
+    "contact": {
+      "title": "Contact Us - Supakoto",
+      "description": "Get in touch with our team today. We're here to help answer your questions and provide the support you need."
+    },
+    "services": {
+      "title": "Services - Supakoto",
+      "description": "Discover our comprehensive range of professional services"
+    },
+    "locations": {
+      "title": "Locations - Supakoto",
+      "description": "Visit us at one of our convenient locations."
+    },
+    "offers": {
+      "title": "Special Offers - Supakoto",
+      "description": "Take advantage of our current special offers and save on our premium services."
+    },
+    "faq": {
+      "title": "FAQ - Supakoto",
+      "description": "Find answers to common questions about our services."
+    },
+    "gallery": {
+      "title": "Gallery - Supakoto",
+      "description": "Discover our portfolio of premium automotive services and transformations."
+    }
   }
 }

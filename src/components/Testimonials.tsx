@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
+import { useTranslations } from '../i18n/react';
 import './testimonials.css'; // Import for custom animations
 
 interface Testimonial {
@@ -12,10 +13,13 @@ interface Testimonial {
 }
 
 interface TestimonialsProps {
-  isArabic?: boolean;
+  currentLocale?: 'en' | 'ar';
 }
 
-const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
+const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element => {
+  const isArabic = currentLocale === 'ar';
+  const t = useTranslations(currentLocale);
+
   // Embla carousel setup
   const [viewportRef, embla] = useEmblaCarousel({ 
     loop: false,
@@ -58,20 +62,6 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
     };
   }, [embla, onSelect]);
 
-  // Import translation function from i18n utils
-  const t = (key: string) => {
-    try {
-      // Access the global translation function if available
-      if (typeof window !== 'undefined' && (window as any).__TRANSLATIONS__) {
-        const translations = (window as any).__TRANSLATIONS__;
-        return translations[key] || key;
-      }
-      return key;
-    } catch (e) {
-      return key;
-    }
-  };
-
   // Function to toggle expanded state of a testimonial
   const toggleExpand = (id: number) => {
     setExpandedTestimonials(prev => 
@@ -105,7 +95,7 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
     return (
       <div className="mb-4">
         <div className="overflow-hidden transition-all duration-500 ease-in-out">
-          <p className="text-white/90 text-sm sm:text-base mb-4 leading-relaxed">
+          <p className="text-foreground/90 text-sm sm:text-base mb-4 leading-relaxed">
             {needsTruncation && !isExpanded ? `${testimonial.content.substring(0, maxLength)}...` : testimonial.content}
           </p>
         </div>
@@ -113,7 +103,7 @@ const Testimonials = ({ isArabic = false }: TestimonialsProps): JSX.Element => {
           {needsTruncation && (
             <button
               onClick={() => toggleExpand(testimonial.id)}
-              className="text-red-400 hover:text-red-300 text-xs sm:text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 rounded-md"
+              className="text-primary hover:text-primary/90 text-xs sm:text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 rounded-md"
             >
               {isExpanded ? t('testimonials.readLess') : t('testimonials.readMore')}
             </button>

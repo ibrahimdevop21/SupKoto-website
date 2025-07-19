@@ -9,44 +9,193 @@ const rtl = lang === 'ar';
 <HeroCarouselReact client:load currentLocale={lang} isRTL={rtl} />
 
 <style is:global>
-  /* Custom Swiper Styles */
-  .swiper-pagination-bullet {
-    background: white !important;
-    opacity: 0.6 !important;
+  /* Enhanced Hero Carousel Styles */
+  .hero-carousel {
+    position: relative;
+    overflow: hidden;
   }
   
-  .swiper-pagination-bullet-active {
-    opacity: 1 !important;
-    background: white !important;
+  /* Custom Embla Carousel Styles */
+  .embla__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
   }
   
-  /* Hide default navigation arrows */
-  .swiper-button-next::after,
-  .swiper-button-prev::after {
-    display: none;
+  .embla__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
   
-  /* Animation for slides */
-  .swiper-slide-active h2 {
-    animation: fadeInUp 0.8s ease forwards;
+  .embla__dot--selected {
+    background: #dc2626;
+    transform: scale(1.2);
   }
   
-  .swiper-slide-active p {
-    animation: fadeInUp 0.8s 0.3s ease forwards;
+  .embla__button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
   }
   
-  .swiper-slide-active .flex {
-    animation: fadeInUp 0.8s 0.6s ease forwards;
+  .embla__button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
   }
   
+  .embla__button--prev {
+    left: 2rem;
+  }
+  
+  .embla__button--next {
+    right: 2rem;
+  }
+  
+  /* Enhanced Animations */
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Animation Classes */
+  .animate-fadeInUp {
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  
+  .animate-slideInLeft {
+    animation: slideInLeft 0.8s ease forwards;
+  }
+  
+  .animate-slideInRight {
+    animation: slideInRight 0.8s ease forwards;
+  }
+  
+  .animate-scaleIn {
+    animation: scaleIn 0.6s ease forwards;
+  }
+  
+  /* Delay Classes */
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+  
+  .delay-400 {
+    animation-delay: 0.4s;
+  }
+  
+  .delay-600 {
+    animation-delay: 0.6s;
+  }
+  
+  .delay-800 {
+    animation-delay: 0.8s;
+  }
+  
+  .delay-1000 {
+    animation-delay: 1s;
+  }
+  
+  .delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .embla__button {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .embla__button--prev {
+      left: 1rem;
+    }
+    
+    .embla__button--next {
+      right: 1rem;
+    }
+    
+    .embla__dots {
+      bottom: 1rem;
+    }
+  }
+  
+  /* Smooth transitions for all elements */
+  .hero-carousel * {
+    transition: all 0.3s ease;
+  }
+  
+  /* Backdrop blur support */
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Glass morphism effect */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 </style>

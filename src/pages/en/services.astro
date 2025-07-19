@@ -1,6 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { t } from '../../i18n/index';
+import CarGallery from '../../components/CarGallery';
+import ServiceList from '../../components/ServiceList';
+import WhyChooseUs from '../../components/WhyChooseUs';
+import OurProcess from '../../components/OurProcess';
+import CTA from '../../components/CTA';
 
 // For locale-specific pages, we know the locale from the folder structure
 const currentLang = Astro.currentLocale || 'en';
@@ -8,17 +13,14 @@ const currentLang = Astro.currentLocale || 'en';
 const rtl = currentLang === 'ar';
 ---
 
-<Layout title={t('services.page_title', {}, Astro)}>
-	<section class="py-12">
-		<div class="text-center mb-12">
-			<h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('services.heading', {}, Astro)}</h1>
-			<p class="text-xl text-muted-foreground max-w-3xl mx-auto">{t('services.subheading', {}, Astro)}</p>
-		</div>
-		
-		<div class="container mx-auto px-4">
-			<p class="text-center text-muted-foreground">
-				{t('services.description', {}, Astro)}
-			</p>
+<Layout title={t('pages.services.title')}>
+	<section class="py-16 md:py-24 bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(59,130,246,0.15),rgba(255,255,255,0))] min-h-screen">
+		<div class="container mx-auto px-4 md:px-8 lg:px-12">
+			<ServiceList client:visible currentLocale={currentLang} isRTL={rtl} />
+			<CarGallery client:load currentLocale={currentLang} isRTL={rtl} />
+			<WhyChooseUs client:visible currentLocale={currentLang} isRTL={rtl} />
+			<OurProcess client:visible currentLocale={currentLang} isRTL={rtl} />
+			<CTA client:visible currentLocale={currentLang} isRTL={rtl} contactUrl="/en/contact" />
 		</div>
 	</section>
 </Layout>

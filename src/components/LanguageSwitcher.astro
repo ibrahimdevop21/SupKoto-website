@@ -1,19 +1,35 @@
 ---
-import { t, getCurrentLocale, getLocalizedUrl } from '../i18n/index';
+import { t, getCurrentLocale } from '../i18n/index';
 
 const currentLang = getCurrentLocale(Astro);
 const currentPath = Astro.url.pathname;
 
 const languages = [
-  { code: 'en', name: t('language.en') },
-  { code: 'ar', name: t('language.ar') },
+  { code: 'en', name: t('language.en', {}, Astro) || 'English' },
+  { code: 'ar', name: t('language.ar', {}, Astro) || 'العربية' },
 ];
 
 const otherLang = languages.find((lang) => lang.code !== currentLang);
 const otherLangLabel = otherLang?.name || (currentLang === 'en' ? 'العربية' : 'English');
 
-// Get the equivalent path in the other language
-const switchPath = getLocalizedUrl(currentPath, otherLang?.code, Astro);
+// Generate the correct path for the other language
+function generateSwitchPath(currentPath: string, targetLang: string): string {
+  // Remove current locale prefix if it exists
+  let pathWithoutLocale = currentPath.replace(/^\/[a-z]{2}(\/|$)/, '/');
+  
+  // Remove leading slash for consistency
+  pathWithoutLocale = pathWithoutLocale.startsWith('/') ? pathWithoutLocale.slice(1) : pathWithoutLocale;
+  
+  // Handle root path
+  if (pathWithoutLocale === '' || pathWithoutLocale === '/') {
+    return `/${targetLang}/`;
+  }
+  
+  // Return new path with target locale
+  return `/${targetLang}/${pathWithoutLocale}`;
+}
+
+const switchPath = generateSwitchPath(currentPath, otherLang?.code || 'en');
 ---
 
 <div class="relative inline-block text-left">

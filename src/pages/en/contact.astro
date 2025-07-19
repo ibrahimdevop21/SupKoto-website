@@ -1,24 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { t } from '../../i18n/index';
+import ContactHero from '../../components/contact/ContactHero.tsx';
+import BranchLocator from '../../components/contact/BranchLocator.tsx';
+import B2BForm from '../../components/contact/B2BForm.tsx';
+import { t } from '../../i18n/index.ts';
 
-// For locale-specific pages, we know the locale from the folder structure
-const currentLang = Astro.currentLocale || 'en';
-// English is LTR, so rtl is false
-const rtl = currentLang === 'ar';
+const lang = Astro.currentLocale || 'en';
+const currentLang = lang;
+const rtl = false;
 ---
 
-<Layout title={t('contact.page_title', {}, Astro)}>
-	<section class="py-12">
-		<div class="text-center mb-12">
-			<h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('contact.heading', {}, Astro)}</h1>
-			<p class="text-xl text-muted-foreground max-w-3xl mx-auto">{t('contact.subheading', {}, Astro)}</p>
-		</div>
-		
-		<div class="container mx-auto px-4">
-			<p class="text-center text-muted-foreground">
-				{t('contact.description', {}, Astro)}
-			</p>
-		</div>
-	</section>
+<Layout title={t('pages.contact.title')} description={t('pages.contact.description')}>
+    <ContactHero client:visible currentLocale={currentLang} isRTL={rtl} />
+    <BranchLocator client:only="react" currentLocale={currentLang} isRTL={rtl} />
+    <B2BForm client:visible currentLocale={currentLang} isRTL={rtl} />
 </Layout>

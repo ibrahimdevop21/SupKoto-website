@@ -8,13 +8,13 @@ const currentLang = Astro.currentLocale || 'ar';
 const rtl = currentLang === 'ar';
 ---
 
-<Layout title={t('locations.page_title', {}, Astro)}>
+<Layout title={t('pages.locations.title')}>
  class="py-12">
 class="text-center mb-12">
-class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('locations.heading', {}, Astro)}</h1>
-class="text-xl text-muted-foreground max-w-3xl mx-auto">{t('locations.subheading', {}, Astro)}</p>
+class="text-4xl md:text-5xl font-bold text-foreground mb-4">{t('locations.heading')}</h1>
+class="text-xl text-muted-foreground max-w-3xl mx-auto">{t('locations.subheading')}</p>
 class="container mx-auto px-4">
 class="text-center text-muted-foreground">
-s.description', {}, Astro)}
+s.description')}
 >
 </Layout>
