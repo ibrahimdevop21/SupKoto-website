@@ -90,6 +90,49 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
   const currentProject = carProjects[selectedProject];
   const currentImage = currentProject.images[selectedImageIndex];
 
+  // Keyboard navigation effect
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (isLightboxOpen) {
+        switch (event.key) {
+          case 'Escape':
+            setIsLightboxOpen(false);
+            break;
+          case 'ArrowLeft':
+            event.preventDefault();
+            prevImage();
+            break;
+          case 'ArrowRight':
+            event.preventDefault();
+            nextImage();
+            break;
+        }
+      } else {
+        switch (event.key) {
+          case 'ArrowLeft':
+            event.preventDefault();
+            prevImage();
+            break;
+          case 'ArrowRight':
+            event.preventDefault();
+            nextImage();
+            break;
+          case 'ArrowUp':
+            event.preventDefault();
+            prevProject();
+            break;
+          case 'ArrowDown':
+            event.preventDefault();
+            nextProject();
+            break;
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, selectedProject, carProjects.length]);
+
   // Autoplay effect
   useEffect(() => {
     const tick = () => {
@@ -111,7 +154,24 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
     };
   }, [selectedProject, isAutoplayPaused, isLightboxOpen, currentProject.images.length]);
 
-  // Navigation functions
+  // Navigation functions for images within current project
+  const nextImage = () => {
+    setSelectedImageIndex((prevIndex) => (prevIndex + 1) % currentProject.images.length);
+    // Reset autoplay timer on manual navigation
+    setIsAutoplayPaused(true);
+    setTimeout(() => setIsAutoplayPaused(false), AUTOPLAY_INTERVAL);
+  };
+
+  const prevImage = () => {
+    setSelectedImageIndex((prevIndex) => 
+      prevIndex === 0 ? currentProject.images.length - 1 : prevIndex - 1
+    );
+    // Reset autoplay timer on manual navigation
+    setIsAutoplayPaused(true);
+    setTimeout(() => setIsAutoplayPaused(false), AUTOPLAY_INTERVAL);
+  };
+
+  // Navigation functions for projects
   const nextProject = () => {
     if (selectedProject < carProjects.length - 1) {
       setSelectedProject(selectedProject + 1);
@@ -161,22 +221,45 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
           <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-red-300/40 rounded-full animate-pulse delay-2000" />
         </div>
         
-        {/* Navigation Arrows */}
+        {/* Image Navigation Arrows */}
         <button
-          onClick={prevProject}
-          disabled={selectedProject === 0}
-          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'right-6' : 'left-6'} bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 transform hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10`}
+          onClick={(e) => {
+            e.stopPropagation();
+            prevImage();
+          }}
+          aria-label={isArabic ? 'الصورة السابقة' : 'Previous image'}
+          title={isArabic ? 'الصورة السابقة (←)' : 'Previous image (←)'}
+          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'right-6' : 'left-6'} bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 transform hover:scale-110 border border-white/10 z-10 group`}
         >
-          <ChevronLeft className="w-6 h-6" />
+          {/* In RTL, "previous" should point right, in LTR it should point left */}
+          {isRTL ? <ChevronRight className="w-6 h-6 group-hover:animate-pulse" /> : <ChevronLeft className="w-6 h-6 group-hover:animate-pulse" />}
         </button>
         
         <button
-          onClick={nextProject}
-          disabled={selectedProject === carProjects.length - 1}
-          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-6' : 'right-6'} bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 transform hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10`}
+          onClick={(e) => {
+            e.stopPropagation();
+            nextImage();
+          }}
+          aria-label={isArabic ? 'الصورة التالية' : 'Next image'}
+          title={isArabic ? 'الصورة التالية (→)' : 'Next image (→)'}
+          className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-6' : 'right-6'} bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 transform hover:scale-110 border border-white/10 z-10 group`}
         >
-          <ChevronRight className="w-6 h-6" />
+          {/* In RTL, "next" should point left, in LTR it should point right */}
+          {isRTL ? <ChevronLeft className="w-6 h-6 group-hover:animate-pulse" /> : <ChevronRight className="w-6 h-6 group-hover:animate-pulse" />}
         </button>
+        
+        {/* Image Counter */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium border border-white/20 shadow-lg">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+            <span>{selectedImageIndex + 1} / {currentProject.images.length}</span>
+          </div>
+        </div>
+        
+        {/* Keyboard Hints */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/40 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs opacity-70 border border-white/10">
+          {isArabic ? 'استخدم الأسهم للتنقل' : 'Use arrow keys to navigate'}
+        </div>
         
         {/* Decorative accent line */}
         <div className={`absolute top-1/2 ${isRTL ? 'left-4' : 'right-4'} transform -translate-y-1/2 w-1 h-16 bg-gradient-to-b from-red-500 to-red-700 rounded-full opacity-60`} />
@@ -253,32 +336,56 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
           </div>
         </div>
         
-        {/* Project Counter with Progress */}
+        {/* Project Navigation Section */}
         <div className="mt-6 pt-6 border-t border-gray-700/50">
-          <div className="flex items-center justify-between mb-4">
-            <span className={`text-sm text-gray-400 font-medium ${isArabic ? 'font-arabic' : ''}`}>
-              {isArabic ? 'مشروع' : 'Project'} {selectedProject + 1} {isArabic ? 'من' : 'of'} {carProjects.length}
-            </span>
+          {/* Project Navigation Controls */}
+          <div className="flex items-center justify-between mb-6">
+            <button
+              onClick={prevProject}
+              disabled={selectedProject === 0}
+              className={`flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10 ${isArabic ? 'flex-row-reverse' : ''}`}
+            >
+              {/* In RTL, "previous" should point right, in LTR it should point left */}
+              {isRTL ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+              <span className={`text-sm font-medium ${isArabic ? 'font-arabic' : ''}`}>
+                {isArabic ? 'المشروع السابق' : 'Previous Project'}
+              </span>
+            </button>
             
-            {/* Progress bar */}
-            <div className="flex items-center space-x-2">
-              <span className="text-white text-sm font-medium">
-                {String(selectedProject + 1).padStart(2, '0')}
-              </span>
-              <div className="w-12 h-0.5 bg-white/20 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-red-500 transition-all duration-300 ease-out"
-                  style={{ width: `${((selectedProject + 1) / carProjects.length) * 100}%` }}
-                />
+            <div className={`text-center ${isArabic ? 'font-arabic' : ''}`}>
+              <div className="text-sm text-gray-400 mb-1">
+                {isArabic ? 'مشروع' : 'Project'}
               </div>
-              <span className="text-white/60 text-sm">
-                {String(carProjects.length).padStart(2, '0')}
+              <div className="text-2xl font-bold text-white">
+                {selectedProject + 1} / {carProjects.length}
+              </div>
+            </div>
+            
+            <button
+              onClick={nextProject}
+              disabled={selectedProject === carProjects.length - 1}
+              className={`flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10 ${isArabic ? 'flex-row-reverse' : ''}`}
+            >
+              <span className={`text-sm font-medium ${isArabic ? 'font-arabic' : ''}`}>
+                {isArabic ? 'المشروع التالي' : 'Next Project'}
               </span>
+              {/* In RTL, "next" should point left, in LTR it should point right */}
+              {isRTL ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            </button>
+          </div>
+          
+          {/* Project Progress Bar */}
+          <div className="mb-4">
+            <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-red-500 to-red-600 transition-all duration-500 ease-out"
+                style={{ width: `${((selectedProject + 1) / carProjects.length) * 100}%` }}
+              />
             </div>
           </div>
           
           {/* Project Navigation Dots */}
-          <div className="flex justify-center gap-2">
+          <div className="flex justify-center gap-3">
             {carProjects.map((_, index) => (
               <button
                 key={index}
@@ -286,10 +393,10 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
                   setSelectedProject(index);
                   setSelectedImageIndex(0);
                 }}
-                className={`w-3 h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
+                className={`w-4 h-4 rounded-full transition-all duration-300 transform hover:scale-125 border-2 ${
                   selectedProject === index 
-                    ? 'bg-red-500 shadow-lg shadow-red-500/30' 
-                    : 'bg-gray-600 hover:bg-gray-500'
+                    ? 'bg-red-500 border-red-500 shadow-lg shadow-red-500/30' 
+                    : 'bg-transparent border-gray-600 hover:border-gray-400 hover:bg-gray-600'
                 }`}
               />
             ))}

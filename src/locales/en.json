@@ -42,6 +42,14 @@
       "link": "View offers"
     }
   },
+  "gallery": {
+    "title": "Gallery",
+    "description": "Explore our portfolio of premium automotive transformations and professional detailing work",
+    "hero": {
+      "title": "Our Work Gallery",
+      "subtitle": "Discover the artistry and precision behind every project. From paint protection films to ceramic coatings, witness the transformation of luxury vehicles through our expert craftsmanship."
+    }
+  },
   "cta": {
     "title": "Ready to Experience Luxury?",
     "description": "Contact us today to learn more about our premium automotive services.",
@@ -120,11 +128,6 @@
     "subheading": "Discover our comprehensive range of professional services",
     "how_we_help": "How We Can Help You",
     "description": "We offer a wide range of professional services designed to meet your specific needs and exceed your expectations."
-  },
-  "gallery": {
-    "heading": "Our Work Gallery",
-    "subheading": "Explore our finest work in luxury car detailing and protection services",
-    "description": "Discover our portfolio of premium automotive services and transformations."
   },
   "partners": {
     "title": "Trusted by the Best",
