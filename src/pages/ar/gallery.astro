@@ -1,0 +1,96 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CarGallery from '../../components/CarGallery';
+import { t } from '../../i18n';
+
+const currentLang = 'ar';
+const rtl = true;
+---
+
+<Layout 
+  title={t('gallery.title')}
+  description={t('gallery.description')}
+>
+  <main class="min-h-screen bg-neutral-950">
+    <!-- Hero Section -->
+    <section class="relative py-20 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950/50 to-purple-950/30"></div>
+      
+      <!-- Animated Background Orbs -->
+      <div class="absolute inset-0 overflow-hidden">
+        <!-- Primary Orb - Diamond Pattern -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/3 rounded-full blur-3xl animate-[float_28s_cubic-bezier(0.4,0,0.6,1)_infinite] opacity-8"></div>
+        
+        <!-- Secondary Orb - Star Pattern -->
+        <div class="absolute top-3/4 right-1/3 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl animate-[floatAlt_34s_cubic-bezier(0.25,0.46,0.45,0.94)_3s_infinite] opacity-12"></div>
+        
+        <!-- Tertiary Orb - Asymmetric Pattern -->
+        <div class="absolute top-1/2 left-3/4 w-72 h-72 bg-blue-600/4 rounded-full blur-3xl animate-[floatComplex_31s_cubic-bezier(0.42,0,0.58,1)_7s_infinite] opacity-10"></div>
+        
+        <!-- Accent Orb - Complex Path -->
+        <div class="absolute top-1/3 right-1/4 w-64 h-64 bg-purple-600/6 rounded-full blur-3xl animate-[floatOrganic_36s_cubic-bezier(0.35,0.17,0.65,0.83)_12s_infinite] opacity-15"></div>
+        
+        <!-- Rotating Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-purple-900/5 animate-[rotateGradient_40s_linear_infinite] opacity-20"></div>
+      </div>
+      
+      <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-12 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-arabic">
+          {t('gallery.hero.title', {}, Astro)}
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed font-arabic">
+          {t('gallery.hero.subtitle', {}, Astro)}
+        </p>
+        <div class="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full"></div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-16">
+      <div class="max-w-7xl mx-auto px-4 md:px-12">
+        <CarGallery client:load currentLocale={currentLang} isRTL={rtl} />
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    25% { transform: translate(60px, -80px) rotate(54deg) scale(1.02); }
+    50% { transform: translate(-40px, -60px) rotate(108deg) scale(1.01); }
+    75% { transform: translate(80px, 40px) rotate(162deg) scale(1.03); }
+  }
+  
+  @keyframes floatAlt {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    20% { transform: translate(-70px, 90px) rotate(72deg) scale(1.04); }
+    40% { transform: translate(55px, -75px) rotate(144deg) scale(1.02); }
+    60% { transform: translate(-85px, -45px) rotate(216deg) scale(1.06); }
+    80% { transform: translate(65px, 70px) rotate(288deg) scale(1.01); }
+  }
+  
+  @keyframes floatComplex {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    25% { transform: translate(-55px, -90px) rotate(90deg) scale(1.03); }
+    50% { transform: translate(75px, 45px) rotate(180deg) scale(1.01); }
+    75% { transform: translate(-65px, 85px) rotate(270deg) scale(1.05); }
+  }
+  
+  @keyframes floatOrganic {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    16.67% { transform: translate(45px, -70px) rotate(60deg) scale(1.02); }
+    33.33% { transform: translate(-80px, -30px) rotate(120deg) scale(1.04); }
+    50% { transform: translate(-35px, 85px) rotate(180deg) scale(1.01); }
+    66.67% { transform: translate(90px, 55px) rotate(240deg) scale(1.06); }
+    83.33% { transform: translate(25px, -95px) rotate(300deg) scale(1.03); }
+  }
+  
+  @keyframes rotateGradient {
+    0% { background: linear-gradient(135deg, rgba(59,130,246,0.05), transparent, rgba(147,51,234,0.05)); transform: translate(0, 0); }
+    25% { background: linear-gradient(225deg, rgba(59,130,246,0.08), transparent, rgba(147,51,234,0.03)); transform: translate(20px, -30px); }
+    50% { background: linear-gradient(315deg, rgba(59,130,246,0.03), transparent, rgba(147,51,234,0.08)); transform: translate(-15px, 25px); }
+    75% { background: linear-gradient(45deg, rgba(59,130,246,0.06), transparent, rgba(147,51,234,0.06)); transform: translate(25px, 15px); }
+    100% { background: linear-gradient(135deg, rgba(59,130,246,0.05), transparent, rgba(147,51,234,0.05)); transform: translate(0, 0); }
+  }
+</style>

@@ -4,12 +4,12 @@
 
 @layer components {
   .marquee-container {
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
   }
 
   .marquee-track {
-    animation: scroll 40s linear infinite;
+    animation: scroll 45s linear infinite;
   }
   
   .marquee-container:hover .marquee-track {
@@ -17,15 +17,17 @@
   }
 
   .marquee-item {
-    filter: grayscale(100%);
-    transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
-    opacity: 0.8;
+    opacity: 0.9;
+    transition: opacity 0.3s ease-in-out;
   }
 
   .marquee-item:hover {
-    filter: grayscale(0%);
-    transform: scale(1.1);
     opacity: 1;
+  }
+  
+  /* Enhanced focus on partner cards */
+  .marquee-item .group:hover {
+    z-index: 10;
   }
 }
 
