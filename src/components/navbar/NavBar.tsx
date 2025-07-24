@@ -22,6 +22,7 @@ export default function NavBar({ currentLocale, isRTL }: NavBarProps) {
   const navLinks = [
     { href: getLocalizedUrl(''), text: t('nav.home') },
     { href: getLocalizedUrl('services'), text: t('nav.services') },
+    { href: getLocalizedUrl('gallery'), text: t('nav.gallery') },
     { href: getLocalizedUrl('about'), text: t('nav.about') },
     { href: getLocalizedUrl('contact'), text: t('nav.contact') },
   ];
@@ -35,7 +36,7 @@ export default function NavBar({ currentLocale, isRTL }: NavBarProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/60 backdrop-blur-md border-b border-border shadow-md">
-      <div className={`max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-1.5 md:py-2 flex justify-between items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+      <div className={`container mx-auto px-4 py-1.5 md:py-2 flex justify-between items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
         {/* Logo */}
         <a href={getLocalizedUrl('')} className="flex items-center group" aria-label="Supakoto Home">
           <img src="/assets/logo.svg" alt="Supakoto Logo" className="h-7 md:h-8 transform transition-transform duration-300 group-hover:scale-105" width="auto" height="32" />

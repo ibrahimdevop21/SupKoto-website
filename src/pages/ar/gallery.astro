@@ -34,7 +34,7 @@ const rtl = true;
         <div class="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-purple-900/5 animate-[rotateGradient_40s_linear_infinite] opacity-20"></div>
       </div>
       
-      <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-12 text-center">
+      <div class="relative z-10 container mx-auto px-4 text-center">
         <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-arabic">
           {t('gallery.hero.title', {}, Astro)}
         </h1>
@@ -47,7 +47,7 @@ const rtl = true;
 
     <!-- Gallery Section -->
     <section class="py-16">
-      <div class="max-w-7xl mx-auto px-4 md:px-12">
+      <div class="container mx-auto px-4">
         <CarGallery client:load currentLocale={currentLang} isRTL={rtl} />
       </div>
     </section>

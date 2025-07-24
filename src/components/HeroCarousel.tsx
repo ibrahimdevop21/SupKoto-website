@@ -206,7 +206,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
                 </div>
                 
                 <div className="absolute inset-0 flex items-center z-20">
-                  <div className="max-w-7xl mx-auto px-4 md:px-12 w-full">
+                  <div className="container mx-auto px-4 w-full">
                     <div className={`max-w-2xl ${isArabic ? 'ml-auto text-right' : 'mr-auto text-left'}`}>
 
 

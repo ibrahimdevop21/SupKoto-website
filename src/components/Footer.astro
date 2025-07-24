@@ -7,33 +7,151 @@ const currentYear = new Date().getFullYear();
 
 const socialLinks = [
   { name: 'Facebook', icon: 'mdi:facebook', url: 'https://facebook.com/supakoto' },
-  { name: 'Twitter', icon: 'mdi:twitter', url: 'https://twitter.com/supakoto' },
+  { name: 'TikTok', icon: 'simple-icons:tiktok', url: 'https://tiktok.com/@supakoto' },
   { name: 'Instagram', icon: 'mdi:instagram', url: 'https://instagram.com/supakoto' },
   { name: 'LinkedIn', icon: 'mdi:linkedin', url: 'https://linkedin.com/company/supakoto' },
+  { name: 'YouTube', icon: 'mdi:youtube', url: 'https://youtube.com/@supakoto' },
+];
+
+const quickLinks = [
+  { name: t('nav.home', {}, { locale: currentLocale }), href: getLocalizedUrl('/', currentLocale, Astro) },
+  { name: t('nav.services', {}, { locale: currentLocale }), href: getLocalizedUrl('/services', currentLocale, Astro) },
+  { name: t('nav.about', {}, { locale: currentLocale }), href: getLocalizedUrl('/about', currentLocale, Astro) },
+  { name: t('nav.contact', {}, { locale: currentLocale }), href: getLocalizedUrl('/contact', currentLocale, Astro) },
+];
+
+const services = [
+  { name: 'Engine Repair', href: getLocalizedUrl('/services/engine-repair', currentLocale, Astro) },
+  { name: 'Brake Service', href: getLocalizedUrl('/services/brake-service', currentLocale, Astro) },
+  { name: 'Oil Change', href: getLocalizedUrl('/services/oil-change', currentLocale, Astro) },
+  { name: 'Tire Service', href: getLocalizedUrl('/services/tire-service', currentLocale, Astro) },
+];
+
+const contactInfo = [
+  { icon: 'mdi:phone', text: '+1 (555) 123-4567', href: 'tel:+15551234567' },
+  { icon: 'mdi:email', text: 'info@supakoto.com', href: 'mailto:info@supakoto.com' },
+  { icon: 'mdi:map-marker', text: '123 Auto Street, Car City, CC 12345', href: 'https://maps.google.com' },
 ];
 ---
 
-<footer class="bg-background/70 text-foreground backdrop-blur-sm border-t border-foreground/10">
-  <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-3">
-        <a href={getLocalizedUrl('/', currentLocale, Astro)} class="flex items-center gap-2.5 text-xl font-bold text-foreground">
-          <Icon name="mdi:car-wrench" class="h-8 w-8 text-primary" />
-          <span>SupaKoto</span>
-        </a>
-      </div>
+<footer class="bg-gradient-to-br from-background via-background/95 to-background/90 text-foreground backdrop-blur-sm border-t border-foreground/20">
+  <!-- Main Footer Content -->
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
       
-      <p class="text-sm leading-5 text-muted-foreground">
-        &copy; {currentYear} SupaKoto. {t('footer.copyright', {}, { locale: currentLocale })}
-      </p>
+      <!-- Company Info -->
+      <div class="lg:col-span-1 text-center lg:text-left">
+        <a href={getLocalizedUrl('/', currentLocale, Astro)} class="inline-block mb-6 group">
+          <img 
+            src="/logo.svg" 
+            alt="SupaKoto Logo" 
+            class="h-16 w-auto group-hover:scale-105 transition-transform duration-300 mx-auto lg:mx-0"
+          />
+        </a>
+        <div class="flex items-center justify-center lg:justify-start space-x-4">
+          {socialLinks.map((item) => (
+            <a 
+              href={item.url} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="p-2 bg-muted/50 hover:bg-primary/20 text-muted-foreground hover:text-primary rounded-lg transition-all duration-300 hover:scale-110"
+            >
+              <span class="sr-only">{item.name}</span>
+              <Icon name={item.icon} class="h-5 w-5" />
+            </a>
+          ))}
+        </div>
+      </div>
 
-      <div class="flex items-center space-x-5">
-        {socialLinks.map((item) => (
-          <a href={item.url} target="_blank" rel="noopener noreferrer" class="text-muted-foreground hover:text-primary transition-colors duration-300">
-            <span class="sr-only">{item.name}</span>
-            <Icon name={item.icon} class="h-6 w-6" />
-          </a>
-        ))}
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
+          <Icon name="mdi:link-variant" class="h-5 w-5 text-primary" />
+          Quick Links
+        </h3>
+        <ul class="space-y-3">
+          {quickLinks.map((link) => (
+            <li>
+              <a 
+                href={link.href} 
+                class="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
+              >
+                <Icon name="mdi:chevron-right" class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
+          <Icon name="mdi:wrench" class="h-5 w-5 text-primary" />
+          Our Services
+        </h3>
+        <ul class="space-y-3">
+          {services.map((service) => (
+            <li>
+              <a 
+                href={service.href} 
+                class="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
+              >
+                <Icon name="mdi:chevron-right" class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {service.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
+          <Icon name="mdi:contact-mail" class="h-5 w-5 text-primary" />
+          Get In Touch
+        </h3>
+        <ul class="space-y-4">
+          {contactInfo.map((contact) => (
+            <li>
+              <a 
+                href={contact.href} 
+                class="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-start gap-3 group"
+              >
+                <div class="p-1.5 bg-muted/50 group-hover:bg-primary/20 rounded-md transition-colors duration-300 mt-0.5">
+                  <Icon name={contact.icon} class="h-4 w-4" />
+                </div>
+                <span class="text-sm leading-relaxed">{contact.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="border-t border-foreground/10 bg-background/50">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex flex-col sm:flex-row items-center gap-4 text-sm text-muted-foreground">
+          <p>&copy; {currentYear} SupaKoto. {t('footer.copyright', {}, { locale: currentLocale })}</p>
+          <div class="hidden sm:block w-px h-4 bg-foreground/20"></div>
+          <div class="flex items-center gap-4">
+            <a href={getLocalizedUrl('/privacy', currentLocale, Astro)} class="hover:text-primary transition-colors duration-300">
+              Privacy Policy
+            </a>
+            <a href={getLocalizedUrl('/terms', currentLocale, Astro)} class="hover:text-primary transition-colors duration-300">
+              Terms of Service
+            </a>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-2 text-sm text-muted-foreground">
+          <span>Made with</span>
+          <Icon name="mdi:heart" class="h-4 w-4 text-red-500 animate-pulse" />
+          <span>by SupaKoto Team</span>
+        </div>
       </div>
     </div>
   </div>

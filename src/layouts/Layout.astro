@@ -24,7 +24,7 @@ const siteDescription = description || t('site.description');
 <html lang={currentLang} dir={rtl ? 'rtl' : 'ltr'} class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content={siteDescription} />
 		
 		<!-- Preload critical resources -->
@@ -100,7 +100,7 @@ const siteDescription = description || t('site.description');
 		<!-- Full-width slot for hero sections and other full-width components -->
 		<slot name="hero" />
 		
-		<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 bg-background">
+		<main class="flex-grow container mx-auto px-4 bg-background">
 			<slot />
 		</main>
 		

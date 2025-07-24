@@ -20,7 +20,7 @@ h2 {
 @layer base {
   :root {
     /* Core Palette: Black & Red */
-    --background: 240 10% 3.9%; /* Near-black */
+    --background: 220 13% 9%; /* Subtle dark blue */
     --foreground: 0 0% 98%;     /* Off-white */
 
     --primary: 0 84.2% 60.2%;   /* Brand Red */
