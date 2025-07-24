@@ -29,7 +29,7 @@ export default defineConfig({
     defaultLocale: 'en',
     locales: ['en', 'ar'],
     routing: {
-      prefixDefaultLocale: true,      // add /en/ prefix for default locale
+      prefixDefaultLocale: false,     // serve default locale from the root (e.g., / instead of /en/)
       strategy: 'pathname',           // use pathname strategy for locale detection
       exclude: {
         ar: ['en/**'],
