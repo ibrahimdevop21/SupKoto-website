@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, MapPin } from './icons';
 
 interface CarProject {
   id: number;
@@ -206,7 +206,9 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
           src={currentImage}
           key={currentImage} // Add key to trigger re-render and animation on change
           alt={currentProject.title[isArabic ? 'ar' : 'en']}
-          className="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105 animate-fadeIn"
+          className="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105 animate-fadeIn transition-all duration-300 hover:scale-105"
+          width="800"
+          height="600"
         />
         
         {/* Enhanced gradient overlay */}
@@ -232,7 +234,7 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
           className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'right-6' : 'left-6'} bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 transform hover:scale-110 border border-white/10 z-10 group`}
         >
           {/* In RTL, "previous" should point right, in LTR it should point left */}
-          {isRTL ? <ChevronRight className="w-6 h-6 group-hover:animate-pulse" /> : <ChevronLeft className="w-6 h-6 group-hover:animate-pulse" />}
+          {isRTL ? <ChevronRight className="w-6 h-6 group-hover:animate-pulse transition-all duration-300 hover:scale-105" /> : <ChevronLeft className="w-6 h-6 group-hover:animate-pulse transition-all duration-300 hover:scale-105" />}
         </button>
         
         <button
@@ -245,7 +247,7 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
           className={`absolute top-1/2 -translate-y-1/2 ${isRTL ? 'left-6' : 'right-6'} bg-black/40 hover:bg-black/60 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 transform hover:scale-110 border border-white/10 z-10 group`}
         >
           {/* In RTL, "next" should point left, in LTR it should point right */}
-          {isRTL ? <ChevronLeft className="w-6 h-6 group-hover:animate-pulse" /> : <ChevronRight className="w-6 h-6 group-hover:animate-pulse" />}
+          {isRTL ? <ChevronLeft className="w-6 h-6 group-hover:animate-pulse transition-all duration-300 hover:scale-105" /> : <ChevronRight className="w-6 h-6 group-hover:animate-pulse transition-all duration-300 hover:scale-105" />}
         </button>
         
         {/* Image Counter */}
@@ -283,6 +285,8 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
               src={image}
               alt={`${currentProject.title[isArabic ? 'ar' : 'en']} - ${index + 1}`}
               className="w-full h-full object-cover transition-transform duration-300 group-hover/thumb:scale-110"
+              width="120"
+              height="80"
             />
             <div className="absolute inset-0 bg-black/30 group-hover/thumb:bg-black/10 transition-colors duration-300" />
             {selectedImageIndex === index && (
@@ -297,11 +301,11 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
       </div>
 
       {/* Project Information */}
-      <div className={`bg-gray-900/60 backdrop-blur-md rounded-xl p-8 border border-gray-700/40 shadow-2xl animate-fadeInUp delay-400 ${isArabic ? 'text-right' : 'text-left'}`}>
+      <div className={`bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-2xl animate-fadeInUp delay-400 ${isArabic ? 'text-right' : 'text-left'} relative overflow-hidden`}>
         {/* Project Badge */}
         <div className="flex items-center gap-2 mb-4">
-          <div className="bg-red-500/20 backdrop-blur-sm rounded-full px-3 py-1 border border-red-500/30">
-            <span className="text-red-400 text-sm font-medium">
+          <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 backdrop-blur-sm rounded-full px-3 py-1 border border-red-500/40">
+            <span className="text-red-300 text-sm font-medium">
               {isArabic ? 'مشروع مميز' : 'Featured Project'}
             </span>
           </div>
@@ -415,10 +419,12 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
               src={currentImage} 
               alt={currentProject.title[isArabic ? 'ar' : 'en']}
               className="w-full h-full object-contain rounded-lg shadow-2xl shadow-red-500/20"
+              width="1200"
+              height="800"
             />
             <button 
               onClick={() => setIsLightboxOpen(false)} 
-              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/80 transition-colors"
+              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/80 transition-colors transition-all duration-300 hover:scale-105"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>

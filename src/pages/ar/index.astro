@@ -1,9 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import HeroCarousel from '../../components/HeroCarousel.astro';
+import OptimizedHeroCarousel from '../../components/OptimizedHeroCarousel.astro';
 import Partners from '../../components/Partners.astro';
-import LatestWorkCarousel from '../../components/LatestWorkCarousel.astro';
-import Testimonials from '../../components/Testimonials.astro';
+import LatestWorkCarousel from '../../components/LatestWorkCarousel.tsx';
+import Testimonials from '../../components/Testimonials.tsx';
 import { t } from '../../i18n/index';
 
 // For locale-specific pages, we know the locale from the folder structure
@@ -13,23 +13,29 @@ const rtl = currentLang === 'ar';
 ---
 
 <Layout title={t('pages.home.title')}>
-	<HeroCarousel slot="hero" />
+	<OptimizedHeroCarousel slot="hero" />
 	
-	<!-- Main content with consistent spacing -->
-	<section class="py-16 md:py-20 lg:py-24">
-		<!-- Partners Section with proper spacing -->
-		<div class="mb-24 md:mb-32">
-			<Partners />
-		</div>
+	<!-- Main content with responsive container and consistent spacing -->
+	<main class="w-full">
+		<!-- Partners Section -->
+		<section class="py-12 sm:py-16 md:py-20 lg:py-24">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<Partners />
+			</div>
+		</section>
 		
-		<!-- Latest Work Section with proper spacing -->
-		<div class="mb-24 md:mb-32">
-			<LatestWorkCarousel client:visible />
-		</div>
+		<!-- Latest Work Section -->
+		<section class="py-12 sm:py-16 md:py-20 lg:py-24">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<LatestWorkCarousel isArabic={true} client:visible />
+			</div>
+		</section>
 		
 		<!-- Testimonials Section -->
-		<div>
-			<Testimonials client:visible />
-		</div>
-	</section>
+		<section class="py-12 sm:py-16 md:py-20 lg:py-24">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<Testimonials currentLocale="ar" client:visible />
+			</div>
+		</section>
+	</main>
 </Layout>

@@ -1,8 +1,9 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { t, getLocalizedUrl, type Locale } from "../i18n/index.ts";
+import { t, getLocalizedUrl, isRTL, type Locale } from "../i18n/index.ts";
 
 const currentLocale = (Astro.currentLocale || 'en') as Locale;
+const rtl = isRTL(Astro);
 const currentYear = new Date().getFullYear();
 
 const socialLinks = [
@@ -14,143 +15,247 @@ const socialLinks = [
 ];
 
 const quickLinks = [
-  { name: t('nav.home', {}, { locale: currentLocale }), href: getLocalizedUrl('/', currentLocale, Astro) },
-  { name: t('nav.services', {}, { locale: currentLocale }), href: getLocalizedUrl('/services', currentLocale, Astro) },
-  { name: t('nav.about', {}, { locale: currentLocale }), href: getLocalizedUrl('/about', currentLocale, Astro) },
-  { name: t('nav.contact', {}, { locale: currentLocale }), href: getLocalizedUrl('/contact', currentLocale, Astro) },
-];
-
-const services = [
-  { name: 'Engine Repair', href: getLocalizedUrl('/services/engine-repair', currentLocale, Astro) },
-  { name: 'Brake Service', href: getLocalizedUrl('/services/brake-service', currentLocale, Astro) },
-  { name: 'Oil Change', href: getLocalizedUrl('/services/oil-change', currentLocale, Astro) },
-  { name: 'Tire Service', href: getLocalizedUrl('/services/tire-service', currentLocale, Astro) },
+  { 
+    name: currentLocale === 'ar' ? 'الرئيسية' : 'Home', 
+    href: getLocalizedUrl('/', currentLocale, Astro), 
+    icon: 'mdi:home', 
+    description: 'Return to homepage' 
+  },
+  { 
+    name: currentLocale === 'ar' ? 'الخدمات' : 'Services', 
+    href: getLocalizedUrl('/services', currentLocale, Astro), 
+    icon: 'mdi:wrench', 
+    description: 'Explore our offerings' 
+  },
+  { 
+    name: currentLocale === 'ar' ? 'المعرض' : 'Gallery', 
+    href: getLocalizedUrl('/gallery', currentLocale, Astro), 
+    icon: 'mdi:image-multiple', 
+    description: 'View our work gallery' 
+  },
+  { 
+    name: currentLocale === 'ar' ? 'من نحن' : 'About', 
+    href: getLocalizedUrl('/about', currentLocale, Astro), 
+    icon: 'mdi:information', 
+    description: 'Learn about us' 
+  },
+  { 
+    name: currentLocale === 'ar' ? 'اتصل بنا' : 'Contact', 
+    href: getLocalizedUrl('/contact', currentLocale, Astro), 
+    icon: 'mdi:phone', 
+    description: 'Get in touch' 
+  },
 ];
 
 const contactInfo = [
-  { icon: 'mdi:phone', text: '+1 (555) 123-4567', href: 'tel:+15551234567' },
-  { icon: 'mdi:email', text: 'info@supakoto.com', href: 'mailto:info@supakoto.com' },
-  { icon: 'mdi:map-marker', text: '123 Auto Street, Car City, CC 12345', href: 'https://maps.google.com' },
+  { 
+    icon: 'mdi:phone', 
+    text: currentLocale === 'ar' ? '+971 50 123 4567' : '+1 (555) 123-4567', 
+    href: currentLocale === 'ar' ? 'tel:+971501234567' : 'tel:+15551234567' 
+  },
+  { 
+    icon: 'mdi:email', 
+    text: t('footer.contact_email', {}, { locale: currentLocale }) || 'info@supakoto.com', 
+    href: 'mailto:info@supakoto.com' 
+  },
+  { 
+    icon: 'mdi:map-marker', 
+    text: currentLocale === 'ar' ? 
+      t('footer.contact_address_dubai', {}, { locale: currentLocale }) || 'المنطقة الصناعية جبل علي 1، دبي، الإمارات العربية المتحدة' :
+      '123 Main St, City, State 12345', 
+    href: 'https://maps.google.com' 
+  },
 ];
 ---
 
-<footer class="bg-gradient-to-br from-background via-background/95 to-background/90 text-foreground backdrop-blur-sm border-t border-foreground/20">
+<footer class="bg-gradient-to-br from-background via-background/95 to-background/90 text-foreground backdrop-blur-sm border-t border-foreground/20" dir={rtl ? 'rtl' : 'ltr'}>
   <!-- Main Footer Content -->
-  <div class="container mx-auto px-4 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
       
       <!-- Company Info -->
-      <div class="lg:col-span-1 text-center lg:text-left">
-        <a href={getLocalizedUrl('/', currentLocale, Astro)} class="inline-block mb-6 group">
-          <img 
-            src="/logo.svg" 
-            alt="SupaKoto Logo" 
-            class="h-16 w-auto group-hover:scale-105 transition-transform duration-300 mx-auto lg:mx-0"
-          />
-        </a>
-        <div class="flex items-center justify-center lg:justify-start space-x-4">
-          {socialLinks.map((item) => (
+      <div class={`lg:col-span-2 text-center lg:text-${rtl ? 'right' : 'left'}`}>
+        <!-- Logo Section -->
+        <div class="mb-6">
+          <a href={getLocalizedUrl('/', currentLocale, Astro)} class="inline-block group">
+            <img 
+              src="/logo.svg" 
+              alt="SupaKoto Logo" 
+              class={`h-16 lg:h-20 w-auto group-hover:scale-105 transition-transform duration-300 mx-auto lg:m${rtl ? 'r' : 'l'}-0`}
+            />
+          </a>
+        </div>
+        
+        <!-- Company Description -->
+        <div class="mb-6">
+          <p class={`text-muted-foreground text-base lg:text-lg leading-relaxed max-w-xl mx-auto lg:m${rtl ? 'r' : 'l'}-0`}>
+            {currentLocale === 'ar' ? 'قيادة التميز بحماية فائقة وتخصيص لا مثيل له.' : 'Driving excellence with premium protection and unparalleled customization.'}
+          </p>
+        </div>
+        
+        <!-- Social Media Section -->
+        <div class="space-y-4">
+          <h3 class={`text-lg font-semibold text-foreground flex items-center justify-center lg:justify-${rtl ? 'end' : 'start'} gap-2 ${rtl ? 'flex-row-reverse' : ''}`}>
+            <div class="p-1.5 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg">
+              <Icon name="mdi:share-variant" class="h-4 w-4 text-primary" />
+            </div>
+            {currentLocale === 'ar' ? 'تواصل معنا' : 'Connect With Us'}
+          </h3>
+          
+          <div class={`flex items-center justify-center lg:justify-${rtl ? 'end' : 'start'} gap-3 ${rtl ? 'flex-row-reverse' : ''}`}>
+            {socialLinks.map((item) => (
+              <a 
+                href={item.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="group p-3 bg-gradient-to-br from-muted/30 to-muted/20 hover:from-primary/20 hover:to-primary/10 text-muted-foreground hover:text-primary rounded-xl transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-primary/20 border border-muted/20 hover:border-primary/30"
+              >
+                <span class="sr-only">{item.name}</span>
+                <Icon name={item.icon} class="h-5 w-5" />
+              </a>
+            ))}
+          </div>
+          
+          <!-- Additional Info -->
+          <div class="pt-4 border-t border-muted/20">
+            <p class={`text-sm text-muted-foreground text-center lg:text-${rtl ? 'right' : 'left'}`}>
+              {currentLocale === 'ar' ? 'استمتع بالتميز في عالم السيارات مع سوباكوتو' : 'Experience automotive excellence with SupaKoto'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class={`lg:col-span-1 ${rtl ? 'lg:order-last' : ''}`}>
+        <!-- Section Header -->
+        <div class="mb-6">
+          <h3 class={`text-lg font-semibold text-foreground mb-3 flex items-center justify-center lg:justify-${rtl ? 'end' : 'start'} gap-2 ${rtl ? 'flex-row-reverse' : ''}`}>
+            <div class="p-1.5 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg">
+              <Icon name="mdi:link-variant" class="h-4 w-4 text-primary" />
+            </div>
+            {currentLocale === 'ar' ? 'روابط سريعة' : 'Quick Links'}
+          </h3>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="space-y-2">
+          {quickLinks.map((link) => (
             <a 
-              href={item.url} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="p-2 bg-muted/50 hover:bg-primary/20 text-muted-foreground hover:text-primary rounded-lg transition-all duration-300 hover:scale-110"
+              href={link.href} 
+              class={`group flex items-center gap-3 p-3 bg-gradient-to-br from-muted/20 to-muted/10 hover:from-primary/15 hover:to-primary/5 rounded-lg border border-muted/20 hover:border-primary/30 transition-all duration-300 hover:scale-[1.02] ${rtl ? 'flex-row-reverse' : ''}`}
             >
-              <span class="sr-only">{item.name}</span>
-              <Icon name={item.icon} class="h-5 w-5" />
+              <div class="p-1.5 bg-gradient-to-br from-muted/40 to-muted/20 group-hover:from-primary/25 group-hover:to-primary/15 rounded-md transition-all duration-300">
+                <Icon 
+                  name={link.icon} 
+                  class="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" 
+                />
+              </div>
+              <div class="flex-1">
+                <span class={`text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300 block text-${rtl ? 'right' : 'left'}`}>
+                  {link.name}
+                </span>
+              </div>
+              <Icon 
+                name={rtl ? 'mdi:chevron-left' : 'mdi:chevron-right'} 
+                class={`h-3 w-3 text-muted-foreground group-hover:text-primary transition-all duration-300 group-hover:translate-x-${rtl ? '-0.5' : '0.5'}`} 
+              />
             </a>
           ))}
         </div>
       </div>
 
-      <!-- Quick Links -->
-      <div>
-        <h3 class="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
-          <Icon name="mdi:link-variant" class="h-5 w-5 text-primary" />
-          Quick Links
-        </h3>
-        <ul class="space-y-3">
-          {quickLinks.map((link) => (
-            <li>
-              <a 
-                href={link.href} 
-                class="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
-              >
-                <Icon name="mdi:chevron-right" class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- Services -->
-      <div>
-        <h3 class="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
-          <Icon name="mdi:wrench" class="h-5 w-5 text-primary" />
-          Our Services
-        </h3>
-        <ul class="space-y-3">
-          {services.map((service) => (
-            <li>
-              <a 
-                href={service.href} 
-                class="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
-              >
-                <Icon name="mdi:chevron-right" class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                {service.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
       <!-- Contact Info -->
-      <div>
-        <h3 class="text-lg font-semibold text-foreground mb-6 flex items-center gap-2">
-          <Icon name="mdi:contact-mail" class="h-5 w-5 text-primary" />
-          Get In Touch
-        </h3>
-        <ul class="space-y-4">
+      <div class="lg:col-span-1">
+        <!-- Section Header -->
+        <div class="mb-6">
+          <h3 class={`text-lg font-semibold text-foreground mb-3 flex items-center justify-center lg:justify-${rtl ? 'end' : 'start'} gap-2 ${rtl ? 'flex-row-reverse' : ''}`}>
+            <div class="p-1.5 bg-gradient-to-br from-primary/20 to-primary/10 rounded-lg">
+              <Icon name="mdi:contact-mail" class="h-4 w-4 text-primary" />
+            </div>
+            {currentLocale === 'ar' ? 'معلومات التواصل' : 'Contact Info'}
+          </h3>
+        </div>
+        
+        <!-- Contact Links -->
+        <div class="space-y-3">
           {contactInfo.map((contact) => (
-            <li>
-              <a 
-                href={contact.href} 
-                class="text-muted-foreground hover:text-primary transition-colors duration-300 flex items-start gap-3 group"
-              >
-                <div class="p-1.5 bg-muted/50 group-hover:bg-primary/20 rounded-md transition-colors duration-300 mt-0.5">
-                  <Icon name={contact.icon} class="h-4 w-4" />
-                </div>
-                <span class="text-sm leading-relaxed">{contact.text}</span>
-              </a>
-            </li>
+            <a 
+              href={contact.href} 
+              class={`group flex items-start gap-3 p-3 bg-gradient-to-br from-muted/20 to-muted/10 hover:from-primary/15 hover:to-primary/5 rounded-lg border border-muted/20 hover:border-primary/30 transition-all duration-300 hover:scale-[1.02] ${rtl ? 'flex-row-reverse text-right' : ''}`}
+            >
+              <div class="p-1.5 bg-gradient-to-br from-muted/40 to-muted/20 group-hover:from-primary/25 group-hover:to-primary/15 rounded-md transition-all duration-300 flex-shrink-0">
+                <Icon 
+                  name={contact.icon} 
+                  class="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-300" 
+                />
+              </div>
+              <span class={`text-sm text-foreground group-hover:text-primary transition-colors duration-300 leading-relaxed ${rtl ? 'text-right' : 'text-left'} flex-1`}>
+                {contact.text}
+              </span>
+            </a>
           ))}
-        </ul>
+        </div>
+        
+        <!-- Business Hours -->
+        <div class="mt-6 p-3 bg-gradient-to-br from-muted/15 to-muted/5 rounded-lg border border-muted/20">
+          <h3 class={`text-sm font-medium text-foreground mb-2 ${rtl ? 'text-right' : 'text-left'}`}>
+            {currentLocale === 'ar' ? 'ساعات العمل' : 'Business Hours'}
+          </h3>
+          <div class="space-y-1 text-xs text-muted-foreground">
+            <div class={`flex justify-between ${rtl ? 'flex-row-reverse' : ''}`}>
+              <span class={rtl ? 'text-right' : 'text-left'}>{currentLocale === 'ar' ? 'الاثنين - الجمعة' : 'Mon - Fri'}</span>
+              <span class={rtl ? 'text-left' : 'text-right'}>{currentLocale === 'ar' ? '8:00 ص - 6:00 م' : '8:00 AM - 6:00 PM'}</span>
+            </div>
+            <div class={`flex justify-between ${rtl ? 'flex-row-reverse' : ''}`}>
+              <span class={rtl ? 'text-right' : 'text-left'}>{currentLocale === 'ar' ? 'السبت' : 'Saturday'}</span>
+              <span class={rtl ? 'text-left' : 'text-right'}>{currentLocale === 'ar' ? '9:00 ص - 4:00 م' : '9:00 AM - 4:00 PM'}</span>
+            </div>
+            <div class={`flex justify-between ${rtl ? 'flex-row-reverse' : ''}`}>
+              <span class={rtl ? 'text-right' : 'text-left'}>{currentLocale === 'ar' ? 'الأحد' : 'Sunday'}</span>
+              <span class={rtl ? 'text-left' : 'text-right'}>{currentLocale === 'ar' ? 'مغلق' : 'Closed'}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Bottom Bar -->
   <div class="border-t border-foreground/10 bg-background/50">
-    <div class="container mx-auto px-4 py-6">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="flex flex-col sm:flex-row items-center gap-4 text-sm text-muted-foreground">
-          <p>&copy; {currentYear} SupaKoto. {t('footer.copyright', {}, { locale: currentLocale })}</p>
+    <div class="container mx-auto px-4 py-4">
+      <div class={`flex flex-col sm:flex-row items-center justify-between gap-3 ${rtl ? 'sm:flex-row-reverse' : ''}`}>
+        <div class={`flex flex-col sm:flex-row items-center gap-3 text-sm text-muted-foreground ${rtl ? 'sm:flex-row-reverse text-right' : ''}`}>
+          <p class={rtl ? 'text-right' : 'text-left'}>
+            &copy; {currentYear} {currentLocale === 'ar' ? 'سوباكوتو' : 'SupaKoto'}. {currentLocale === 'ar' ? 'جميع الحقوق محفوظة.' : 'All rights reserved.'}
+          </p>
           <div class="hidden sm:block w-px h-4 bg-foreground/20"></div>
-          <div class="flex items-center gap-4">
+          <div class={`flex items-center gap-4 ${rtl ? 'flex-row-reverse' : ''}`}>
             <a href={getLocalizedUrl('/privacy', currentLocale, Astro)} class="hover:text-primary transition-colors duration-300">
-              Privacy Policy
+              {currentLocale === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy'}
             </a>
             <a href={getLocalizedUrl('/terms', currentLocale, Astro)} class="hover:text-primary transition-colors duration-300">
-              Terms of Service
+              {currentLocale === 'ar' ? 'شروط الخدمة' : 'Terms of Service'}
             </a>
           </div>
         </div>
         
-        <div class="flex items-center gap-2 text-sm text-muted-foreground">
-          <span>Made with</span>
-          <Icon name="mdi:heart" class="h-4 w-4 text-red-500 animate-pulse" />
-          <span>by SupaKoto Team</span>
+
+<!-- RTL-Fixed "Made with" section -->
+<div class={`flex items-center gap-2 text-sm text-muted-foreground ${rtl ? 'flex-row-reverse' : ''}`}>
+  {currentLocale === 'ar' ? (
+    <>
+      <span>من فريق سوباكوتو</span>
+      <Icon name="mdi:heart" class="h-4 w-4 text-red-500 animate-pulse" />
+      <span>صُنع بـ</span>
+    </>
+  ) : (
+    <>
+      <span>Made with</span>
+      <Icon name="mdi:heart" class="h-4 w-4 text-red-500 animate-pulse" />
+      <span>by SupaKoto Team</span>
+    </>
+  )}
+</div>
         </div>
       </div>
     </div>

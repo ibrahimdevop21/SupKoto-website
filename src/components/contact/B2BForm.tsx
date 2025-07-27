@@ -52,40 +52,45 @@ const B2BForm: React.FC<B2BFormProps> = ({ currentLocale, isRTL }) => {
 
   if (isSubmitted) {
     return (
-      <div className="text-center p-12 bg-green-500/10 rounded-lg border border-green-500/30">
+      <div className="text-center p-12 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-lg border border-green-500/30 backdrop-blur-sm">
         <p className="text-xl text-white">{t('successMessage')}</p>
       </div>
     );
   }
 
   return (
-    <section className={`py-16 md:py-24 ${isArabic ? 'rtl font-arabic' : 'ltr'}`}>
-      <div className="container mx-auto px-4">
+    <section className={`py-16 md:py-24 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden ${isArabic ? 'rtl font-arabic' : 'ltr'}`}>
+      {/* Decorative gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-red-600/5 via-transparent to-orange-500/5 pointer-events-none" />
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 animate-fadeInUp">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">{t('title')}</h2>
-          <p className="text-lg md:text-xl text-neutral-300 max-w-3xl mx-auto">{t('subtitle')}</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight bg-gradient-to-r from-red-600 via-red-500 to-orange-500 bg-clip-text text-transparent">{t('title')}</h2>
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">{t('subtitle')}</p>
         </div>
-        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-neutral-900 p-8 rounded-2xl border border-neutral-800 shadow-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <input type="text" name="companyName" placeholder={t('companyName')} onChange={handleChange} required className="bg-neutral-800 text-white p-4 rounded-lg border border-neutral-700 focus:ring-2 focus:ring-rose-500 outline-none" />
-            <input type="text" name="contactPerson" placeholder={t('contactPerson')} onChange={handleChange} required className="bg-neutral-800 text-white p-4 rounded-lg border border-neutral-700 focus:ring-2 focus:ring-rose-500 outline-none" />
-            <input type="email" name="email" placeholder={t('email')} onChange={handleChange} required className="bg-neutral-800 text-white p-4 rounded-lg border border-neutral-700 focus:ring-2 focus:ring-rose-500 outline-none" />
-            <input type="tel" name="phone" placeholder={t('phone')} onChange={handleChange} className="bg-neutral-800 text-white p-4 rounded-lg border border-neutral-700 focus:ring-2 focus:ring-rose-500 outline-none" />
+        <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-8 rounded-2xl border border-red-500/20 shadow-2xl backdrop-blur-sm relative">
+          {/* Form gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5 rounded-2xl" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 relative z-10">
+            <input type="text" name="companyName" placeholder={t('companyName')} onChange={handleChange} required className="bg-slate-800/50 text-white p-4 rounded-lg border border-slate-600 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all duration-300 backdrop-blur-sm" />
+            <input type="text" name="contactPerson" placeholder={t('contactPerson')} onChange={handleChange} required className="bg-slate-800/50 text-white p-4 rounded-lg border border-slate-600 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all duration-300 backdrop-blur-sm" />
+            <input type="email" name="email" placeholder={t('email')} onChange={handleChange} required className="bg-slate-800/50 text-white p-4 rounded-lg border border-slate-600 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all duration-300 backdrop-blur-sm" />
+            <input type="tel" name="phone" placeholder={t('phone')} onChange={handleChange} className="bg-slate-800/50 text-white p-4 rounded-lg border border-slate-600 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all duration-300 backdrop-blur-sm" />
           </div>
-          <div className="mb-6">
-            <label className="block text-neutral-400 mb-2">{t('inquiryType')}</label>
-            <select name="inquiryType" onChange={handleChange} value={formData.inquiryType} className="w-full bg-neutral-800 text-white p-4 rounded-lg border border-neutral-700 focus:ring-2 focus:ring-rose-500 outline-none">
+          <div className="mb-6 relative z-10">
+            <label className="block text-gray-400 mb-2">{t('inquiryType')}</label>
+            <select name="inquiryType" onChange={handleChange} value={formData.inquiryType} className="w-full bg-slate-800/50 text-white p-4 rounded-lg border border-slate-600 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all duration-300 backdrop-blur-sm">
               <option value="fleet-services">{t('fleetServices')}</option>
               <option value="showroom-partnership">{t('showroomPartnership')}</option>
               <option value="car-club-event">{t('carClubEvent')}</option>
               <option value="other">{t('other')}</option>
             </select>
           </div>
-          <div className="mb-6">
-            <textarea name="message" placeholder={t('message')} rows={6} onChange={handleChange} required className="w-full bg-neutral-800 text-white p-4 rounded-lg border border-neutral-700 focus:ring-2 focus:ring-rose-500 outline-none"></textarea>
+          <div className="mb-6 relative z-10">
+            <textarea name="message" placeholder={t('message')} rows={6} onChange={handleChange} required className="w-full bg-slate-800/50 text-white p-4 rounded-lg border border-slate-600 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all duration-300 backdrop-blur-sm"></textarea>
           </div>
-          <div className="text-center">
-            <button type="submit" className="bg-rose-600 text-white font-bold text-lg px-10 py-4 rounded-full transition-all duration-300 ease-in-out transform hover:scale-110 hover:bg-rose-700 shadow-lg">
+          <div className="text-center relative z-10">
+            <button type="submit" className="bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold text-lg px-10 py-4 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:from-red-700 hover:to-orange-600 shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/30">
               {t('submit')}
             </button>
           </div>

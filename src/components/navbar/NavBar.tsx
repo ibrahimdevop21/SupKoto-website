@@ -35,8 +35,8 @@ export default function NavBar({ currentLocale, isRTL }: NavBarProps) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/60 backdrop-blur-md border-b border-border shadow-md">
-      <div className={`container mx-auto px-4 py-1.5 md:py-2 flex justify-between items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+    <header className="w-full h-16 md:h-20 border-b border-gray-200/20 bg-gray-900/50 backdrop-blur-md sticky top-0 z-50">
+      <div className="relative z-20 flex items-center justify-between h-full max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
         {/* Logo */}
         <a href={getLocalizedUrl('')} className="flex items-center group" aria-label="Supakoto Home">
           <img src="/assets/logo.svg" alt="Supakoto Logo" className="h-7 md:h-8 transform transition-transform duration-300 group-hover:scale-105" width="auto" height="32" />

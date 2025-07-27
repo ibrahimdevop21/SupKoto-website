@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from '../icons';
 
 interface PropType {
   enabled: boolean;
@@ -15,7 +15,7 @@ export const PrevButton: React.FC<PropType> = (props) => {
 
   return (
     <button
-      className="embla__button embla__button--prev disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation flex items-center justify-center w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm hover:bg-black/70 transition-colors duration-200 border border-white/10 shadow-lg"
+      className="embla__button embla__button--prev disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-slate-900/70 via-slate-800/60 to-slate-900/70 backdrop-blur-sm hover:bg-gradient-to-br hover:from-slate-800/80 hover:via-slate-700/70 hover:to-slate-800/80 transition-all duration-200 border border-red-500/20 hover:border-red-500/40 shadow-lg"
       onClick={onClick}
       disabled={!enabled}
       aria-label="Previous slide"
@@ -33,7 +33,7 @@ export const NextButton: React.FC<PropType> = (props) => {
 
   return (
     <button
-      className="embla__button embla__button--next disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation flex items-center justify-center w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm hover:bg-black/70 transition-colors duration-200 border border-white/10 shadow-lg"
+      className="embla__button embla__button--next disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-slate-900/70 via-slate-800/60 to-slate-900/70 backdrop-blur-sm hover:bg-gradient-to-br hover:from-slate-800/80 hover:via-slate-700/70 hover:to-slate-800/80 transition-all duration-200 border border-red-500/20 hover:border-red-500/40 shadow-lg"
       onClick={onClick}
       disabled={!enabled}
       aria-label="Next slide"
