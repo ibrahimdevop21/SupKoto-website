@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Globe, ChevronDown } from "lucide-react";
+import { Globe, ChevronDown } from './icons';
 import { useSwitchLocalePath } from "../i18n/react";
 import { type Locale } from "../i18n";
 

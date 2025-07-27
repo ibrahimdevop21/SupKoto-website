@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import AboutHero from '../../components/about/AboutHero.tsx';
+
 import OurStory from '../../components/about/OurStory.tsx';
 import Timeline from '../../components/about/Timeline.tsx';
 import OurPhilosophy from '../../components/about/OurPhilosophy.tsx';
@@ -13,9 +13,27 @@ const rtl = false;
 ---
 
 <Layout title={t('pages.about.title')} description={t('pages.about.description')}>
-    <AboutHero client:visible currentLocale={currentLang} isRTL={rtl} />
-    <OurStory client:visible currentLocale={currentLang} isRTL={rtl} />
-    <Timeline client:visible currentLocale={currentLang} isRTL={rtl} />
-    <OurPhilosophy client:visible currentLocale={currentLang} isRTL={rtl} />
-    <CTA client:visible currentLocale={currentLang} isRTL={rtl} contactUrl="/en/services" />
+  <section class="py-16 md:py-20 lg:py-24">
+
+    
+    <!-- Our Story Section -->
+    <div class="mb-24 md:mb-32">
+      <OurStory client:visible currentLocale={currentLang} isRTL={rtl} />
+    </div>
+    
+    <!-- Timeline Section -->
+    <div class="mb-24 md:mb-32">
+      <Timeline client:visible currentLocale={currentLang} isRTL={rtl} />
+    </div>
+    
+    <!-- Our Philosophy Section -->
+    <div class="mb-24 md:mb-32">
+      <OurPhilosophy client:visible currentLocale={currentLang} isRTL={rtl} />
+    </div>
+    
+    <!-- CTA Section -->
+    <div>
+      <CTA client:visible currentLocale={currentLang} isRTL={rtl} contactUrl="/en/services" />
+    </div>
+  </section>
 </Layout>

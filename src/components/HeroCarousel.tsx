@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocalizedUrl } from '../i18n/react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { DotButton, PrevButton, NextButton } from './shared/EmblaCarouselArrowsDotsButtons';
-import { motion, type Variants } from 'framer-motion';
-import { Star, Shield, Award } from 'lucide-react';
+import { Star, Shield, Award } from './icons';
 
 interface SlideContent {
   id: number;
@@ -117,7 +116,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants: Variants = {
+const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
     opacity: 1, 
@@ -130,6 +129,20 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, direction: isRTL ? 'rtl' : 'ltr' });
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+  
+    // Preload first hero image for better LCP
+    useEffect(() => {
+      if (slides.length > 0) {
+        const firstSlide = slides[0];
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = firstSlide.image;
+        link.fetchPriority = 'high';
+        document.head.appendChild(link);
+      }
+    }, [slides]);
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -169,7 +182,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
 
   return (
     <div 
-      className="relative overflow-hidden bg-[#0e0e0f]"
+      className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
@@ -182,20 +195,21 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
                   <source media="(max-width: 640px)" srcSet={slide.imageSources.mobile} />
                   <source media="(max-width: 1024px)" srcSet={slide.imageSources.tablet} />
                   <source media="(min-width: 1025px)" srcSet={slide.imageSources.desktop} />
-                  <motion.img 
+                  <img 
                     src={slide.image} 
                     alt={slide.title[isArabic ? 'ar' : 'en']} 
                     className="w-full h-full object-cover"
+                    width="1920"
+                    height="1080"
                     loading={slide.id === 1 ? "eager" : "lazy"}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.5 }}
+                    fetchPriority={slide.id === 1 ? "high" : "low"}
+                    decoding="async"
                   />
                 </picture>
                 
                 {/* Enhanced overlays for better text visibility */}
-                <div className="absolute inset-0 bg-black/40" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-slate-800/30 to-slate-900/40" />
                 <div className={`absolute inset-0 bg-gradient-to-r ${isRTL ? 'from-transparent via-black/30 to-black/80' : 'from-black/80 via-black/30 to-transparent'}`} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
                 
                 {/* Floating particles */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -218,7 +232,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
                       </h1>
                       
                       <p 
-                        className={`text-lg md:text-xl text-gray-100 mb-8 max-w-2xl leading-relaxed ${isArabic ? 'font-arabic' : ''} bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-white/20 shadow-2xl relative z-30`}
+                        className={`text-lg md:text-xl text-gray-100 mb-8 max-w-2xl leading-relaxed ${isArabic ? 'font-arabic' : ''} bg-gradient-to-br from-slate-900/90 via-slate-800/85 to-slate-900/90 backdrop-blur-sm p-6 rounded-xl border border-red-500/20 shadow-2xl relative z-30`}
                         style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}
                       >
                         {slide.description[isArabic ? 'ar' : 'en']}
@@ -228,7 +242,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
                         {slide.features.map((feature, idx) => (
                           <div 
                             key={idx} 
-                            className="flex items-center bg-black/80 backdrop-blur-md rounded-xl px-5 py-4 text-white border border-[#e32636]/30 shadow-2xl hover:shadow-[#e32636]/20 transition-all duration-300 hover:scale-105 relative z-30"
+                            className="flex items-center bg-gradient-to-br from-slate-900/90 via-slate-800/85 to-slate-900/90 backdrop-blur-md rounded-xl px-5 py-4 text-white border border-red-500/40 shadow-2xl hover:shadow-red-500/30 transition-all duration-300 hover:scale-105 relative z-30 transition-all duration-300 hover:scale-105"
                           >
                             <feature.icon className="w-6 h-6 mr-3 text-[#e32636]" />
                             <span className={`text-sm font-medium ${isArabic ? 'font-arabic' : ''}`} style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}>
@@ -241,14 +255,14 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
                       <div className={`flex flex-col sm:flex-row gap-4 relative z-30 ${isArabic ? 'sm:justify-end' : 'sm:justify-start'}`}>
                         <a 
                           href={getLocalizedUrl(slide.ctaLink)}
-                          className="inline-flex items-center justify-center px-8 py-4 bg-[#e32636] text-white font-semibold rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 border border-[#e32636] hover:scale-105"
+                          className="inline-flex items-center justify-center px-8 py-4 bg-[#e32636] text-white font-semibold rounded-lg shadow-xl hover:bg-red-700 transition-all duration-300 border border-[#e32636] hover:scale-105 transition-all duration-300 hover:scale-105"
                           style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}
                         >
                           {isArabic ? 'اكتشف المزيد' : 'Discover More'}
                         </a>
                         <a 
                           href={getLocalizedUrl('/contact')}
-                          className="inline-flex items-center justify-center px-8 py-4 bg-black/80 backdrop-blur-sm border-2 border-white/30 text-white font-semibold rounded-lg hover:bg-black/90 hover:border-[#e32636] transition-all duration-300 shadow-xl hover:scale-105"
+                          className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-br from-slate-900/90 via-slate-800/85 to-slate-900/90 backdrop-blur-sm border-2 border-white/30 text-white font-semibold rounded-lg hover:bg-gradient-to-br hover:from-slate-800/95 hover:via-slate-700/90 hover:to-slate-800/95 hover:border-red-500 transition-all duration-300 shadow-xl hover:scale-105 transition-all duration-300 hover:scale-105"
                           style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.9)' }}
                         >
                           {isArabic ? 'تواصل معنا' : 'Contact Us'}
@@ -281,7 +295,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
       
       {/* Slide counter */}
       <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10">
-        <div className="bg-black/60 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
+        <div className="bg-gradient-to-br from-slate-900/80 via-slate-800/70 to-slate-900/80 backdrop-blur-sm rounded-full px-4 py-2 border border-red-500/20">
           <div className="flex items-center gap-3 text-white text-sm">
             <span className="font-medium">{String(selectedIndex + 1).padStart(2, '0')}</span>
             <div className="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
@@ -296,7 +310,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ currentLocale, isRTL }) => 
       </div>
       
       {/* Bottom dots navigation */}
-      <div className="embla__dots absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-2 bg-black/50 backdrop-blur-sm rounded-full px-4 py-2 z-10">
+      <div className="embla__dots absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-2 bg-gradient-to-br from-slate-900/70 via-slate-800/60 to-slate-900/70 backdrop-blur-sm rounded-full px-4 py-2 z-10 border border-red-500/20">
         {scrollSnaps.map((_, index) => (
           <DotButton
             key={index}

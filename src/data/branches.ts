@@ -4,6 +4,7 @@ export interface Branch {
   name: string;
   address: string;
   phone: string;
+  rating: number;
   workingHours: {
     en: string;
     ar: string;
@@ -16,63 +17,55 @@ export interface Branch {
 
 export const branches: Branch[] = [
   {
-    id: 'cairo-main',
-    country: 'Egypt',
-    name: 'Supakoto Cairo (Main Branch)',
-    address: '123 Nile Corniche, Downtown, Cairo, Egypt',
-    phone: '+20 2 2579 8888',
-    workingHours: {
-      en: 'Sat - Thu, 9:00 AM - 7:00 PM',
-      ar: 'السبت - الخميس، 9:00 ص - 7:00 م',
-    },
-    coordinates: { lat: 30.0444, lng: 31.2357 },
-  },
-  {
-    id: 'alexandria',
-    country: 'Egypt',
-    name: 'Supakoto Alexandria',
-    address: '456 Stanley Bridge Rd, Alexandria, Egypt',
-    phone: '+20 3 544 7777',
-    workingHours: {
-      en: 'Sat - Thu, 10:00 AM - 8:00 PM',
-      ar: 'السبت - الخميس، 10:00 ص - 8:00 م',
-    },
-    coordinates: { lat: 31.2459, lng: 29.9626 },
-  },
-  {
-    id: 'giza',
-    country: 'Egypt',
-    name: 'Supakoto Giza',
-    address: '789 Pyramids Ave, Giza, Egypt',
-    phone: '+20 2 3385 6666',
-    workingHours: {
-      en: 'Sat - Thu, 9:00 AM - 7:00 PM',
-      ar: 'السبت - الخميس، 9:00 ص - 7:00 م',
-    },
-    coordinates: { lat: 29.9792, lng: 31.1342 },
-  },
-  {
-    id: 'sharm-el-sheikh',
-    country: 'Egypt',
-    name: 'Supakoto Sharm El Sheikh',
-    address: '101 Naama Bay, Sharm El Sheikh, Egypt',
-    phone: '+20 69 360 5555',
-    workingHours: {
-      en: 'Sun - Fri, 11:00 AM - 9:00 PM',
-      ar: 'الأحد - الجمعة، 11:00 ص - 9:00 م',
-    },
-    coordinates: { lat: 27.9143, lng: 34.3295 },
-  },
-  {
     id: 'dubai',
     country: 'UAE',
     name: 'Supakoto Dubai',
-    address: 'Sheikh Zayed Rd, Al Quoz, Dubai, UAE',
-    phone: '+971 4 333 0000',
+    address: 'Warehouse 48 15B St - Al Quoz - Al Quoz Industrial Area 4 - Dubai - United Arab Emirates',
+    phone: '+971 55 205 4478',
+    rating: 4.9,
     workingHours: {
-      en: 'Sun - Fri, 10:00 AM - 8:00 PM',
-      ar: 'الأحد - الجمعة، 10:00 ص - 8:00 م',
+      en: 'Sat - Thu, 10:00 AM - 6:00 PM (Friday Off)',
+      ar: 'السبت - الخميس، 10:00 ص - 6:00 م (الجمعة إجازة)',
     },
-    coordinates: { lat: 25.1802, lng: 55.2414 },
+    coordinates: { lat: 25.117377971600526, lng: 55.23615351779093 },
+  },
+  {
+    id: 'giza-sheikh-zayed',
+    country: 'Egypt',
+    name: 'Supakoto Giza - Sheikh Zayed',
+    address: '2XCH+73P, First Al Sheikh Zayed, Giza Governorate 3245070',
+    phone: '+20 11 27 23 2340',
+    rating: 4.8,
+    workingHours: {
+      en: 'Sat - Thu, 10:00 AM - 6:00 PM (Friday Off)',
+      ar: 'السبت - الخميس، 10:00 ص - 6:00 م (الجمعة إجازة)',
+    },
+    coordinates: { lat: 30.019907567782525, lng: 30.97782899999999 },
+  },
+  {
+    id: 'cairo-maadi',
+    country: 'Egypt',
+    name: 'Supakoto Cairo - Maadi',
+    address: 'Inside Skoda Maadi Center, 199 Wadi Degla Street, Zahraa Al Maadi, Cairo Governorate 11742',
+    phone: '+20 12 24 46 4637',
+    rating: 4.8,
+    workingHours: {
+      en: 'Sat - Thu, 10:00 AM - 6:00 PM (Friday Off)',
+      ar: 'السبت - الخميس، 10:00 ص - 6:00 م (الجمعة إجازة)',
+    },
+    coordinates: { lat: 29.959868385272628, lng: 31.320307057672636 },
+  },
+  {
+    id: 'cairo-5th-settlement',
+    country: 'Egypt',
+    name: 'Supakoto Cairo - 5th Settlement',
+    address: '2C9J+GRQ, New Cairo 1, Cairo Governorate 4730124',
+    phone: '+20 12 24 46 4637',
+    rating: 5.0,
+    workingHours: {
+      en: 'Sat - Thu, 10:00 AM - 6:00 PM (Friday Off)',
+      ar: 'السبت - الخميس، 10:00 ص - 6:00 م (الجمعة إجازة)',
+    },
+    coordinates: { lat: 30.018919121730043, lng: 31.432121498113556 },
   },
 ];

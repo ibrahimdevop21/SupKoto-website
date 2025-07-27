@@ -36,11 +36,58 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
   const [expandedTestimonials, setExpandedTestimonials] = useState<number[]>([]);
   const [screenWidth, setScreenWidth] = useState(0);
   const [isVisible, setIsVisible] = useState(true); // Set to true by default
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Autoplay configuration
+  const AUTOPLAY_DELAY = 4000; // 4 seconds for testimonials
+  
+  // Autoplay control functions
+  const startAutoplay = useCallback(() => {
+    if (!embla || !isAutoPlaying) return;
+    
+    if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+    }
+    
+    autoplayRef.current = setInterval(() => {
+      if (embla && isAutoPlaying) {
+        embla.scrollNext();
+      }
+    }, AUTOPLAY_DELAY);
+  }, [embla, isAutoPlaying, AUTOPLAY_DELAY]);
+  
+  const stopAutoplay = useCallback(() => {
+    if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
+    }
+  }, []);
+  
+  const pauseAutoplay = useCallback(() => {
+    setIsAutoPlaying(false);
+    stopAutoplay();
+  }, [stopAutoplay]);
+  
+  const resumeAutoplay = useCallback(() => {
+    setIsAutoPlaying(true);
+  }, []);
   
   // Carousel navigation functions
   // In RTL mode, we need to swap the scroll direction to maintain visual consistency
-  const scrollPrev = useCallback(() => embla && (isArabic ? embla.scrollNext() : embla.scrollPrev()), [embla, isArabic]);
-  const scrollNext = useCallback(() => embla && (isArabic ? embla.scrollPrev() : embla.scrollNext()), [embla, isArabic]);
+  const scrollPrev = useCallback(() => {
+    pauseAutoplay();
+    embla && (isArabic ? embla.scrollNext() : embla.scrollPrev());
+    // Resume autoplay after manual interaction
+    setTimeout(() => resumeAutoplay(), 1500);
+  }, [embla, isArabic, pauseAutoplay, resumeAutoplay]);
+  
+  const scrollNext = useCallback(() => {
+    pauseAutoplay();
+    embla && (isArabic ? embla.scrollPrev() : embla.scrollNext());
+    // Resume autoplay after manual interaction
+    setTimeout(() => resumeAutoplay(), 1500);
+  }, [embla, isArabic, pauseAutoplay, resumeAutoplay]);
   
   const onSelect = useCallback(() => {
     if (!embla) return;
@@ -61,6 +108,26 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
       embla.off('reInit', onSelect);
     };
   }, [embla, onSelect]);
+  
+  // Initialize and manage autoplay
+  useEffect(() => {
+    if (embla && isAutoPlaying) {
+      startAutoplay();
+    } else {
+      stopAutoplay();
+    }
+    
+    return () => stopAutoplay();
+  }, [embla, isAutoPlaying, startAutoplay, stopAutoplay]);
+  
+  // Cleanup autoplay on component unmount
+  useEffect(() => {
+    return () => {
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+      }
+    };
+  }, []);
 
   // Function to toggle expanded state of a testimonial
   const toggleExpand = (id: number) => {
@@ -103,7 +170,7 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
           {needsTruncation && (
             <button
               onClick={() => toggleExpand(testimonial.id)}
-              className="text-primary hover:text-primary/90 text-xs sm:text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 rounded-md"
+              className="text-primary hover:text-primary/90 text-xs sm:text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 rounded-md transition-all duration-300 hover:scale-105"
             >
               {isExpanded ? t('testimonials.readLess') : t('testimonials.readMore')}
             </button>
@@ -198,41 +265,59 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
   return (
     <section 
       ref={sectionRef} 
-      className="overflow-hidden opacity-100"
+      className="w-full overflow-hidden opacity-100"
       aria-labelledby="testimonials-heading"
     >
-      <div className="w-full max-w-[1440px] mx-auto">
+      <div className="w-full">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16 lg:mb-20">
-          <h2 
-            id="testimonials-heading"
-            className={`text-3xl md:text-4xl font-bold mb-4 text-white ${isArabic ? 'font-arabic' : ''}`}
-          >
-            {t('testimonials.subtitle')}
-          </h2>
-          <div className="flex justify-center items-center space-x-3 mb-4">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-neutral-400"></div>
-            <div className="h-1 w-16 bg-red-500 rounded-full animate-pulse"></div>
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-neutral-400"></div>
+        <div className="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24">
+          <div className="relative">
+            <h2 
+              id="testimonials-heading"
+              className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-red-600 via-red-500 to-orange-500 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight ${isArabic ? 'font-arabic' : ''}`}
+            >
+              {t('testimonials.subtitle')}
+            </h2>
+            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
           </div>
-          <p className="max-w-2xl mx-auto text-neutral-400 text-base md:text-lg mb-8">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-4 leading-relaxed">
             {t('testimonials.description')}
           </p>
+          <div className="flex justify-center items-center space-x-4 mb-4">
+            <div className="h-px w-16 bg-gradient-to-r from-transparent via-red-500/50 to-transparent"></div>
+            <div className="relative">
+              <div className="h-2 w-20 bg-gradient-to-r from-red-600 via-red-500 to-orange-500 rounded-full"></div>
+              <div className="absolute inset-0 h-2 w-20 bg-gradient-to-r from-red-600 via-red-500 to-orange-500 rounded-full animate-pulse opacity-75"></div>
+            </div>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent via-red-500/50 to-transparent"></div>
+          </div>
         </div>
         
         {/* Carousel Container */}
-        <div className="relative">
+        <div 
+          className="relative w-full overflow-hidden"
+          onMouseEnter={pauseAutoplay}
+          onMouseLeave={resumeAutoplay}
+        >
           {/* Embla Viewport */}
-          <div className="overflow-hidden" ref={viewportRef}>
-            <div className="flex -ml-6">
+          <div className="w-full overflow-hidden" ref={viewportRef}>
+            <div className="flex -ml-2 sm:-ml-4 md:-ml-6">
               {testimonials.map((testimonial) => (
                 <div 
                   key={testimonial.id} 
-                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-6"
+                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-2 sm:pl-4 md:pl-6"
                 >
-                  <div className="group relative rounded-xl overflow-hidden bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 h-full">
-                    {/* Testimonial Card */}
-                    <div className="p-6 sm:p-8 h-full flex flex-col">
+                  <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-sm border border-slate-700/50 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-[1.02] hover:border-red-500/60 cursor-pointer h-full transition-all duration-300 hover:scale-105">
+                    {/* Animated background gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-orange-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 transition-all duration-300 hover:scale-105" />
+                    
+                    {/* Glowing border effect */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-500/20 via-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm transition-all duration-300 hover:scale-105" />
+                    
+                    {/* Inner content container */}
+                    <div className="relative h-full bg-gradient-to-br from-white/5 to-white/2 rounded-2xl">
+                      {/* Testimonial Card */}
+                      <div className="p-8 sm:p-10 h-full flex flex-col relative z-10">
                       {/* Rating stars */}
                       <div className="flex mb-4">
                         {[...Array(5)].map((_, i) => (
@@ -287,6 +372,7 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
                             </span>
                           </p>
                         </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -295,33 +381,35 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
             </div>
           </div>
           
-          {/* Navigation Buttons */}
+          {/* Premium Navigation Buttons */}
           <button
-            className={`absolute top-1/2 -translate-y-1/2 left-2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center border border-white/10 transition-all duration-300 ${
+            className={`absolute top-1/2 -translate-y-1/2 left-4 z-20 w-12 h-12 rounded-full bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-md flex items-center justify-center border border-slate-600/50 shadow-xl transition-all duration-500 group ${
               isArabic ? nextBtnEnabled : prevBtnEnabled 
-                ? 'opacity-100 hover:bg-black/70' 
-                : 'opacity-30 cursor-not-allowed'
+                ? 'opacity-100 hover:bg-gradient-to-br hover:from-red-600/90 hover:to-red-700/90 hover:border-red-500/60 hover:shadow-red-500/25 hover:scale-110' 
+                : 'opacity-40 cursor-not-allowed'
             }`}
             onClick={scrollPrev}
             disabled={isArabic ? !nextBtnEnabled : !prevBtnEnabled}
             aria-label="Previous testimonial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm transition-all duration-300 hover:scale-105" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white relative z-10 transform group-hover:scale-110 transition-transform duration-300 transition-all duration-300 hover:scale-105">
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </button>
           
           <button
-            className={`absolute top-1/2 -translate-y-1/2 right-2 z-10 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center border border-white/10 transition-all duration-300 ${
+            className={`absolute top-1/2 -translate-y-1/2 right-4 z-20 w-12 h-12 rounded-full bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-md flex items-center justify-center border border-slate-600/50 shadow-xl transition-all duration-500 group ${
               isArabic ? prevBtnEnabled : nextBtnEnabled 
-                ? 'opacity-100 hover:bg-black/70' 
-                : 'opacity-30 cursor-not-allowed'
+                ? 'opacity-100 hover:bg-gradient-to-br hover:from-red-600/90 hover:to-red-700/90 hover:border-red-500/60 hover:shadow-red-500/25 hover:scale-110' 
+                : 'opacity-40 cursor-not-allowed'
             }`}
             onClick={scrollNext}
             disabled={isArabic ? !prevBtnEnabled : !nextBtnEnabled}
             aria-label="Next testimonial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm transition-all duration-300 hover:scale-105" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white relative z-10 transform group-hover:scale-110 transition-transform duration-300 transition-all duration-300 hover:scale-105">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </button>
