@@ -6,13 +6,18 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "build:production": "NODE_ENV=production astro build --config astro.config.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "optimize-images": "node scripts/optimize-images.js",
-    "build:optimized": "NODE_ENV=production astro build",
-    "analyze": "npx astro build --experimental-static-build && npx bundlesize",
+
+    "build:optimized": "NODE_ENV=production astro build --config astro.config.mjs --vite-config vite.config.optimized.ts",
+    "analyze": "ANALYZE=true NODE_ENV=production astro build",
+    "analyze:source-map": "npm run build:production && npx source-map-explorer 'dist/assets/js/*.js'",
+    "analyze:full": "npm run analyze && npm run analyze:source-map",
+
+    "analyze:complete": "npm run build:production && npm run analyze",
     "lighthouse": "npx lighthouse http://localhost:4321 --output=html --output-path=./lighthouse-report.html",
-    "build:production": "NODE_ENV=production astro build --config ./vite.config.production.js",
+
     "build:analyze": "npm run build:optimized && npx bundlesize",
     "purge:css": "purgecss --css dist/**/*.css --content dist/**/*.html --output dist/css/",
     "optimize:images": "imagemin src/assets/**/*.{jpg,jpeg,png,webp} --out-dir=src/assets/optimized/",
@@ -21,8 +26,8 @@
     "lighthouse:mobile": "lighthouse http://localhost:4321 --preset=mobile --output=html --output-path=./reports/lighthouse-mobile.html",
     "lighthouse:desktop": "lighthouse http://localhost:4321 --preset=desktop --output=html --output-path=./reports/lighthouse-desktop.html",
     "performance:test": "npm run build:optimized && npm run preview & sleep 5 && npm run lighthouse:mobile && npm run lighthouse:desktop && kill %1",
-    "compress:images": "imagemin src/assets/**/*.{jpg,jpeg,png} --out-dir=src/assets/optimized/ --plugin=imagemin-webp",
-    "preload:fonts": "node scripts/preload-fonts.js"
+    "compress:images": "imagemin src/assets/**/*.{jpg,jpeg,png} --out-dir=src/assets/optimized/ --plugin=imagemin-webp"
+
   },
   "dependencies": {
     "@astrojs/react": "^3.0.0",
@@ -53,11 +58,13 @@
     "@iconify-json/mdi": "^1.2.3",
     "@types/leaflet": "^1.9.20",
     "astro-compress": "^2.3.8",
-    "sharp": "^0.34.2",
-    "purgecss": "^5.0.0",
+    "bundlesize": "^0.18.1",
     "imagemin": "^8.0.1",
     "imagemin-webp": "^7.0.0",
-    "bundlesize": "^0.18.1",
-    "lighthouse": "^11.0.0"
+    "lighthouse": "^11.0.0",
+    "purgecss": "^5.0.0",
+    "rollup-plugin-visualizer": "^6.0.3",
+    "sharp": "^0.34.2",
+    "source-map-explorer": "^2.5.3"
   }
 }

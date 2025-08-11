@@ -17,26 +17,41 @@ export function useLocalizedUrl(locale: Locale = 'en') {
     // Remove leading slash for consistency
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
     
-    // Always include the language prefix to match Astro's configuration
-    return `/${locale}/${cleanPath}`;
+    // For English (default locale), use root paths without prefix
+    if (locale === 'en') {
+      return cleanPath === '' ? '/' : `/${cleanPath}`;
+    }
+    
+    // For Arabic, add /ar prefix
+    if (locale === 'ar') {
+      return cleanPath === '' ? '/ar/' : `/ar/${cleanPath}`;
+    }
+    
+    // Fallback to root
+    return '/';
   };
 }
 
 // Switch path hook for React components (used in language switcher)
 export function useSwitchLocalePath() {
   return (currentPath: string, targetLocale: Locale) => {
-    // Extract the path without locale prefix
-    let pathWithoutLocale = currentPath.replace(/^\/[a-z]{2}(\/|$)/, '/');
+    // Extract the path without locale prefix (remove /ar/ if present)
+    let pathWithoutLocale = currentPath.replace(/^\/ar(\/|$)/, '/');
     
-    // Remove leading slash for consistency
-    pathWithoutLocale = pathWithoutLocale.startsWith('/') ? pathWithoutLocale.slice(1) : pathWithoutLocale;
+    // Clean up the path
+    pathWithoutLocale = pathWithoutLocale === '/' ? '' : pathWithoutLocale.replace(/^\//, '');
     
-    // Handle root path
-    if (pathWithoutLocale === '' || pathWithoutLocale === '/') {
-      return `/${targetLocale}/`;
+    // For English (default locale), use root paths without prefix
+    if (targetLocale === 'en') {
+      return pathWithoutLocale === '' ? '/' : `/${pathWithoutLocale}`;
     }
     
-    // Return new path with target locale
-    return `/${targetLocale}/${pathWithoutLocale}`;
+    // For Arabic, add /ar prefix
+    if (targetLocale === 'ar') {
+      return pathWithoutLocale === '' ? '/ar/' : `/ar/${pathWithoutLocale}`;
+    }
+    
+    // Fallback to root
+    return '/';
   };
 }

@@ -1,18 +1,18 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { t } from '../../i18n/index';
-import ServicesHero from '../../components/services/ServicesHero';
-import ServiceTiers from '../../components/services/ServiceTiers';
-import TechCraftsmanship from '../../components/services/TechCraftsmanship';
-import FinishOptions from '../../components/services/FinishOptions';
-import TechnicalHighlights from '../../components/services/TechnicalHighlights';
-import LifestyleUseCases from '../../components/services/LifestyleUseCases';
-import TrustAssurance from '../../components/services/TrustAssurance';
-import ServicesCTA from '../../components/services/ServicesCTA';
+import Layout from '../layouts/Layout.astro';
+import { t } from '../i18n/index';
+import ServicesHero from '../components/services/ServicesHero';
+import ServiceTiers from '../components/services/ServiceTiers';
+import TechCraftsmanship from '../components/services/TechCraftsmanship';
+import FinishOptions from '../components/services/FinishOptions';
+import TechnicalHighlights from '../components/services/TechnicalHighlights';
+import LifestyleUseCases from '../components/services/LifestyleUseCases';
+import TrustAssurance from '../components/services/TrustAssurance';
+import ServicesCTA from '../components/services/ServicesCTA';
 
 // For locale-specific pages, we know the locale from the folder structure
-const currentLang = Astro.currentLocale || 'ar';
-// Arabic is RTL, so rtl is true
+const currentLang = Astro.currentLocale || 'en';
+// English is LTR, so rtl is false
 const rtl = currentLang === 'ar';
 ---
 
@@ -73,4 +73,3 @@ const rtl = currentLang === 'ar';
 		</section>
 	</main>
 </Layout>
-

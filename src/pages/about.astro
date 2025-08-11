@@ -1,11 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro';
 
-import OurStory from '../../components/about/OurStory.tsx';
-import Timeline from '../../components/about/Timeline.tsx';
-import OurPhilosophy from '../../components/about/OurPhilosophy.tsx';
-import CTA from '../../components/CTA.tsx';
-import { t } from '../../i18n/index.ts';
+import OurStory from '../components/about/OurStory';
+import Timeline from '../components/about/Timeline';
+import OurPhilosophy from '../components/about/OurPhilosophy';
+import CTA from '../components/CTA';
+import { t } from '../i18n/index';
 
 const lang = Astro.currentLocale || 'en';
 const currentLang = lang;
@@ -33,7 +33,7 @@ const rtl = false;
     
     <!-- CTA Section -->
     <div>
-      <CTA client:visible currentLocale={currentLang} isRTL={rtl} contactUrl="/en/services" />
+      <CTA client:visible currentLocale={currentLang} isRTL={rtl} contactUrl="/services" />
     </div>
   </section>
 </Layout>

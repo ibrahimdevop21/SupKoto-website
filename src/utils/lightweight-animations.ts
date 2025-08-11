@@ -72,23 +72,7 @@ export const createScrollAnimation = (
   return observer;
 };
 
-// Optimized carousel transition
-export const createCarouselTransition = (
-  container: HTMLElement,
-  currentIndex: number,
-  totalSlides: number,
-  duration = 500
-) => {
-  const translateX = -(currentIndex * 100);
-  return container.animate([
-    { transform: container.style.transform || 'translateX(0)' },
-    { transform: `translateX(${translateX}%)` }
-  ], {
-    duration,
-    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-    fill: 'forwards'
-  });
-};
+// [Function removed - now handled directly in OptimizedHeroCarousel component]
 
 // Performance-optimized hover effects
 export const addHoverEffect = (element: HTMLElement, scale = 1.05) => {

@@ -34,12 +34,31 @@ export default function NavBar({ currentLocale, isRTL }: NavBarProps) {
     setCurrentPath(window.location.pathname);
   }, []);
 
+  useEffect(() => {
+    // Add scroll event listener to enhance glass effect on scroll
+    const handleScroll = () => {
+      const navbar = document.querySelector('header.navbar-glass');
+      if (window.scrollY > 50) {
+        navbar?.classList.add('navbar-scrolled');
+      } else {
+        navbar?.classList.remove('navbar-scrolled');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="w-full h-16 md:h-20 border-b border-gray-200/20 bg-gray-900/50 backdrop-blur-md sticky top-0 z-50">
+    <header className="navbar-glass w-full h-14 md:h-16 border-b border-foreground/10 bg-background/70 backdrop-blur-lg transition-all duration-300 sticky top-0 z-50">
       <div className="relative z-20 flex items-center justify-between h-full max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
         {/* Logo */}
         <a href={getLocalizedUrl('')} className="flex items-center group" aria-label="Supakoto Home">
-          <img src="/assets/logo.svg" alt="Supakoto Logo" className="h-7 md:h-8 transform transition-transform duration-300 group-hover:scale-105" width="auto" height="32" />
+          <img src="/assets/logo.svg" alt="Supakoto Logo" className="h-6 md:h-7 transform transition-transform duration-300 group-hover:scale-105" width="auto" height="28" />
         </a>
 
         {/* Desktop Links */}

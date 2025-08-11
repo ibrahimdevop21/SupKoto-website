@@ -1,4 +1,41 @@
 ---
-// Server-side redirect to default locale - no browser redirect notification
-return Astro.redirect('/en/');
+import Layout from '../layouts/Layout.astro';
+import ModernHeroCarousel from '../components/ModernHeroCarousel.astro';
+import ModernTrustedBy from '../components/ModernTrustedBy.astro';
+import LatestWorkCarousel from '../components/LatestWorkCarousel';
+import Testimonials from '../components/Testimonials';
+import { t } from '../i18n/index';
+
+// We can now use Astro's built-in i18n system
+const currentLang = Astro.currentLocale || 'en';
+// English is LTR, so rtl is false
+const rtl = currentLang === 'ar';
 ---
+
+<Layout title={t('pages.home.title')}>
+	<ModernHeroCarousel slot="hero" />
+	
+	<!-- Main content with responsive container and consistent spacing -->
+	<main class="w-full">
+		<!-- Trusted By Section -->
+		<section class="py-12 sm:py-16 md:py-20 lg:py-24">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<ModernTrustedBy />
+			</div>
+		</section>
+		
+		<!-- Latest Work Section -->
+		<section class="py-12 sm:py-16 md:py-20 lg:py-24">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<LatestWorkCarousel isArabic={false} client:visible />
+			</div>
+		</section>
+		 
+		<!-- Testimonials Section -->
+		<section class="py-12 sm:py-16 md:py-20 lg:py-24">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<Testimonials currentLocale="en" client:visible />
+			</div>
+		</section>
+	</main>
+</Layout>

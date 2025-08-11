@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslations } from '../i18n/react';
+import { OptimizedImage } from './OptimizedImage';
+import './testimonials.css'; // Import for continuous scroll animations
 
 interface WorkItem {
   id: number;
@@ -52,111 +53,80 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
   slides = defaultSlides 
 }) => {
   const t = useTranslations(isArabic ? 'ar' : 'en');
-  const [viewportRef, embla] = useEmblaCarousel({ 
-    loop: false,
-    align: 'start',
-    skipSnaps: false,
-    direction: isArabic ? 'rtl' : 'ltr'
-  });
-  
-  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
-  const [nextBtnEnabled, setNextBtnEnabled] = useState(true);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollTrackRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true); // Set to true by default
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false);
   
-  // Autoplay configuration
-  const AUTOPLAY_DELAY = 3500; // 3.5 seconds for latest work
-  
-  // Autoplay control functions
-  const startAutoplay = useCallback(() => {
-    if (!embla || !isAutoPlaying) return;
+  // Control continuous scrolling animation
+  useEffect(() => {
+    // Only start animation once images are loaded
+    if (!imagesLoaded || !startAnimation) return;
     
-    if (autoplayRef.current) {
-      clearInterval(autoplayRef.current);
+    if (scrollTrackRef.current) {
+      // Add the animate-scroll class from testimonials.css
+      // The RTL direction will be handled automatically by the CSS in testimonials.css
+      // which uses [dir="rtl"] selector to apply the right animation
+      scrollTrackRef.current.classList.add('animate-scroll');
     }
     
-    autoplayRef.current = setInterval(() => {
-      if (embla && isAutoPlaying) {
-        embla.scrollNext();
-      }
-    }, AUTOPLAY_DELAY);
-  }, [embla, isAutoPlaying, AUTOPLAY_DELAY]);
-  
-  const stopAutoplay = useCallback(() => {
-    if (autoplayRef.current) {
-      clearInterval(autoplayRef.current);
-      autoplayRef.current = null;
+    // Add event listener to pause on hover
+    const scrollContainer = scrollContainerRef.current;
+    const scrollTrack = scrollTrackRef.current;
+    
+    if (scrollContainer && scrollTrack) {
+      const handleMouseEnter = () => {
+        scrollTrack.style.animationPlayState = 'paused';
+      };
+      
+      const handleMouseLeave = () => {
+        scrollTrack.style.animationPlayState = 'running';
+      };
+      
+      scrollContainer.addEventListener('mouseenter', handleMouseEnter);
+      scrollContainer.addEventListener('mouseleave', handleMouseLeave);
+      
+      return () => {
+        scrollContainer.removeEventListener('mouseenter', handleMouseEnter);
+        scrollContainer.removeEventListener('mouseleave', handleMouseLeave);
+      };
     }
-  }, []);
+  }, [isArabic, imagesLoaded, startAnimation]);
   
-  const pauseAutoplay = useCallback(() => {
-    setIsAutoPlaying(false);
-    stopAutoplay();
-  }, [stopAutoplay]);
-  
-  const resumeAutoplay = useCallback(() => {
-    setIsAutoPlaying(true);
-  }, []);
-  
-  // In RTL mode, we need to swap the scroll direction to maintain visual consistency
-  const scrollPrev = useCallback(() => {
-    pauseAutoplay();
-    embla && (isArabic ? embla.scrollNext() : embla.scrollPrev());
-    // Resume autoplay after manual interaction
-    setTimeout(() => resumeAutoplay(), 1200);
-  }, [embla, isArabic, pauseAutoplay, resumeAutoplay]);
-  
-  const scrollNext = useCallback(() => {
-    pauseAutoplay();
-    embla && (isArabic ? embla.scrollPrev() : embla.scrollNext());
-    // Resume autoplay after manual interaction
-    setTimeout(() => resumeAutoplay(), 1200);
-  }, [embla, isArabic, pauseAutoplay, resumeAutoplay]);
-  
-  const onSelect = useCallback(() => {
-    if (!embla) return;
-    setSelectedIndex(embla.selectedScrollSnap());
-    setPrevBtnEnabled(embla.canScrollPrev());
-    setNextBtnEnabled(embla.canScrollNext());
-  }, [embla]);
-
+  // Preload images to avoid glitchy appearance
   useEffect(() => {
-    if (!embla) return;
+    // Create array of all work images
+    const imageUrls = slides.map(slide => slide.image);
+    let loadedCount = 0;
     
-    onSelect();
-    setScrollSnaps(embla.scrollSnapList());
-    embla.on('select', onSelect);
-    embla.on('reInit', onSelect);
-    
-    return () => {
-      embla.off('select', onSelect);
-      embla.off('reInit', onSelect);
-    };
-  }, [embla, onSelect]);
-  
-  // Initialize and manage autoplay
-  useEffect(() => {
-    if (embla && isAutoPlaying) {
-      startAutoplay();
-    } else {
-      stopAutoplay();
-    }
-    
-    return () => stopAutoplay();
-  }, [embla, isAutoPlaying, startAutoplay, stopAutoplay]);
-  
-  // Cleanup autoplay on component unmount
-  useEffect(() => {
-    return () => {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current);
-      }
-    };
-  }, []);
+    // Preload all images
+    imageUrls.forEach(url => {
+      const img = new Image();
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === imageUrls.length) {
+          // All images loaded, mark as ready
+          setImagesLoaded(true);
+          // Start animation after a short delay for smoother transition
+          setTimeout(() => {
+            setStartAnimation(true);
+          }, 100);
+        }
+      };
+      img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === imageUrls.length) {
+          setImagesLoaded(true);
+          setTimeout(() => {
+            setStartAnimation(true);
+          }, 100);
+        }
+      };
+      img.src = url;
+    });
+  }, [slides]);
   
   // Fade-in animation on scroll
   useEffect(() => {
@@ -165,6 +135,9 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
+            entry.target.classList.add('scroll-active');
+          } else {
+            entry.target.classList.remove('scroll-active');
           }
         });
       },
@@ -182,11 +155,15 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
     };
   }, []);
 
+  // Triple the slides for continuous scroll effect
+  const tripleSlides = [...slides, ...slides, ...slides];
+  
   return (
     <section 
       ref={sectionRef} 
-      className="w-full overflow-hidden opacity-100"
+      className={`w-full overflow-hidden ${isVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}
       aria-labelledby="latest-work-heading"
+      dir={isArabic ? 'rtl' : 'ltr'}
     >
       <div className="w-full">
         {/* Section Header */}
@@ -213,86 +190,55 @@ const LatestWorkCarousel: React.FC<LatestWorkCarouselProps> = ({
           </div>
         </div>
         
-        {/* Carousel Container */}
+        {/* Continuous Scroll Container */}
         <div 
-          className="relative w-full overflow-hidden"
-          onMouseEnter={pauseAutoplay}
-          onMouseLeave={resumeAutoplay}
+          ref={scrollContainerRef}
+          className="relative w-full overflow-hidden" 
+          style={{ opacity: imagesLoaded && startAnimation ? 1 : 0, transition: 'opacity 500ms ease-in-out' }}
         >
-          {/* Embla Viewport */}
-          <div className="w-full overflow-hidden" ref={viewportRef}>
-            <div className="flex -ml-2 sm:-ml-4 md:-ml-6">
-              {slides.map((slide) => (
-                <div 
-                  key={slide.id} 
-                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-2 sm:pl-4 md:pl-6"
-                >
-                  <div className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-sm border border-slate-700/50 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-[1.02] hover:border-red-500/60 cursor-pointer transition-all duration-300 hover:scale-105">
-                    {/* Glowing border effect */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-500/20 via-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm transition-all duration-300 hover:scale-105" />
+          <div 
+            ref={scrollTrackRef}
+            className="flex"
+          >
+            {tripleSlides.map((slide, index) => (
+              <div 
+                key={`${slide.id}-${index}`} 
+                className="flex-none w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-3"
+              >
+                <div className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-sm border border-slate-700/50 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-[1.02] hover:border-red-500/60 cursor-pointer">
+                  {/* Glowing border effect */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-500/20 via-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm" />
+                  
+                  {/* Image Container */}
+                  <div className="relative h-full overflow-hidden rounded-2xl">
+                    <OptimizedImage
+                      src={slide.image}
+                      alt={slide.title}
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                      width={480}
+                      height={360}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
                     
-                    {/* Image Container */}
-                    <div className="relative h-full overflow-hidden rounded-2xl">
-                      <img
-                        src={slide.image}
-                        alt={slide.title}
-                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110 transition-all duration-300 hover:scale-105"
-                        loading="lazy"
-                      />
-                      
-                      {/* Subtle bottom gradient for text readability - only at bottom */}
-                      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transition-all duration-300 hover:scale-105" />
-                      
-                      {/* Text overlay - only appears on hover at bottom */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 transition-all duration-300 hover:scale-105">
-                        <h3 className="text-white text-xl font-bold mb-2 tracking-wide drop-shadow-lg">{slide.title}</h3>
-                        {slide.description && (
-                          <p className="text-gray-200 text-sm leading-relaxed opacity-90 drop-shadow-md">{slide.description}</p>
-                        )}
-                        <div className="mt-3 w-12 h-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-full" />
-                      </div>
-                      
-                      {/* Corner accent */}
-                      <div className="absolute top-4 right-4 w-2 h-2 bg-gradient-to-br from-red-500 to-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 transition-all duration-300 hover:scale-105" />
+                    {/* Subtle bottom gradient for text readability - only at bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Text overlay - only appears on hover at bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                      <h3 className="text-white text-xl font-bold mb-2 tracking-wide drop-shadow-lg">{slide.title}</h3>
+                      {slide.description && (
+                        <p className="text-gray-200 text-sm leading-relaxed opacity-90 drop-shadow-md">{slide.description}</p>
+                      )}
+                      <div className="mt-3 w-12 h-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-full" />
                     </div>
+                    
+                    {/* Corner accent */}
+                    <div className="absolute top-4 right-4 w-2 h-2 bg-gradient-to-br from-red-500 to-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-          
-          {/* Premium Navigation Buttons */}
-          <button
-            className={`absolute top-1/2 -translate-y-1/2 left-4 z-20 w-12 h-12 rounded-full bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-md flex items-center justify-center border border-slate-600/50 shadow-xl transition-all duration-500 group ${
-              isArabic ? nextBtnEnabled : prevBtnEnabled 
-                ? 'opacity-100 hover:bg-gradient-to-br hover:from-red-600/90 hover:to-red-700/90 hover:border-red-500/60 hover:shadow-red-500/25 hover:scale-110' 
-                : 'opacity-40 cursor-not-allowed'
-            }`}
-            onClick={scrollPrev}
-            disabled={isArabic ? !nextBtnEnabled : !prevBtnEnabled}
-            aria-label="Previous slide"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm transition-all duration-300 hover:scale-105" />
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white relative z-10 transform group-hover:scale-110 transition-transform duration-300 transition-all duration-300 hover:scale-105">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          
-          <button
-            className={`absolute top-1/2 -translate-y-1/2 right-4 z-20 w-12 h-12 rounded-full bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-md flex items-center justify-center border border-slate-600/50 shadow-xl transition-all duration-500 group ${
-              isArabic ? prevBtnEnabled : nextBtnEnabled 
-                ? 'opacity-100 hover:bg-gradient-to-br hover:from-red-600/90 hover:to-red-700/90 hover:border-red-500/60 hover:shadow-red-500/25 hover:scale-110' 
-                : 'opacity-40 cursor-not-allowed'
-            }`}
-            onClick={scrollNext}
-            disabled={isArabic ? !prevBtnEnabled : !nextBtnEnabled}
-            aria-label="Next slide"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm transition-all duration-300 hover:scale-105" />
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white relative z-10 transform group-hover:scale-110 transition-transform duration-300 transition-all duration-300 hover:scale-105">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
         </div>
       </div>
     </section>
