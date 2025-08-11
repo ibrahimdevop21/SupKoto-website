@@ -14,22 +14,30 @@ const otherLangLabel = otherLang?.name || (currentLang === 'en' ? 'العربي�
 
 // Generate the correct path for the other language
 function generateSwitchPath(currentPath: string, targetLang: string): string {
-  // Remove current locale prefix if it exists
-  let pathWithoutLocale = currentPath.replace(/^\/[a-z]{2}(\/|$)/, '/');
+  // Remove current locale prefix if it exists (for Arabic /ar/)
+  let pathWithoutLocale = currentPath.replace(/^\/ar(\/|$)/, '/');
   
-  // Remove leading slash for consistency
-  pathWithoutLocale = pathWithoutLocale.startsWith('/') ? pathWithoutLocale.slice(1) : pathWithoutLocale;
+  // Clean up the path
+  pathWithoutLocale = pathWithoutLocale === '/' ? '' : pathWithoutLocale;
   
-  // Handle root path
-  if (pathWithoutLocale === '' || pathWithoutLocale === '/') {
-    return `/${targetLang}/`;
+  // For English (default locale), use root paths without prefix
+  if (targetLang === 'en') {
+    return pathWithoutLocale === '' ? '/' : pathWithoutLocale;
   }
   
-  // Return new path with target locale
-  return `/${targetLang}/${pathWithoutLocale}`;
+  // For Arabic, add /ar prefix
+  if (targetLang === 'ar') {
+    return pathWithoutLocale === '' ? '/ar/' : `/ar${pathWithoutLocale}`;
+  }
+  
+  // Fallback
+  return '/';
 }
 
 const switchPath = generateSwitchPath(currentPath, otherLang?.code || 'en');
+
+// Add title attribute for debugging
+const debugTitle = `Switch from ${currentLang} to ${otherLang?.code}: ${currentPath} → ${switchPath}`;
 ---
 
 <div class="relative inline-block text-left">
@@ -57,6 +65,7 @@ const switchPath = generateSwitchPath(currentPath, otherLang?.code || 'en');
     <div class="py-1" role="none">
       <a
         href={switchPath}
+        title={debugTitle}
         class="flex items-center gap-1 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 rtl:text-right"
         role="menuitem"
         tabindex="-1"

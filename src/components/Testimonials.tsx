@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslations } from '../i18n/react';
 import './testimonials.css'; // Import for custom animations
 
@@ -17,117 +16,22 @@ interface TestimonialsProps {
 }
 
 const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element => {
+  // Ensure we have a consistent boolean for Arabic detection
   const isArabic = currentLocale === 'ar';
-  const t = useTranslations(currentLocale);
-
-  // Embla carousel setup
-  const [viewportRef, embla] = useEmblaCarousel({ 
-    loop: false,
-    align: 'start',
-    skipSnaps: false,
-    direction: isArabic ? 'rtl' : 'ltr'
-  });
+  const t = useTranslations(isArabic ? 'ar' : 'en');
   
-  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
-  const [nextBtnEnabled, setNextBtnEnabled] = useState(true);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  // Debug logging to help identify issues
+  console.log('Testimonials component:', { currentLocale, isArabic });
+  
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [visibleTestimonials, setVisibleTestimonials] = useState<number[]>([]);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollTrackRef = useRef<HTMLDivElement>(null);
   const [expandedTestimonials, setExpandedTestimonials] = useState<number[]>([]);
   const [screenWidth, setScreenWidth] = useState(0);
-  const [isVisible, setIsVisible] = useState(true); // Set to true by default
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
-  
-  // Autoplay configuration
-  const AUTOPLAY_DELAY = 4000; // 4 seconds for testimonials
-  
-  // Autoplay control functions
-  const startAutoplay = useCallback(() => {
-    if (!embla || !isAutoPlaying) return;
-    
-    if (autoplayRef.current) {
-      clearInterval(autoplayRef.current);
-    }
-    
-    autoplayRef.current = setInterval(() => {
-      if (embla && isAutoPlaying) {
-        embla.scrollNext();
-      }
-    }, AUTOPLAY_DELAY);
-  }, [embla, isAutoPlaying, AUTOPLAY_DELAY]);
-  
-  const stopAutoplay = useCallback(() => {
-    if (autoplayRef.current) {
-      clearInterval(autoplayRef.current);
-      autoplayRef.current = null;
-    }
-  }, []);
-  
-  const pauseAutoplay = useCallback(() => {
-    setIsAutoPlaying(false);
-    stopAutoplay();
-  }, [stopAutoplay]);
-  
-  const resumeAutoplay = useCallback(() => {
-    setIsAutoPlaying(true);
-  }, []);
-  
-  // Carousel navigation functions
-  // In RTL mode, we need to swap the scroll direction to maintain visual consistency
-  const scrollPrev = useCallback(() => {
-    pauseAutoplay();
-    embla && (isArabic ? embla.scrollNext() : embla.scrollPrev());
-    // Resume autoplay after manual interaction
-    setTimeout(() => resumeAutoplay(), 1500);
-  }, [embla, isArabic, pauseAutoplay, resumeAutoplay]);
-  
-  const scrollNext = useCallback(() => {
-    pauseAutoplay();
-    embla && (isArabic ? embla.scrollPrev() : embla.scrollNext());
-    // Resume autoplay after manual interaction
-    setTimeout(() => resumeAutoplay(), 1500);
-  }, [embla, isArabic, pauseAutoplay, resumeAutoplay]);
-  
-  const onSelect = useCallback(() => {
-    if (!embla) return;
-    setSelectedIndex(embla.selectedScrollSnap());
-    setPrevBtnEnabled(embla.canScrollPrev());
-    setNextBtnEnabled(embla.canScrollNext());
-  }, [embla]);
-
-  useEffect(() => {
-    if (!embla) return;
-    
-    onSelect();
-    embla.on('select', onSelect);
-    embla.on('reInit', onSelect);
-    
-    return () => {
-      embla.off('select', onSelect);
-      embla.off('reInit', onSelect);
-    };
-  }, [embla, onSelect]);
-  
-  // Initialize and manage autoplay
-  useEffect(() => {
-    if (embla && isAutoPlaying) {
-      startAutoplay();
-    } else {
-      stopAutoplay();
-    }
-    
-    return () => stopAutoplay();
-  }, [embla, isAutoPlaying, startAutoplay, stopAutoplay]);
-  
-  // Cleanup autoplay on component unmount
-  useEffect(() => {
-    return () => {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current);
-      }
-    };
-  }, []);
+  const [isVisible, setIsVisible] = useState(false); // Start false to prevent flash
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   // Function to toggle expanded state of a testimonial
   const toggleExpand = (id: number) => {
@@ -138,8 +42,9 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
     );
   };
 
-  // Set screen width on client side only
+  // Set screen width and client state on client side only
   useEffect(() => {
+    setIsClient(true);
     setScreenWidth(window.innerWidth);
     
     const handleResize = () => {
@@ -232,19 +137,105 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
     },
   ];
 
-  // Fade-in animation on scroll
+  // Control continuous scrolling animation
   useEffect(() => {
+    // Only start animation once images are loaded
+    if (!imagesLoaded || !startAnimation) return;
+    
+    // Set a continuous scroll animation
+    // Faster animation for testimonials (20 seconds)
+    const duration = 40; 
+    
+    if (scrollTrackRef.current) {
+      // Calculate track width to adjust animation speed properly based on content
+      const trackWidth = scrollTrackRef.current.scrollWidth;
+      const containerWidth = scrollContainerRef.current?.clientWidth || 800;
+      
+      // Calculate optimal duration based on content amount
+      const optimalDuration = Math.max(duration, trackWidth / containerWidth * 20);
+      
+      // Use the same animation approach as other components
+      // Add the animate-scroll class which handles RTL automatically via CSS
+      scrollTrackRef.current.classList.add('animate-scroll');
+      
+      // Override duration if needed
+      if (optimalDuration !== 40) {
+        scrollTrackRef.current.style.animationDuration = `${optimalDuration}s`;
+      }
+    }
+    
+    // Optional: add event listener to pause on hover if desired
+    const scrollContainer = scrollContainerRef.current;
+    const scrollTrack = scrollTrackRef.current;
+    
+    if (scrollContainer && scrollTrack) {
+      const handleMouseEnter = () => {
+        scrollTrack.style.animationPlayState = 'paused';
+      };
+      
+      const handleMouseLeave = () => {
+        scrollTrack.style.animationPlayState = 'running';
+      };
+      
+      scrollContainer.addEventListener('mouseenter', handleMouseEnter);
+      scrollContainer.addEventListener('mouseleave', handleMouseLeave);
+      
+      return () => {
+        scrollContainer.removeEventListener('mouseenter', handleMouseEnter);
+        scrollContainer.removeEventListener('mouseleave', handleMouseLeave);
+      };
+    }
+  }, [isArabic, imagesLoaded, startAnimation]);
+  
+  // Preload images to avoid glitchy appearance
+  useEffect(() => {
+    // Create array of testimonial images that exist
+    const imageUrls = testimonials
+      .filter(testimonial => testimonial.image)
+      .map(testimonial => testimonial.image as string);
+      
+    // If no images, just start animation
+    if (imageUrls.length === 0) {
+      setImagesLoaded(true);
+      setTimeout(() => setStartAnimation(true), 100);
+      return;
+    }
+    
+    let loadedCount = 0;
+    
+    // Preload all images
+    imageUrls.forEach(url => {
+      const img = new Image();
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === imageUrls.length) {
+          setImagesLoaded(true);
+          setTimeout(() => setStartAnimation(true), 100);
+        }
+      };
+      img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === imageUrls.length) {
+          setImagesLoaded(true);
+          setTimeout(() => setStartAnimation(true), 100);
+        }
+      };
+      img.src = url;
+    });
+  }, [testimonials]);
+  
+  // Fade-in animation on scroll - only run on client side
+  useEffect(() => {
+    if (!isClient) return;
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            // When section is visible, animate each testimonial with a delay
-            testimonials.forEach((testimonial) => {
-              setTimeout(() => {
-                setVisibleTestimonials(prev => [...prev, testimonial.id]);
-              }, testimonial.id * 200);
-            });
+            if (scrollTrackRef.current) {
+              scrollTrackRef.current.style.animationPlayState = 'running';
+            }
           }
         });
       },
@@ -260,13 +251,111 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
         observer.unobserve(sectionRef.current);
       }
     };
-  }, [testimonials]);
+  }, [isClient]);
 
+  // Create 3 sets of testimonials for continuous loop effect
+  const duplicateTestimonials = [...testimonials, ...testimonials, ...testimonials];
+
+  // Create testimonial card component for reuse
+  const TestimonialCard = ({ testimonial, index }: { testimonial: Testimonial, index: number }) => (
+    <div 
+      key={`${testimonial.id}-${index}`} 
+      className={`testimonial-card flex-none min-w-[300px] w-[300px] sm:min-w-[350px] sm:w-[350px] md:min-w-[400px] md:w-[400px] mx-4 ${!imagesLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-700`}
+    >
+      <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-sm border border-slate-700/50 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-[1.02] hover:border-red-500/60 cursor-pointer h-full">
+        {/* Animated background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-orange-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        
+        {/* Glowing border effect */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-500/20 via-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm" />
+        
+        {/* Inner content container */}
+        <div className="relative h-full bg-gradient-to-br from-white/5 to-white/2 rounded-2xl">
+          {/* Testimonial Card */}
+          <div className="p-8 sm:p-10 h-full flex flex-col relative z-10">
+          {/* Rating stars */}
+          <div className="flex mb-4">
+            {[...Array(5)].map((_, i) => (
+              <svg 
+                key={i} 
+                className={`w-5 h-5 ${i < testimonial.rating ? 'text-yellow-500' : 'text-neutral-600'}`}
+                fill="currentColor" 
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          
+          {/* Quote mark */}
+          <div className="absolute top-0 right-0 sm:-top-2 sm:-right-2 text-red-500 opacity-20">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 sm:h-10 sm:w-10" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+          </div>
+          
+          {/* Testimonial text */}
+          <div className="flex-grow">
+            {renderTestimonialContent(testimonial)}
+          </div>
+          
+          {/* Client info */}
+          <div className="mt-4 flex items-center">
+            {testimonial.image && (
+              <div className="mr-3 rtl:mr-0 rtl:ml-3 flex-shrink-0">
+                <div className="w-10 h-10 rounded-full overflow-hidden border border-red-500/50">
+                  <img 
+                    src={testimonial.image} 
+                    alt={testimonial.name}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            )}
+            <div>
+              <h4 className="font-bold text-white text-sm sm:text-base">
+                {testimonial.name}
+              </h4>
+              <p className="text-neutral-300 text-xs sm:text-sm">
+                <span className="text-red-400 flex items-center branch-location">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 rtl:ml-1 rtl:mr-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {t('testimonials.location')}: {testimonial.branch}
+                </span>
+              </p>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+  
+  // Don't render until client-side to prevent hydration mismatch
+  if (!isClient) {
+    return (
+      <section 
+        className="w-full overflow-hidden opacity-0 h-96"
+        aria-labelledby="testimonials-heading"
+        dir={isArabic ? 'rtl' : 'ltr'}
+      >
+        {/* Placeholder during SSR */}
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="animate-pulse text-muted-foreground">Loading testimonials...</div>
+        </div>
+      </section>
+    );
+  }
+  
   return (
     <section 
       ref={sectionRef} 
-      className="w-full overflow-hidden opacity-100"
+      className={`w-full overflow-hidden ${isVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-700`}
       aria-labelledby="testimonials-heading"
+      dir={isArabic ? 'rtl' : 'ltr'}
     >
       <div className="w-full">
         {/* Section Header */}
@@ -293,126 +382,28 @@ const Testimonials = ({ currentLocale = 'en' }: TestimonialsProps): JSX.Element 
           </div>
         </div>
         
-        {/* Carousel Container */}
+        {/* Continuous Scrolling Testimonials */}
         <div 
-          className="relative w-full overflow-hidden"
-          onMouseEnter={pauseAutoplay}
-          onMouseLeave={resumeAutoplay}
+          ref={scrollContainerRef}
+          className="relative w-full overflow-hidden testimonials-container"
+          style={{ WebkitMask: 'linear-gradient(90deg, transparent, black 5%, black 95%, transparent)' }}
         >
-          {/* Embla Viewport */}
-          <div className="w-full overflow-hidden" ref={viewportRef}>
-            <div className="flex -ml-2 sm:-ml-4 md:-ml-6">
-              {testimonials.map((testimonial) => (
-                <div 
-                  key={testimonial.id} 
-                  className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-2 sm:pl-4 md:pl-6"
-                >
-                  <div className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-sm border border-slate-700/50 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-[1.02] hover:border-red-500/60 cursor-pointer h-full transition-all duration-300 hover:scale-105">
-                    {/* Animated background gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 via-transparent to-orange-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 transition-all duration-300 hover:scale-105" />
-                    
-                    {/* Glowing border effect */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-500/20 via-orange-500/20 to-red-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm transition-all duration-300 hover:scale-105" />
-                    
-                    {/* Inner content container */}
-                    <div className="relative h-full bg-gradient-to-br from-white/5 to-white/2 rounded-2xl">
-                      {/* Testimonial Card */}
-                      <div className="p-8 sm:p-10 h-full flex flex-col relative z-10">
-                      {/* Rating stars */}
-                      <div className="flex mb-4">
-                        {[...Array(5)].map((_, i) => (
-                          <svg 
-                            key={i} 
-                            className={`w-5 h-5 ${i < testimonial.rating ? 'text-yellow-500' : 'text-neutral-600'}`}
-                            fill="currentColor" 
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
-                      </div>
-                      
-                      {/* Quote mark */}
-                      <div className="absolute top-0 right-0 sm:-top-2 sm:-right-2 text-red-500 opacity-20">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 sm:h-10 sm:w-10" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                        </svg>
-                      </div>
-                      
-                      {/* Testimonial text */}
-                      <div className="flex-grow">
-                        {renderTestimonialContent(testimonial)}
-                      </div>
-                      
-                      {/* Client info */}
-                      <div className="mt-4 flex items-center">
-                        {testimonial.image && (
-                          <div className="mr-3 flex-shrink-0">
-                            <div className="w-10 h-10 rounded-full overflow-hidden border border-red-500/50">
-                              <img 
-                                src={testimonial.image} 
-                                alt={testimonial.name}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                              />
-                            </div>
-                          </div>
-                        )}
-                        <div>
-                          <h4 className="font-bold text-white text-sm sm:text-base">
-                            {testimonial.name}
-                          </h4>
-                          <p className="text-neutral-300 text-xs sm:text-sm">
-                            <span className="text-red-400 flex items-center branch-location">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1 rtl:ml-1 rtl:mr-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                              </svg>
-                              {t('testimonials.location')}: {testimonial.branch}
-                            </span>
-                          </p>
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div 
+            ref={scrollTrackRef} 
+            className={`testimonials-track flex ${startAnimation ? 'animate-scroll' : ''}`}
+            style={{
+              // Ensure the track is wide enough for all items
+              minWidth: 'max-content',
+            }}
+          >
+            {duplicateTestimonials.map((testimonial, index) => (
+              <TestimonialCard 
+                key={`testimonial-${testimonial.id}-${index}`} 
+                testimonial={testimonial} 
+                index={index}
+              />
+            ))}
           </div>
-          
-          {/* Premium Navigation Buttons */}
-          <button
-            className={`absolute top-1/2 -translate-y-1/2 left-4 z-20 w-12 h-12 rounded-full bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-md flex items-center justify-center border border-slate-600/50 shadow-xl transition-all duration-500 group ${
-              isArabic ? nextBtnEnabled : prevBtnEnabled 
-                ? 'opacity-100 hover:bg-gradient-to-br hover:from-red-600/90 hover:to-red-700/90 hover:border-red-500/60 hover:shadow-red-500/25 hover:scale-110' 
-                : 'opacity-40 cursor-not-allowed'
-            }`}
-            onClick={scrollPrev}
-            disabled={isArabic ? !nextBtnEnabled : !prevBtnEnabled}
-            aria-label="Previous testimonial"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm transition-all duration-300 hover:scale-105" />
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white relative z-10 transform group-hover:scale-110 transition-transform duration-300 transition-all duration-300 hover:scale-105">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          
-          <button
-            className={`absolute top-1/2 -translate-y-1/2 right-4 z-20 w-12 h-12 rounded-full bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-md flex items-center justify-center border border-slate-600/50 shadow-xl transition-all duration-500 group ${
-              isArabic ? prevBtnEnabled : nextBtnEnabled 
-                ? 'opacity-100 hover:bg-gradient-to-br hover:from-red-600/90 hover:to-red-700/90 hover:border-red-500/60 hover:shadow-red-500/25 hover:scale-110' 
-                : 'opacity-40 cursor-not-allowed'
-            }`}
-            onClick={scrollNext}
-            disabled={isArabic ? !prevBtnEnabled : !nextBtnEnabled}
-            aria-label="Next testimonial"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm transition-all duration-300 hover:scale-105" />
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white relative z-10 transform group-hover:scale-110 transition-transform duration-300 transition-all duration-300 hover:scale-105">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
         </div>
       </div>
     </section>

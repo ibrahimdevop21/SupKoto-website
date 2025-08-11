@@ -1,0 +1,36 @@
+/* Navbar Glass Effect Styles */
+.navbar-glass {
+  /* Base glass effect */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(15, 23, 42, 0.7); /* slate-900 with 70% opacity */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Enhanced effects when scrolled */
+.navbar-glass.navbar-scrolled {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background-color: rgba(15, 23, 42, 0.8); /* slightly more opaque */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Subtle glow effect on hover */
+@media (hover: hover) {
+  .navbar-glass:hover {
+    box-shadow: 0 4px 20px rgba(var(--primary-rgb, 227, 38, 54), 0.15);
+  }
+}
+
+/* Improve the logo hover effect */
+.navbar-glass a.group:hover img {
+  filter: drop-shadow(0 0 5px rgba(var(--primary-rgb, 227, 38, 54), 0.5));
+}
+
+/* Smooth transitions for all navbar elements */
+.navbar-glass * {
+  transition: all 0.2s ease-in-out;
+}

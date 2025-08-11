@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Calendar, MapPin } from './icons';
+import { OptimizedImage } from './OptimizedImage';
 
 interface CarProject {
   id: number;
@@ -202,13 +203,15 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
         onMouseEnter={() => setIsAutoplayPaused(true)}
         onMouseLeave={() => setIsAutoplayPaused(false)}
       >
-        <img
+        <OptimizedImage
           src={currentImage}
           key={currentImage} // Add key to trigger re-render and animation on change
           alt={currentProject.title[isArabic ? 'ar' : 'en']}
-          className="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105 animate-fadeIn transition-all duration-300 hover:scale-105"
-          width="800"
-          height="600"
+          className="w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105 animate-fadeIn transition-all duration-300"
+          width={800}
+          height={600}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 60vw"
+          priority={true}
         />
         
         {/* Enhanced gradient overlay */}
@@ -281,12 +284,14 @@ const CarGallery: React.FC<CarGalleryProps> = ({ currentLocale, isRTL }) => {
                 : 'border-2 border-transparent hover:border-neutral-600 hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.1)]'
               }`}
           >
-            <img
+            <OptimizedImage
               src={image}
               alt={`${currentProject.title[isArabic ? 'ar' : 'en']} - ${index + 1}`}
               className="w-full h-full object-cover transition-transform duration-300 group-hover/thumb:scale-110"
-              width="120"
-              height="80"
+              width={120}
+              height={80}
+              priority={false}
+              sizes="120px"
             />
             <div className="absolute inset-0 bg-black/30 group-hover/thumb:bg-black/10 transition-colors duration-300" />
             {selectedImageIndex === index && (

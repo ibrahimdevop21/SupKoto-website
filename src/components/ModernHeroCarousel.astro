@@ -1,0 +1,451 @@
+---
+import { t, getLocalizedUrl } from '../i18n/index';
+
+// Get current locale and setup i18n
+const currentLocale = (Astro.currentLocale || 'en') as 'en' | 'ar';
+const isRTL = currentLocale === 'ar';
+
+// Hero slides data with optimized content
+const slides = [
+  {
+    id: 1,
+    title: { 
+      en: "Premium Car Care Services", 
+      ar: "خدمات العناية بالسيارات المتميزة" 
+    },
+    subtitle: { 
+      en: "Experience excellence in automotive care with our professional detailing and maintenance services", 
+      ar: "اختبر التميز في العناية بالسيارات مع خدمات التفصيل والصيانة المهنية لدينا" 
+    },
+    image: "/images/optimized/hero-desktop.webp",
+    ctaLink: "/services"
+  },
+  {
+    id: 2,
+    title: { 
+      en: "Expert Auto Detailing", 
+      ar: "تفصيل السيارات الخبير" 
+    },
+    subtitle: { 
+      en: "Transform your vehicle with our comprehensive detailing packages and paint protection services", 
+      ar: "حول سيارتك مع باقات التفصيل الشاملة وخدمات حماية الطلاء لدينا" 
+    },
+    image: "/images/optimized/luxury-detailing-desktop.webp",
+    ctaLink: "/services"
+  },
+  {
+    id: 3,
+    title: { 
+      en: "Quality You Can Trust", 
+      ar: "جودة يمكنك الوثوق بها" 
+    },
+    subtitle: { 
+      en: "Certified professionals using premium products and advanced techniques for exceptional results", 
+      ar: "محترفون معتمدون يستخدمون منتجات متميزة وتقنيات متطورة لنتائج استثنائية" 
+    },
+    image: "/images/optimized/quality-service-desktop.webp",
+    ctaLink: "/about"
+  }
+];
+
+// Get current slide content
+const currentSlideContent = slides[0]; // Default to first slide
+---
+
+<section class="hero-carousel relative w-full h-screen overflow-hidden bg-slate-900" data-carousel>
+  <!-- Slides Container -->
+  <div class="slides-wrapper relative w-full h-full">
+    {slides.map((slide, index) => (
+      <div 
+        class={`slide absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+        data-slide={index}
+      >
+        <!-- Background Image with Optimized Loading -->
+        <div class="absolute inset-0">
+          <picture>
+            <source 
+              media="(max-width: 768px)" 
+              srcset={`/images/optimized/hero-mobile.webp`}
+            />
+            <source 
+              media="(max-width: 1024px)" 
+              srcset={`/images/optimized/hero-tablet.webp`}
+            />
+            <img 
+              src={slide.image}
+              alt={slide.title[currentLocale]}
+              class="w-full h-full object-cover"
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          </picture>
+        </div>
+
+        <!-- Gradient Overlays for Better Text Readability -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-slate-800/30 to-slate-900/40"></div>
+        <div class={`absolute inset-0 bg-gradient-to-r ${
+          isRTL 
+            ? 'from-transparent via-black/20 to-black/70' 
+            : 'from-black/70 via-black/20 to-transparent'
+        }`}></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10"></div>
+
+        <!-- Content Overlay -->
+        <div class="absolute inset-0 flex items-center z-20">
+          <div class="container mx-auto px-6 sm:px-8 md:px-12 lg:px-16 w-full">
+            <div 
+              class={`max-w-3xl ${
+                isRTL 
+                  ? 'ml-auto text-right' 
+                  : 'mr-auto text-left'
+              }`} 
+              dir={isRTL ? 'rtl' : 'ltr'}
+            >
+              <!-- Animated Title -->
+              <div class="animate-fade-in-up animation-delay-200">
+                <h1 class={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white leading-tight tracking-tight ${
+                  isRTL ? 'font-arabic' : ''
+                }`}>
+                  <span class="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
+                    {slide.title[currentLocale]}
+                  </span>
+                </h1>
+              </div>
+
+              <!-- Animated Subtitle -->
+              <div class="animate-fade-in-up animation-delay-400">
+                <p class={`text-lg sm:text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed max-w-2xl ${
+                  isRTL ? 'font-arabic' : ''
+                }`}>
+                  {slide.subtitle[currentLocale]}
+                </p>
+              </div>
+
+              <!-- Trust Indicators -->
+              <div class={`animate-fade-in-up animation-delay-600 flex items-center gap-6 mb-10 ${
+                isRTL ? 'justify-end flex-row-reverse' : 'justify-start'
+              }`}>
+                <div class="flex items-center gap-2 text-yellow-400">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-yellow-400">
+                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
+                  </svg>
+                  <span class="text-white text-base font-semibold">4.9/5</span>
+                </div>
+                <div class="flex items-center gap-2 text-blue-400">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+                  </svg>
+                  <span class="text-white text-base font-semibold">
+                    {isRTL ? 'مضمون' : 'Guaranteed'}
+                  </span>
+                </div>
+                <div class="flex items-center gap-2 text-green-400">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"></polyline>
+                  </svg>
+                  <span class="text-white text-base font-semibold">
+                    {isRTL ? 'معتمد' : 'Certified'}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Enhanced CTA Buttons -->
+              <div class={`animate-fade-in-up animation-delay-800 flex flex-col sm:flex-row gap-4 ${
+                isRTL ? 'sm:justify-end' : 'sm:justify-start'
+              }`}>
+                <!-- Primary CTA -->
+                <a 
+                  href={getLocalizedUrl(slide.ctaLink, currentLocale, Astro)}
+                  class="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold text-lg rounded-xl shadow-2xl hover:shadow-red-500/25 transition-all duration-300 transform hover:scale-105 hover:from-red-500 hover:to-red-600 border-2 border-red-500/20 hover:border-red-400/40"
+                >
+                  <span class="relative z-10">
+                    {isRTL ? 'اكتشف المزيد' : 'Discover More'}
+                  </span>
+                  <div class="absolute inset-0 bg-gradient-to-r from-red-400/20 to-red-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <svg 
+                    class={`w-5 h-5 ${isRTL ? 'mr-2' : 'ml-2'} transition-transform group-hover:translate-x-1`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={isRTL ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}></path>
+                  </svg>
+                </a>
+
+                <!-- Secondary CTA -->
+                <a 
+                  href={getLocalizedUrl('/contact', currentLocale, Astro)}
+                  class="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-slate-800/90 to-slate-900/90 backdrop-blur-sm border-2 border-white/30 text-white font-bold text-lg rounded-xl hover:bg-gradient-to-r hover:from-slate-700/95 hover:to-slate-800/95 hover:border-white/50 transition-all duration-300 shadow-xl hover:shadow-white/10 transform hover:scale-105"
+                >
+                  <span class="relative z-10">
+                    {isRTL ? 'تواصل معنا' : 'Contact Us'}
+                  </span>
+                  <svg 
+                    class={`w-5 h-5 ${isRTL ? 'mr-2' : 'ml-2'} transition-transform group-hover:scale-110`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Navigation Controls -->
+  {slides.length > 1 && (
+    <div class="absolute inset-0 flex items-center justify-between px-4 sm:px-6 md:px-8 z-30 pointer-events-none">
+      <!-- Previous Button -->
+      <button
+        class={`nav-btn prev-btn pointer-events-auto p-3 sm:p-4 bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full text-white transition-all duration-200 transform hover:scale-110 ${
+          isRTL ? 'order-2' : 'order-1'
+        }`}
+        aria-label={isRTL ? 'الشريحة السابقة' : 'Previous slide'}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d={isRTL ? "m9 18 6-6-6-6" : "m15 18-6-6 6-6"}></path>
+        </svg>
+      </button>
+
+      <!-- Next Button -->
+      <button
+        class={`nav-btn next-btn pointer-events-auto p-3 sm:p-4 bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full text-white transition-all duration-200 transform hover:scale-110 ${
+          isRTL ? 'order-1' : 'order-2'
+        }`}
+        aria-label={isRTL ? 'الشريحة التالية' : 'Next slide'}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d={isRTL ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"}></path>
+        </svg>
+      </button>
+    </div>
+  )}
+
+  <!-- Slide Indicators -->
+  {slides.length > 1 && (
+    <div class={`absolute bottom-8 ${isRTL ? 'right-1/2 translate-x-1/2' : 'left-1/2 -translate-x-1/2'} flex gap-3 z-30`}>
+      {slides.map((_, index) => (
+        <button
+          class={`indicator w-3 h-3 rounded-full transition-all duration-300 ${
+            index === 0 
+              ? 'bg-white shadow-lg' 
+              : 'bg-white/40 hover:bg-white/60'
+          }`}
+          data-slide-to={index}
+          aria-label={`${isRTL ? 'اذهب إلى الشريحة' : 'Go to slide'} ${index + 1}`}
+        />
+      ))}
+    </div>
+  )}
+</section>
+
+<!-- Enhanced Carousel JavaScript -->
+<script>
+  class ModernHeroCarousel {
+    constructor() {
+      this.carousel = document.querySelector('[data-carousel]');
+      this.slides = this.carousel?.querySelectorAll('.slide');
+      this.indicators = this.carousel?.querySelectorAll('.indicator');
+      this.prevBtn = this.carousel?.querySelector('.prev-btn');
+      this.nextBtn = this.carousel?.querySelector('.next-btn');
+      
+      this.currentSlide = 0;
+      this.isAutoPlaying = true;
+      this.autoPlayInterval = null;
+      
+      this.init();
+    }
+
+    init() {
+      if (!this.carousel || !this.slides.length) return;
+      
+      this.setupEventListeners();
+      this.startAutoPlay();
+      
+      // Pause autoplay on hover
+      this.carousel.addEventListener('mouseenter', () => this.pauseAutoPlay());
+      this.carousel.addEventListener('mouseleave', () => this.startAutoPlay());
+      
+      // Pause autoplay when page is not visible
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          this.pauseAutoPlay();
+        } else {
+          this.startAutoPlay();
+        }
+      });
+    }
+
+    setupEventListeners() {
+      // Navigation buttons
+      this.prevBtn?.addEventListener('click', () => this.prevSlide());
+      this.nextBtn?.addEventListener('click', () => this.nextSlide());
+      
+      // Indicators
+      this.indicators?.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => this.goToSlide(index));
+      });
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') this.prevSlide();
+        if (e.key === 'ArrowRight') this.nextSlide();
+      });
+      
+      // Touch/swipe support
+      let startX = 0;
+      let endX = 0;
+      
+      this.carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      });
+      
+      this.carousel.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) { // Minimum swipe distance
+          if (diff > 0) {
+            this.nextSlide();
+          } else {
+            this.prevSlide();
+          }
+        }
+      });
+    }
+
+    goToSlide(index) {
+      if (index === this.currentSlide) return;
+      
+      // Hide current slide
+      this.slides[this.currentSlide].classList.remove('opacity-100', 'z-10');
+      this.slides[this.currentSlide].classList.add('opacity-0', 'z-0');
+      
+      // Update indicators
+      this.indicators[this.currentSlide]?.classList.remove('bg-white', 'shadow-lg');
+      this.indicators[this.currentSlide]?.classList.add('bg-white/40');
+      
+      // Show new slide
+      this.currentSlide = index;
+      this.slides[this.currentSlide].classList.remove('opacity-0', 'z-0');
+      this.slides[this.currentSlide].classList.add('opacity-100', 'z-10');
+      
+      // Update indicators
+      this.indicators[this.currentSlide]?.classList.remove('bg-white/40');
+      this.indicators[this.currentSlide]?.classList.add('bg-white', 'shadow-lg');
+    }
+
+    nextSlide() {
+      const nextIndex = (this.currentSlide + 1) % this.slides.length;
+      this.goToSlide(nextIndex);
+    }
+
+    prevSlide() {
+      const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+      this.goToSlide(prevIndex);
+    }
+
+    startAutoPlay() {
+      if (!this.isAutoPlaying || this.slides.length <= 1) return;
+      
+      this.autoPlayInterval = setInterval(() => {
+        this.nextSlide();
+      }, 5000); // 5 seconds
+    }
+
+    pauseAutoPlay() {
+      if (this.autoPlayInterval) {
+        clearInterval(this.autoPlayInterval);
+        this.autoPlayInterval = null;
+      }
+    }
+  }
+
+  // Initialize carousel when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new ModernHeroCarousel();
+  });
+</script>
+
+<style>
+  /* Enhanced animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 0.6s;
+  }
+
+  .animation-delay-800 {
+    animation-delay: 0.8s;
+  }
+
+  /* Smooth transitions for slides */
+  .slide {
+    transition: opacity 1s ease-in-out, z-index 0s linear 1s;
+  }
+
+  .slide.opacity-100 {
+    transition: opacity 1s ease-in-out, z-index 0s linear 0s;
+  }
+
+  /* Enhanced button hover effects */
+  .nav-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .indicator {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .indicator:hover {
+    transform: scale(1.2);
+  }
+
+  /* RTL-specific adjustments */
+  [dir="rtl"] .flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .hero-carousel h1 {
+      font-size: 2.5rem;
+      line-height: 1.1;
+    }
+    
+    .hero-carousel .max-w-3xl {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+  }
+</style>

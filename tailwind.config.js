@@ -1,6 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+	content: [
+		'./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
+		'./public/**/*.html',
+		// Include any dynamic class patterns
+		'./src/components/**/*.{astro,tsx,jsx}',
+		'./src/pages/**/*.{astro,md,mdx}',
+		'./src/layouts/**/*.{astro,tsx,jsx}'
+	],
+	// Safelist for dynamic classes that might be missed by purging
+	safelist: [
+		// Animation classes
+		'animate-pulse',
+		'animate-spin',
+		'animate-bounce',
+		// Dynamic color classes
+		{ pattern: /bg-(red|green|blue|yellow|purple|pink|indigo)-(100|200|300|400|500|600|700|800|900)/ },
+		{ pattern: /text-(red|green|blue|yellow|purple|pink|indigo)-(100|200|300|400|500|600|700|800|900)/ },
+		// Grid and flex patterns
+		{ pattern: /grid-cols-(1|2|3|4|5|6|12)/ },
+		{ pattern: /col-span-(1|2|3|4|5|6|12)/ },
+	],
 	darkMode: ['class'], // Dark mode forced via class
 	// Performance optimizations - disable unused core plugins
 	corePlugins: {

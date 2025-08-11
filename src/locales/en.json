@@ -132,12 +132,6 @@
     "leadership_team": "Leadership Team",
     "leadership_description": "Meet the dedicated professionals who lead Supakoto with vision and expertise."
   },
-  "services": {
-    "heading": "Our Services",
-    "subheading": "Discover our comprehensive range of professional services",
-    "how_we_help": "How We Can Help You",
-    "description": "We offer a wide range of professional services designed to meet your specific needs and exceed your expectations."
-  },
   "faq": {
     "heading": "Frequently Asked Questions",
     "subheading": "Find answers to common questions",
@@ -185,6 +179,222 @@
     "gallery": {
       "title": "Gallery - Supakoto",
       "description": "Discover our portfolio of premium automotive services and transformations."
+    }
+  },
+  "services": {
+    "meta": {
+      "title": "Services - Supakoto",
+      "description": "Advanced Japanese PPF and nano-coatings for ultimate automotive protection."
+    },
+    "hero": {
+      "title": "Unmatched Automotive Protection — Engineered for Perfection",
+      "subtitle": "From advanced Japanese PPF to nano-coatings — discover the best in car care.",
+      "cta": "Explore Our Protection Solutions"
+    },
+    "tiers": {
+      "title": "Protection Tiers",
+      "subtitle": "Choose the perfect level of protection for your vehicle",
+      "ultimate": {
+        "title": "Ultimate Protection",
+        "description": "Full exterior PPF coverage, interior film, nano coatings, longest warranty, and premium finish options.",
+        "feature1": "Complete vehicle coverage with premium PPF",
+        "feature2": "Interior protection and nano-ceramic coatings",
+        "feature3": "15-year manufacturer warranty"
+      },
+      "premium": {
+        "title": "Premium Protection",
+        "description": "Full-body PPF, interior add-ons, self-healing & anti-yellowing properties, expert manual installation.",
+        "feature1": "Full-body paint protection film",
+        "feature2": "Self-healing and anti-yellowing technology",
+        "feature3": "Professional manual installation"
+      },
+      "standard": {
+        "title": "Standard Protection",
+        "description": "Exterior coverage with premium PPF, optional glass/interior protection — balanced cost & durability.",
+        "feature1": "Key area exterior coverage",
+        "feature2": "Optional glass and interior protection",
+        "feature3": "Balanced cost and durability"
+      },
+      "essential": {
+        "title": "Essential Protection",
+        "description": "Key area coverage for scratch and chip resistance — perfect entry-level choice.",
+        "feature1": "High-impact area protection",
+        "feature2": "Scratch and chip resistance",
+        "feature3": "Entry-level pricing"
+      },
+      "learnMore": "Learn More",
+      "showLess": "Show Less",
+      "requestQuote": "Request Quote"
+    },
+    "specs": {
+      "thickness": "Thickness",
+      "stretch": "Stretch",
+      "features": "Key Features",
+      "performance": "Performance",
+      "selfHealing": "Self-Healing",
+      "uvProtection": "UV Protection",
+      "antiYellowing": "Anti-Yellowing"
+    },
+    "tech": {
+      "title": "Why SupaKoto?",
+      "subtitle": "Advanced technology and expert craftsmanship for superior protection",
+      "takai": {
+        "title": "Takai Japanese PPF",
+        "description": "Precision-engineered clarity & strength from Japan's leading manufacturer."
+      },
+      "precision": {
+        "title": "Manual-Cut Precision",
+        "description": "Flawless fit without panel removal using expert hand-cutting techniques."
+      },
+      "nano": {
+        "title": "Nano-Ceramic Coatings",
+        "description": "Advanced protection for glass, rims & interior surfaces."
+      },
+      "warranty": {
+        "title": "Warranty You Can Trust",
+        "description": "Up to 15 years manufacturer-backed warranty for peace of mind."
+      },
+      "certified": "Certified Installation",
+      "professional": "Professional Grade",
+      "guaranteed": "Quality Guaranteed"
+    },
+    "finishes": {
+      "title": "Finish Options",
+      "subtitle": "Choose between ultra-gloss or stealth matte finishes",
+      "gloss": {
+        "title": "Ultra Gloss",
+        "description": "Deep mirror finish that enhances your vehicle's natural beauty with stunning clarity.",
+        "feature1": "Mirror-like reflection and depth",
+        "feature2": "Enhanced color vibrancy",
+        "feature3": "Show-quality appearance"
+      },
+      "matte": {
+        "title": "Stealth Matte",
+        "description": "Satin, understated elegance with a sophisticated non-reflective finish.",
+        "feature1": "Non-reflective satin finish",
+        "feature2": "Sophisticated understated look",
+        "feature3": "Unique texture and feel"
+      },
+      "keyFeatures": "Key Features",
+      "clarity": "Clarity",
+      "reflection": "Reflection",
+      "previewPlaceholder": "Finish Preview"
+    },
+    "technical": {
+      "title": "Technical Highlights",
+      "subtitle": "Detailed specifications and performance characteristics",
+      "material": {
+        "title": "Material Specifications",
+        "thickness": "Film Thickness",
+        "stretch": "Stretchability",
+        "clarity": "Optical Clarity",
+        "clarityValue": "Crystal Clear",
+        "adhesive": "Adhesive Type",
+        "adhesiveValue": "Pressure-Sensitive"
+      },
+      "performance": {
+        "title": "Performance Features",
+        "selfHealing": "Self-Healing",
+        "selfHealingValue": "Heat Activated",
+        "uvBlocking": "UV Blocking",
+        "irRejection": "IR Rejection",
+        "antiYellowing": "Anti-Yellowing",
+        "antiYellowingValue": "Guaranteed"
+      },
+      "craftsmanship": {
+        "title": "Installation Craftsmanship",
+        "cutting": "Cutting Method",
+        "cuttingValue": "Hand-Cut Precision",
+        "installation": "Installation",
+        "installationValue": "Expert Manual",
+        "disassembly": "Panel Removal",
+        "disassemblyValue": "Minimal Required",
+        "finish": "Edge Finish",
+        "finishValue": "Seamless Wrap"
+      },
+      "maintenance": {
+        "title": "Care & Maintenance",
+        "washing": "Washing",
+        "washingValue": "Standard Car Wash",
+        "frequency": "Maintenance",
+        "frequencyValue": "Minimal Required",
+        "products": "Cleaning Products",
+        "productsValue": "Any pH Neutral",
+        "inspection": "Inspection",
+        "inspectionValue": "Annual Recommended"
+      },
+      "disclaimer": "Specifications may vary by country and specific product selection. Contact us for detailed information."
+    },
+    "lifestyle": {
+      "title": "Lifestyle Use Cases",
+      "subtitle": "Protection tailored to your driving needs and environment",
+      "longTerm": {
+        "title": "Long-Term Ownership",
+        "description": "Preserve your vehicle's showroom appearance and maintain maximum resale value over years of ownership.",
+        "benefit1": "Maintains showroom appearance",
+        "benefit2": "Preserves resale value"
+      },
+      "harsh": {
+        "title": "Harsh Climates",
+        "description": "Defend against extreme heat, UV radiation, and sand abrasion in challenging environmental conditions.",
+        "benefit1": "UV and heat protection",
+        "benefit2": "Sand and debris resistance"
+      },
+      "performance": {
+        "title": "Performance Cars",
+        "description": "Protect aerodynamic surfaces and maintain paint integrity during high-speed driving and track use.",
+        "benefit1": "Aerodynamic surface protection",
+        "benefit2": "High-speed debris resistance"
+      },
+      "luxury": {
+        "title": "Luxury Vehicles",
+        "description": "Discreet protection that maintains the premium aesthetic while providing comprehensive coverage.",
+        "benefit1": "Invisible protection",
+        "benefit2": "Premium finish options"
+      },
+      "cta": "Find your perfect protection solution"
+    },
+    "trust": {
+      "title": "Trust & Assurance",
+      "subtitle": "Backed by certifications, warranties, and satisfied customers",
+      "testimonials": "Customer Reviews",
+      "testimonial1": {
+        "text": "Exceptional quality and service. My car looks better than new after the PPF installation.",
+        "author": "Ahmed M."
+      },
+      "testimonial2": {
+        "text": "Professional installation and amazing results. Highly recommend SupaKoto for paint protection.",
+        "author": "Sarah K."
+      },
+      "warranty": {
+        "title": "15-Year Warranty",
+        "description": "Comprehensive manufacturer-backed warranty coverage",
+        "backed": "Manufacturer Backed"
+      },
+      "certifications": "Certifications & Standards",
+      "cert1": {
+        "title": "Certified Installation",
+        "description": "Factory-trained technicians"
+      },
+      "cert2": {
+        "title": "Quality Assurance",
+        "description": "ISO standard compliance"
+      },
+      "cert3": {
+        "title": "Warranty Protection",
+        "description": "Manufacturer guarantees"
+      },
+      "partners": "Trusted Partners",
+      "statement": "All claims are manufacturer-backed and subject to terms and conditions. Contact us for complete warranty details."
+    },
+    "cta": {
+      "title": "Ready for the Ultimate Protection?",
+      "subtitle": "Let our experts provide a free consultation and quote for your vehicle. Experience the SupaKoto difference today.",
+      "bookInstallation": "Book Your Installation",
+      "requestQuote": "Request a Quote",
+      "freeConsultation": "Free Consultation",
+      "expertInstallation": "Expert Installation",
+      "warrantyIncluded": "Warranty Included"
     }
   }
 }

@@ -6,4 +6,4 @@ const currentLocale = Astro.currentLocale || 'en';
 const rtl = isRTL(Astro);
 ---
 
-<NavBarComponent currentLocale={currentLocale} isRTL={rtl} client:load />
+<NavBarComponent currentLocale={currentLocale} isRTL={rtl} client:idle />
