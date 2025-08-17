@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslations } from '../i18n/react';
-import { OptimizedImage } from './OptimizedImage';
+import { useTranslations } from '../../i18n/react';
+import { OptimizedImage } from '../shared/OptimizedImage';
 import './testimonials.css'; // Import for continuous scroll animations
 
 interface WorkItem {

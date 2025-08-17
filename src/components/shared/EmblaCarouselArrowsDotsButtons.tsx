@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronLeft, ChevronRight } from '../icons';
+import { ChevronLeft, ChevronRight } from '../icons/LightweightIcons';
 
 interface PropType {
   enabled: boolean;

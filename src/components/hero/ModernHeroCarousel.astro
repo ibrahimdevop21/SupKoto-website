@@ -1,0 +1,168 @@
+---
+import { t } from '../../i18n/index';
+
+// Get current locale from Astro context
+const currentLang = Astro.currentLocale || 'en';
+const rtl = currentLang === 'ar';
+---
+
+<section class="hero relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Responsive Video Background -->
+  <div class="absolute inset-0 w-full h-full">
+    <!-- Mobile Video (≤768px) -->
+    <video 
+      class="absolute inset-0 w-full h-full object-cover md:hidden"
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      preload="metadata"
+    >
+      <source src="/videos/supakoto-hero-mobiile.webm" type="video/webm">
+      <!-- Fallback image for mobile -->
+      <img 
+        src="/images/optimized/hero-mobile.webp" 
+        alt="SupaKoto Mobile Hero"
+        class="w-full h-full object-cover"
+      />
+    </video>
+    
+    <!-- Desktop/Tablet Video (≥769px) -->
+    <video 
+      class="absolute inset-0 w-full h-full object-cover hidden md:block"
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      preload="metadata"
+    >
+      <source src="/videos/supakoto-hero.webm" type="video/webm">
+      <!-- Fallback image for desktop -->
+      <img 
+        src="/images/optimized/hero-desktop.webp" 
+        alt="SupaKoto Desktop Hero"
+        class="w-full h-full object-cover"
+      />
+    </video>
+    
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+  </div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="max-w-4xl mx-auto">
+      <!-- Main Title -->
+      <h1 class={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight ${rtl ? 'font-arabic' : ''}`}>
+        <span class="block">
+{t('hero.title', {}, Astro)}
+        </span>
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class={`text-lg md:text-xl lg:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed ${rtl ? 'font-arabic' : ''}`}>
+        {t('hero.subtitle', {}, Astro)}
+      </p>
+      
+      <!-- Trust Indicators -->
+      <div class="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-8 text-sm md:text-base text-gray-300">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span>{t('hero.trust.certified', {}, Astro)}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span>{t('hero.trust.experience', {}, Astro)}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          <span>{t('hero.trust.warranty', {}, Astro)}</span>
+        </div>
+      </div>
+      
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a 
+          href={rtl ? '/ar/contact' : '/contact'}
+          class="inline-flex items-center justify-center px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          aria-label={t('hero.cta.primary', {}, Astro)}
+        >
+          {t('hero.cta.primary', {}, Astro)}
+          <svg class={`w-5 h-5 ${rtl ? 'mr-2' : 'ml-2'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={rtl ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}></path>
+          </svg>
+        </a>
+        
+        <a 
+          href={rtl ? '/ar/services' : '/services'}
+          class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold rounded-lg transition-all duration-300"
+          aria-label={t('hero.cta.secondary', {}, Astro)}
+        >
+          {t('hero.cta.secondary', {}, Astro)}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  }
+  
+  /* Ensure video covers properly */
+  video {
+    will-change: transform;
+  }
+  
+  /* Smooth animations */
+  .hero h1 {
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  .hero p {
+    animation: fadeInUp 1s ease-out 0.2s both;
+  }
+  
+  .hero .flex:has(svg) {
+    animation: fadeInUp 1s ease-out 0.4s both;
+  }
+  
+  .hero .flex:has(a) {
+    animation: fadeInUp 1s ease-out 0.6s both;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* RTL Support */
+  [dir="rtl"] .hero {
+    direction: rtl;
+  }
+  
+  /* Font optimization */
+  .font-arabic {
+    font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
+  }
+</style>

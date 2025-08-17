@@ -24,7 +24,18 @@
     "experience": "Experience Automotive Excellence",
     "description": "Discover our range of premium automotive services designed to exceed your expectations and elevate your driving experience.",
     "services": "Our Services",
-    "contact": "Contact Us"
+    "contact": "Contact Us",
+    "title": "Experience Automotive Excellence",
+    "subtitle": "Discover our range of premium automotive services designed to exceed your expectations and elevate your driving experience.",
+    "trust": {
+      "certified": "Certified Professionals",
+      "experience": "15+ Years Experience",
+      "warranty": "Quality Warranty"
+    },
+    "cta": {
+      "primary": "Get Started",
+      "secondary": "Our Services"
+    }
   },
   "features": {
     "premium": {
@@ -63,6 +74,7 @@
     "title": "Ready to Experience Luxury?",
     "description": "Contact us today to learn more about our premium automotive services.",
     "enquire": "Enquire Now",
+    "book": "Book Now",
     "whatsapp": "Chat on WhatsApp"
   },
   "testimonials": {
@@ -109,7 +121,8 @@
       "address": "Address",
       "phone": "Phone",
       "hours": "Working Hours",
-      "whatsapp": "Chat on WhatsApp"
+      "whatsapp": "Chat on WhatsApp",
+      "call": "Call Now"
     },
     "faq": {
       "heading": "Frequently Asked Questions",

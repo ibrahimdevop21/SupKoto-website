@@ -35,6 +35,7 @@ body {
 }
 
 /* Navigation critical styles */
+/* DISABLED: Conflicts with new glass navbar - blocking clicks
 .nav-container {
   position: fixed;
   top: 0;
@@ -42,6 +43,7 @@ body {
   z-index: 50;
   backdrop-filter: blur(10px);
 }
+*/
 
 /* Critical button styles */
 .btn-primary {

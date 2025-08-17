@@ -9,15 +9,12 @@
     "build:production": "NODE_ENV=production astro build --config astro.config.mjs",
     "preview": "astro preview",
     "astro": "astro",
-
     "build:optimized": "NODE_ENV=production astro build --config astro.config.mjs --vite-config vite.config.optimized.ts",
     "analyze": "ANALYZE=true NODE_ENV=production astro build",
     "analyze:source-map": "npm run build:production && npx source-map-explorer 'dist/assets/js/*.js'",
     "analyze:full": "npm run analyze && npm run analyze:source-map",
-
     "analyze:complete": "npm run build:production && npm run analyze",
     "lighthouse": "npx lighthouse http://localhost:4321 --output=html --output-path=./lighthouse-report.html",
-
     "build:analyze": "npm run build:optimized && npx bundlesize",
     "purge:css": "purgecss --css dist/**/*.css --content dist/**/*.html --output dist/css/",
     "optimize:images": "imagemin src/assets/**/*.{jpg,jpeg,png,webp} --out-dir=src/assets/optimized/",
@@ -27,7 +24,6 @@
     "lighthouse:desktop": "lighthouse http://localhost:4321 --preset=desktop --output=html --output-path=./reports/lighthouse-desktop.html",
     "performance:test": "npm run build:optimized && npm run preview & sleep 5 && npm run lighthouse:mobile && npm run lighthouse:desktop && kill %1",
     "compress:images": "imagemin src/assets/**/*.{jpg,jpeg,png} --out-dir=src/assets/optimized/ --plugin=imagemin-webp"
-
   },
   "dependencies": {
     "@astrojs/react": "^3.0.0",
@@ -36,7 +32,7 @@
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-switch": "^1.2.5",
-    "astro": "^4.0.0",
+    "astro": "^5.12.9",
     "astro-i18n": "^2.2.4",
     "astro-icon": "^1.1.5",
     "autoprefixer": "^10.4.14",
@@ -60,8 +56,8 @@
     "astro-compress": "^2.3.8",
     "bundlesize": "^0.18.1",
     "imagemin": "^8.0.1",
-    "imagemin-webp": "^7.0.0",
-    "lighthouse": "^11.0.0",
+    "imagemin-webp": "^6.1.0",
+    "lighthouse": "^12.8.1",
     "purgecss": "^5.0.0",
     "rollup-plugin-visualizer": "^6.0.3",
     "sharp": "^0.34.2",
