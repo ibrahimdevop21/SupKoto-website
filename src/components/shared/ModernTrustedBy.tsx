@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './testimonials.css'; // Import for shared animations
+import '../carousels/testimonials.css'; // Import for shared animations
 
 // Types
 interface PartnerDescription {

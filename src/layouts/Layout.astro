@@ -3,10 +3,9 @@ import '../styles/global.css';
 import '../styles/rtl-support.css';
 import '../styles/gallery.css';
 import '../styles/navbar-glass.css';
-import Footer from '../components/Footer.astro';
-import NavBar from '../components/navbar/NavBar.astro';
-
-import Preload from '../components/Preload.astro';
+import Footer from '../components/layout/Footer.astro';
+import { Navbar } from '../components/layout';
+import Preload from '../components/shared/Preload.astro';
 import { t, isRTL } from '../i18n/index';
 
 export interface Props {
@@ -252,7 +251,7 @@ const siteDescription = description || t('site.description');
 		</script>
 	</head>
 	<body class="min-h-screen flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-foreground font-sans antialiased" class:list={[rtl && 'font-arabic']}>
-		<NavBar />
+		<Navbar currentLocale={currentLang} isRTL={rtl} activePath={Astro.url.pathname} client:load />
 		
 		<!-- Full-width slot for hero sections and other full-width components -->
 		<slot name="hero" />

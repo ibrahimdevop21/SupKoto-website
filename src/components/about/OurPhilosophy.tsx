@@ -1,5 +1,5 @@
 import React from 'react';
-import { Gem, ShieldCheck, Zap } from '../icons';
+import { Gem, ShieldCheck, Zap } from '../icons/LightweightIcons';
 
 interface OurPhilosophyProps {
   currentLocale: string;

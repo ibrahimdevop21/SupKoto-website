@@ -4,7 +4,7 @@ import { branches } from '../../data/branches';
 import type { Branch } from '../../data/branches';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { Phone, Clock, MapPin, Search, Navigation, Star, Users, Car } from '../icons';
+import { Phone, Clock, MapPin, Search, Navigation, Star, Users, Car } from '../icons/LightweightIcons';
 
 // Fix for default marker icon issue with bundlers like Vite/Webpack
 delete (L.Icon.Default.prototype as any)._getIconUrl;
