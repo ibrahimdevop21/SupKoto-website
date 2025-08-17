@@ -86,7 +86,7 @@ const NavBar: React.FC<NavBarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href={locale === 'ar' ? '/ar' : '/'} className="flex items-center">
+            <a href={locale === 'ar' ? '/ar/' : '/'} className="flex items-center">
               <img
                 src="/logo.svg"
                 alt="SupaKoto - Automotive Excellence"
@@ -106,7 +106,7 @@ const NavBar: React.FC<NavBarProps> = ({
                 <a
                   key={`desktop-nav-${locale}-${index}-${item.href[locale]}`}
                   href={item.href[locale]}
-                  className="px-3 py-1.5 text-sm font-medium text-white/90 hover:text-white transition-colors data-[active=true]:border-b-2 data-[active=true]:border-[#bf1e2e]"
+                  className="px-3 py-1.5 text-sm font-brand font-medium text-white/90 hover:text-white transition-colors data-[active=true]:border-b-2 data-[active=true]:border-supakoto-red"
                     data-active={isActive}
                     aria-current={isActive ? 'page' : undefined}
                   >
@@ -122,7 +122,7 @@ const NavBar: React.FC<NavBarProps> = ({
             {/* Call Button */}
             <a
               href={`tel:${phone}`}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm border border-white/20 text-white hover:bg-[#bf1e2e] hover:text-white hover:border-[#bf1e2e] transition"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-brand border border-white/20 text-white hover:bg-supakoto-red hover:text-white hover:border-supakoto-red transition-all duration-300"
               aria-label="Call us"
             >
               <Phone className="w-4 h-4" aria-hidden="true" />
@@ -134,7 +134,7 @@ const NavBar: React.FC<NavBarProps> = ({
               href={whatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm border border-white/20 text-white hover:bg-[#bf1e2e] hover:text-white hover:border-[#bf1e2e] transition"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-brand border border-white/20 text-white hover:bg-supakoto-red hover:text-white hover:border-supakoto-red transition-all duration-300"
               aria-label="Contact us on WhatsApp"
             >
               <WhatsApp className="w-4 h-4" aria-hidden="true" />
@@ -144,7 +144,7 @@ const NavBar: React.FC<NavBarProps> = ({
             {/* Language Switcher */}
             <a
               href={otherLocaleHref}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm border border-white/20 text-white hover:bg-[#bf1e2e] hover:text-white hover:border-[#bf1e2e] transition"
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-brand border border-white/20 text-white hover:bg-supakoto-red hover:text-white hover:border-supakoto-red transition-all duration-300"
               aria-label={`Switch to ${locale === 'en' ? 'Arabic' : 'English'}`}
             >
               <Globe className="w-4 h-4" aria-hidden="true" />

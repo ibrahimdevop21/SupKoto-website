@@ -14,9 +14,16 @@ export default {
 		'animate-pulse',
 		'animate-spin',
 		'animate-bounce',
-		// Dynamic color classes
-		{ pattern: /bg-(red|green|blue|yellow|purple|pink|indigo)-(100|200|300|400|500|600|700|800|900)/ },
-		{ pattern: /text-(red|green|blue|yellow|purple|pink|indigo)-(100|200|300|400|500|600|700|800|900)/ },
+		// SupaKoto brand color classes
+		{ pattern: /bg-supakoto-(red|dark-gray|blue|yellow-gold|dark-slate|deep-burgundy)/ },
+		{ pattern: /text-supakoto-(red|dark-gray|blue|yellow-gold|dark-slate|deep-burgundy)/ },
+		{ pattern: /border-supakoto-(red|dark-gray|blue|yellow-gold|dark-slate|deep-burgundy)/ },
+		// Primary color variations
+		{ pattern: /bg-primary-(50|100|200|300|400|500|600|700|800|900)/ },
+		{ pattern: /text-primary-(50|100|200|300|400|500|600|700|800|900)/ },
+		// Font family classes
+		'font-brand',
+		'font-arabic',
 		// Grid and flex patterns
 		{ pattern: /grid-cols-(1|2|3|4|5|6|12)/ },
 		{ pattern: /col-span-(1|2|3|4|5|6|12)/ },
@@ -73,14 +80,32 @@ export default {
 	
 	theme: {
 		extend: {
-      // Optimized color palette - only colors we actually use
+      // SupaKoto 2025 Visual Identity Brand Palette
       colors: {
-        // Core brand colors
-        primary: '#e32636',
-        'primary-dark': '#b91c2c',
-        'primary-light': '#f87171',
+        // Primary brand colors
+        primary: {
+          DEFAULT: '#bf1e2e',
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#bf1e2e',
+          700: '#991b1b',
+          800: '#7f1d1d',
+          900: '#6b1d1d'
+        },
         
-        // Neutral colors (optimized set)
+        // SupaKoto brand colors (flattened for proper class generation)
+        'supakoto-red': '#bf1e2e',
+        'supakoto-dark-gray': '#333333',
+        'supakoto-blue': '#1f8abf',
+        'supakoto-yellow-gold': '#bfba1f',
+        'supakoto-dark-slate': '#2a3940',
+        'supakoto-deep-burgundy': '#6a343a',
+        
+        // Semantic colors mapped to brand palette
         foreground: 'hsl(var(--foreground))',
         background: 'hsl(var(--background))',
         muted: 'hsl(var(--muted))',
@@ -98,19 +123,28 @@ export default {
         'accent-foreground': 'hsl(var(--accent-foreground))'
       },
       
-      // Optimized border radius
+      // SupaKoto brand border radius system
       borderRadius: {
         'none': '0px',
         'sm': '0.125rem',
-        'DEFAULT': '0.25rem',
-        'md': '0.375rem',
-        'lg': '0.5rem',
-        'xl': '0.75rem',
-        '2xl': '1rem',
+        'DEFAULT': '0.375rem',
+        'md': '0.5rem',
+        'lg': '0.75rem',
+        'xl': '1rem',
+        '2xl': '1.5rem',
+        '3xl': '2rem',
         'full': '9999px'
       },
       
-      // Performance-optimized animations
+      // Brand spacing scale
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+        '144': '36rem'
+      },
+      
+      // SupaKoto brand animations
       keyframes: {
         'fade-in': {
           '0%': { opacity: '0' },
@@ -127,6 +161,10 @@ export default {
         'slide-in-right': {
           '0%': { opacity: '0', transform: 'translateX(100%)' },
           '100%': { opacity: '1', transform: 'translateX(0)' }
+        },
+        'brand-shimmer': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' }
         }
       },
       
@@ -136,13 +174,45 @@ export default {
         'slide-in-left': 'slide-in-left 0.6s ease-out forwards',
         'slide-in-right': 'slide-in-right 0.6s ease-out forwards',
         'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'spin': 'spin 1s linear infinite'
+        'spin': 'spin 1s linear infinite',
+        'brand-shimmer': 'brand-shimmer 2s ease-in-out infinite'
       },
       
-      // Font family optimization
+      // SupaKoto 2025 Typography System
       fontFamily: {
-        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        'arabic': ['Noto Sans Arabic', 'Noto Kufi Arabic', 'Arabic UI Text', 'SF Arabic', 'Segoe UI Arabic', 'sans-serif']
+        'sans': ['RH-Zak', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'arabic': ['RH-Zak', 'system-ui', 'ui-sans-serif', 'sans-serif'],
+        'brand': ['RH-Zak', 'sans-serif']
+      },
+      
+      // Typography scale for consistency
+      fontSize: {
+        'xs': ['0.75rem', { lineHeight: '1rem' }],
+        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+        'base': ['1rem', { lineHeight: '1.5rem' }],
+        'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+        'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        '5xl': ['3rem', { lineHeight: '1' }],
+        '6xl': ['3.75rem', { lineHeight: '1' }],
+        '7xl': ['4.5rem', { lineHeight: '1' }],
+        '8xl': ['6rem', { lineHeight: '1' }],
+        '9xl': ['8rem', { lineHeight: '1' }]
+      },
+      
+      // Font weights for brand consistency
+      fontWeight: {
+        'thin': '100',
+        'extralight': '200',
+        'light': '300',
+        'normal': '400',
+        'medium': '500',
+        'semibold': '600',
+        'bold': '700',
+        'extrabold': '800',
+        'black': '900'
       }
     }
   },
@@ -211,7 +281,7 @@ export default {
       // Add optimized component classes
       addComponents({
         '.btn-primary': {
-          '@apply inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-semibold rounded-lg shadow-xl hover:bg-primary-dark transition-all duration-300 hover:scale-105': {}
+          '@apply inline-flex items-center justify-center px-8 py-4 bg-primary text-white font-semibold rounded-lg shadow-xl hover:bg-supakoto-deep-burgundy transition-all duration-300 hover:scale-105': {}
         },
         '.btn-secondary': {
           '@apply inline-flex items-center justify-center px-8 py-4 bg-gradient-to-br from-slate-900/90 via-slate-800/85 to-slate-900/90 backdrop-blur-sm border-2 border-white/30 text-white font-semibold rounded-lg hover:border-primary transition-all duration-300 shadow-xl hover:scale-105': {}

@@ -32,10 +32,13 @@ const siteDescription = description || t('site.description');
 		
 		<!-- Critical CSS for performance optimization -->
 		<style>
-			/* Critical CSS for SupaKoto - Above the fold styles */
+			/* SupaKoto 2025 Critical CSS - Above the fold styles */
 			:root {
-				--primary: #e32636;
-				--primary-dark: #b91c2c;
+				/* SupaKoto 2025 Brand Colors */
+				--supakoto-red: #bf1e2e;
+				--supakoto-deep-burgundy: #6a343a;
+				--primary: #bf1e2e;
+				--supakoto-deep-burgundy: #6a343a;
 				--foreground: 210 40% 98%;
 				--background: 222.2 84% 4.9%;
 				--muted: 217.2 32.6% 17.5%;
@@ -90,8 +93,9 @@ const siteDescription = description || t('site.description');
 			}
 			
 			.btn-primary:hover {
-				background-color: var(--primary-dark);
-				transform: scale(1.05);
+				background-color: var(--supakoto-deep-burgundy);
+				transform: scale(1.02);
+				box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
 			}
 			
 			/* Loading states */

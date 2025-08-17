@@ -2,8 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import ModernHeroCarousel from '../../components/hero/ModernHeroCarousel.astro';
 import ModernTrustedBy from '../../components/shared/ModernTrustedBy.astro';
-import LatestWorkCarousel from '../../components/carousels/LatestWorkCarousel';
+
 import Testimonials from '../../components/carousels/Testimonials';
+import CallToAction from '../../components/shared/CallToAction';
+import PPFComparison from '../../components/shared/PPFComparison';
 import { t } from '../../i18n/index';
 
 // For locale-specific pages, we know the locale from the folder structure
@@ -24,12 +26,10 @@ const rtl = currentLang === 'ar';
 			</div>
 		</section>
 		
-		<!-- Latest Work Section -->
-		<section class="py-12 sm:py-16 md:py-20 lg:py-24">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<LatestWorkCarousel isArabic={true} client:visible />
-			</div>
-		</section>
+
+
+		<!-- PPF Comparison Section -->
+		<PPFComparison locale={currentLang as "en" | "ar"} client:visible />
 		
 		<!-- Testimonials Section -->
 		<section class="py-12 sm:py-16 md:py-20 lg:py-24">
@@ -37,5 +37,8 @@ const rtl = currentLang === 'ar';
 				<Testimonials currentLocale="ar" client:visible />
 			</div>
 		</section>
+
+		<!-- Call to Action Section -->
+		<CallToAction locale="ar" client:visible />
 	</main>
 </Layout>
