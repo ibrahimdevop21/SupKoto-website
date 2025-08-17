@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Globe, ChevronDown } from './icons';
-import { useSwitchLocalePath } from "../i18n/react";
-import { type Locale } from "../i18n";
+} from "../ui/dropdown-menu";
+import { Globe, ChevronDown } from "../icons/LightweightIcons";
+import { useSwitchLocalePath } from "../../i18n/react";
+import { type Locale } from "../../i18n";
 
 interface LanguageSwitcherProps {
   currentLocale: string;

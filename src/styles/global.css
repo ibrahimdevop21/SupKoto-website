@@ -1,23 +1,86 @@
-/* global.css - Tailwind + SK Theme */
+/* SupaKoto 2025 Visual Identity - Global Styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base layout and typography */
+/* SupaKoto 2025 Typography - RH-Zak Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* RH-Zak Font Face Declarations */
+@font-face {
+  font-family: 'RH-Zak';
+  src: url('/fonts/RH-Zak-Regular.woff2') format('woff2'),
+       url('/fonts/RH-Zak-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'RH-Zak';
+  src: url('/fonts/RH-Zak-Medium.woff2') format('woff2'),
+       url('/fonts/RH-Zak-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'RH-Zak';
+  src: url('/fonts/RH-Zak-SemiBold.woff2') format('woff2'),
+       url('/fonts/RH-Zak-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'RH-Zak';
+  src: url('/fonts/RH-Zak-Bold.woff2') format('woff2'),
+       url('/fonts/RH-Zak-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SupaKoto 2025 Base Layout and Typography */
 html {
   @apply overflow-x-hidden;
+  font-family: 'RH-Zak', 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   @apply bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-foreground min-h-screen overflow-x-hidden;
   width: 100%;
   max-width: 100vw;
+  font-family: 'RH-Zak', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Prevent horizontal overflow on all elements */
+/* RTL Support for Arabic */
+[dir="rtl"] {
+  font-family: 'RH-Zak', system-ui, ui-sans-serif, sans-serif;
+}
+
+[dir="rtl"] body {
+  font-family: 'RH-Zak', system-ui, ui-sans-serif, sans-serif;
+}
+
+/* SupaKoto 2025 Base Element Styles */
 * {
   @apply max-w-full;
   box-sizing: border-box;
+}
+
+/* Ensure consistent font rendering across browsers */
+*,
+*::before,
+*::after {
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
 }
 
 /* Container fixes for mobile */
@@ -37,22 +100,75 @@ body {
   }
 }
 
+/* SupaKoto 2025 Typography Hierarchy */
 h1 {
-  @apply text-3xl font-bold mb-4 text-primary;
+  @apply text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 text-supakoto-red font-brand leading-tight;
 }
 
 h2 {
-  @apply text-2xl font-semibold mb-3 text-primary;
+  @apply text-2xl lg:text-3xl xl:text-4xl font-semibold mb-3 text-supakoto-red font-brand leading-tight;
 }
 
-/* SK Color Palette: Root Variables */
+h3 {
+  @apply text-xl lg:text-2xl font-semibold mb-2 text-supakoto-dark-gray font-brand;
+}
+
+h4 {
+  @apply text-lg lg:text-xl font-medium mb-2 text-supakoto-dark-gray font-brand;
+}
+
+h5 {
+  @apply text-base lg:text-lg font-medium mb-1 text-supakoto-dark-gray font-brand;
+}
+
+h6 {
+  @apply text-sm lg:text-base font-medium mb-1 text-supakoto-dark-gray font-brand;
+}
+
+/* Brand Typography Classes */
+.brand-heading {
+  @apply font-brand font-bold text-supakoto-red leading-tight;
+}
+
+.brand-subheading {
+  @apply font-brand font-semibold text-supakoto-dark-gray leading-relaxed;
+}
+
+.brand-body {
+  @apply font-brand font-normal text-supakoto-dark-gray leading-relaxed;
+}
+
+/* Arabic Typography */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  @apply font-arabic;
+}
+
+.font-arabic {
+  font-family: 'RH-Zak', system-ui, ui-sans-serif, sans-serif;
+  font-feature-settings: 'kern' 1;
+}
+
+/* SupaKoto 2025 Visual Identity - Color System */
 @layer base {
   :root {
-    /* Core Palette: Modern Gradient Base */
+    /* SupaKoto 2025 Brand Palette */
+    --supakoto-red: #bf1e2e;
+    --supakoto-dark-gray: #333333;
+    --supakoto-blue: #1f8abf;
+    --supakoto-yellow-gold: #bfba1f;
+    --supakoto-dark-slate: #2a3940;
+    --supakoto-deep-burgundy: #6a343a;
+    
+    /* Core System Colors */
     --background: 222 84% 5%; /* Deep slate for gradient base */
     --foreground: 0 0% 98%;     /* Off-white */
 
-    --primary: 0 84.2% 60.2%;   /* Brand Red */
+    --primary: 355 73% 44%;   /* SupaKoto Red #bf1e2e */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 240 3.7% 15.9%;
@@ -69,7 +185,7 @@ h2 {
 
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 0 84.2% 60.2%;
+    --ring: 355 73% 44%; /* SupaKoto Red */
 
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
@@ -79,12 +195,12 @@ h2 {
 
     --radius: 0.75rem;
 
-    /* Chart colors for consistency */
-    --chart-1: 0 84.2% 60.2%;
-    --chart-2: 0 0% 98%;
-    --chart-3: 240 5% 64.9%;
-    --chart-4: 240 3.7% 15.9%;
-    --chart-5: 240 10% 3.9%;
+    /* SupaKoto Brand Chart Colors */
+    --chart-1: 355 73% 44%;  /* SupaKoto Red */
+    --chart-2: 195 73% 44%;  /* SupaKoto Blue */
+    --chart-3: 58 73% 44%;   /* SupaKoto Yellow-Gold */
+    --chart-4: 200 22% 20%;  /* SupaKoto Dark Slate */
+    --chart-5: 355 33% 31%;  /* SupaKoto Deep Burgundy */
   }
 
   /* Force dark mode styling */
@@ -100,7 +216,7 @@ h2 {
     @apply bg-background text-foreground;
   }
 
-  /* Animation utilities */
+  /* SupaKoto Brand Animation Utilities */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -111,27 +227,91 @@ h2 {
       transform: translateY(0);
     }
   }
+  
+  @keyframes brandPulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+  
+  @keyframes brandShimmer {
+    0% {
+      background-position: -200px 0;
+    }
+    100% {
+      background-position: calc(200px + 100%) 0;
+    }
+  }
 
   .animate-fadeInUp {
     animation: fadeInUp 0.6s ease-out;
   }
+  
+  .animate-brand-pulse {
+    animation: brandPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-brand-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(191, 30, 46, 0.2),
+      transparent
+    );
+    background-size: 200px 100%;
+    animation: brandShimmer 2s infinite;
+  }
 
-  /* Custom scrollbar styles */
+  /* SupaKoto Brand Button Styles */
+  .btn-primary {
+    @apply bg-supakoto-red hover:bg-supakoto-deep-burgundy text-white font-brand font-semibold px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border-2 border-supakoto-red text-supakoto-red hover:bg-supakoto-red hover:text-white font-brand font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+  }
+  
+  .btn-accent {
+    @apply bg-supakoto-blue hover:bg-supakoto-dark-slate text-white font-brand font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+  }
+
+  /* SupaKoto Brand Link Styles */
+  .link-primary {
+    @apply text-supakoto-red hover:text-supakoto-deep-burgundy font-brand font-medium underline decoration-2 underline-offset-4 transition-colors duration-200;
+  }
+  
+  .link-accent {
+    @apply text-supakoto-blue hover:text-supakoto-dark-slate font-brand font-medium transition-colors duration-200;
+  }
+
+  /* Custom SupaKoto Scrollbar */
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(51, 65, 85, 0.3);
+    background: rgba(51, 51, 51, 0.3);
     border-radius: 3px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(239, 68, 68, 0.5);
+    background: rgba(191, 30, 46, 0.5); /* SupaKoto Red */
     border-radius: 3px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(239, 68, 68, 0.7);
+    background: rgba(191, 30, 46, 0.7); /* SupaKoto Red */
+  }
+  
+  /* SupaKoto Brand Highlights */
+  .highlight-primary {
+    @apply bg-supakoto-red/10 text-supakoto-red px-2 py-1 rounded font-brand font-medium;
+  }
+  
+  .highlight-accent {
+    @apply bg-supakoto-blue/10 text-supakoto-blue px-2 py-1 rounded font-brand font-medium;
   }
 }

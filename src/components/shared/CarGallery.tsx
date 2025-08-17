@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, MapPin } from './icons';
+import { ChevronLeft, ChevronRight, Calendar, MapPin } from '../icons/LightweightIcons';
 import { OptimizedImage } from './OptimizedImage';
 
 interface CarProject {

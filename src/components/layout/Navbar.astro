@@ -4,7 +4,7 @@ import { NAV_ITEMS } from '../../data/navigation';
 import { PHONE_PRIMARY, WHATSAPP_URL } from '../../data/contacts';
 
 const pathname = Astro.url.pathname;
-const isArabic = pathname.startsWith('/ar/');
+const isArabic = pathname.startsWith('/ar/') || pathname === '/ar';
 const locale = isArabic ? 'ar' : 'en';
 
 const phone = PHONE_PRIMARY;
