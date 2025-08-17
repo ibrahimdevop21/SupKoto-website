@@ -23,7 +23,9 @@
     "src/pages/en/**/*.astro",
     "src/pages/ar/**/*.astro",
     "src/pages/index.astro",
-    "src/layouts/**/*.astro"
+    "src/layouts/**/*.astro",
+    "jest.setup.ts",
+    "src/types/**/*.d.ts"
   ],
   "exclude": [
     "dist", 

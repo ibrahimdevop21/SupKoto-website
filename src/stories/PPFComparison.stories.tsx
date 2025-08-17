@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PPFComparison } from '../components/shared/PPFComparison';
+import PPFComparison from '../components/shared/PPFComparison';
 import { ppfComparisonData } from '../data/ppfComparisonData';
 
 const meta: Meta<typeof PPFComparison> = {

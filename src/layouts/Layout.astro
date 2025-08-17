@@ -6,6 +6,7 @@ import '../styles/navbar-glass.css';
 import Footer from '../components/layout/Footer.astro';
 import { Navbar } from '../components/layout';
 import Preload from '../components/shared/Preload.astro';
+import RespondIO from '../components/integrations/RespondIO.astro';
 import { t, isRTL } from '../i18n/index';
 
 export interface Props {
@@ -265,5 +266,8 @@ const siteDescription = description || t('site.description');
 		</main>
 		
 		<Footer />
+		
+		<!-- respond.io Website Chat (lazy, prod-only) -->
+		<RespondIO />
 	</body>
 </html>

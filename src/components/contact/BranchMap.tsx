@@ -14,12 +14,19 @@ L.Icon.Default.mergeOptions({
 
 interface Branch {
   id: string;
-  name: { en: string; ar: string };
-  coordinates: [number, number]; // [lat, lng]
-  address: { en: string; ar: string };
+  country: 'Egypt' | 'UAE';
+  name: string;
+  address: string;
   phone: string;
-  whatsapp: string;
-  hours: { en: string; ar: string };
+  rating: number;
+  workingHours: {
+    en: string;
+    ar: string;
+  };
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
 }
 
 interface BranchMapProps {
@@ -31,7 +38,7 @@ interface BranchMapProps {
 const BranchMap: React.FC<BranchMapProps> = ({ branches, currentLocale, t }) => {
   // Default center position (can be adjusted based on branches)
   const defaultCenter: [number, number] = branches.length > 0 
-    ? branches[0].coordinates 
+    ? [branches[0].coordinates.lat, branches[0].coordinates.lng]
     : [25.276987, 55.296249]; // Default to Dubai if no branches
   
   return (
@@ -51,12 +58,12 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, currentLocale, t }) => 
         {branches.map((branch) => (
           <Marker 
             key={branch.id} 
-            position={branch.coordinates}
+            position={[branch.coordinates.lat, branch.coordinates.lng]}
           >
             <Popup className="branch-popup">
               <div className="text-gray-800">
-                <h3 className="font-bold text-lg">{branch.name[currentLocale as keyof typeof branch.name]}</h3>
-                <p className="mt-1">{branch.address[currentLocale as keyof typeof branch.address]}</p>
+                <h3 className="font-bold text-lg">{branch.name}</h3>
+                <p className="mt-1">{branch.address}</p>
                 <p className="mt-2">
                   <a 
                     href={`tel:${branch.phone}`}
@@ -64,6 +71,9 @@ const BranchMap: React.FC<BranchMapProps> = ({ branches, currentLocale, t }) => 
                   >
                     {branch.phone}
                   </a>
+                </p>
+                <p className="mt-1 text-sm text-gray-600">
+                  {branch.workingHours[currentLocale as keyof typeof branch.workingHours]}
                 </p>
               </div>
             </Popup>

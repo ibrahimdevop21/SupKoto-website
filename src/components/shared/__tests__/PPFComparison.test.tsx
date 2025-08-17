@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { PPFComparison } from '../PPFComparison';
+import PPFComparison from '../PPFComparison';
 import { ppfComparisonData } from '../../../data/ppfComparisonData';
 
 // Mock data for testing
