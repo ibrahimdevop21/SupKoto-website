@@ -256,7 +256,7 @@ const siteDescription = description || t('site.description');
 		</script>
 	</head>
 	<body class="min-h-screen flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-foreground font-sans antialiased" class:list={[rtl && 'font-arabic']}>
-		<Navbar currentLocale={currentLang} isRTL={rtl} activePath={Astro.url.pathname} client:load />
+		<Navbar currentLocale={currentLang} isRTL={rtl} activePath={Astro.url.pathname} />
 		
 		<!-- Full-width slot for hero sections and other full-width components -->
 		<slot name="hero" />

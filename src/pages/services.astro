@@ -7,7 +7,7 @@ import TechCraftsmanship from '../components/services/TechCraftsmanship';
 import FinishOptions from '../components/services/FinishOptions';
 import TechnicalHighlights from '../components/services/TechnicalHighlights';
 import LifestyleUseCases from '../components/services/LifestyleUseCases';
-import TrustAssurance from '../components/services/TrustAssurance';
+
 import ServicesCTA from '../components/services/ServicesCTA';
 
 // For locale-specific pages, we know the locale from the folder structure
@@ -58,12 +58,7 @@ const rtl = currentLang === 'ar';
 			</div>
 		</section>
 
-		<!-- Trust & Assurance Section -->
-		<section class="py-12 md:py-16 bg-muted/30">
-			<div class="container mx-auto px-4">
-				<TrustAssurance client:visible currentLocale={currentLang} isRTL={rtl} />
-			</div>
-		</section>
+
 
 		<!-- Closing CTA Section -->
 		<section class="py-16 md:py-24">

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { branches } from '../../data/branches';
 import type { Branch } from '../../data/branches';
 import B2CForm from './B2CForm';
 
-// Fix for default markers in react-leaflet
+// Fix for default marker icon issue with bundlers like Vite/Webpack
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
@@ -14,7 +17,13 @@ L.Icon.Default.mergeOptions({
 
 const ChangeView = ({ center, zoom }: { center: [number, number]; zoom: number }) => {
   const map = useMap();
-  map.setView(center, zoom);
+  useEffect(() => {
+    map.setView(center, zoom);
+    // Force map to invalidate size after view change
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+  }, [map, center, zoom]);
   return null;
 };
 
@@ -58,10 +67,7 @@ const ContactBookingSection: React.FC<ContactBookingSectionProps> = ({
         <div className="order-1 lg:order-1">
           <B2CForm 
             locale={locale}
-            branches={branchesForForm}
-            defaultBranchId={defaultBranchId}
             defaultService={defaultService}
-            onSuccessRedirect="/thank-you?source=contact_b2c"
           />
         </div>
         
@@ -93,17 +99,18 @@ const ContactBookingSection: React.FC<ContactBookingSectionProps> = ({
               {isClient ? (
                 <MapContainer
                   center={[selectedBranch.coordinates.lat, selectedBranch.coordinates.lng]}
-                  zoom={13}
+                  zoom={12}
+                  scrollWheelZoom={true}
                   style={{ height: '100%', width: '100%' }}
-                  className="rounded-b-2xl"
+                  className="z-0 rounded-b-2xl"
                 >
                   <ChangeView 
                     center={[selectedBranch.coordinates.lat, selectedBranch.coordinates.lng]} 
-                    zoom={13} 
+                    zoom={12} 
                   />
                   <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
                   />
                   {branches.map((branch) => (
                     <Marker
@@ -122,7 +129,13 @@ const ContactBookingSection: React.FC<ContactBookingSectionProps> = ({
                             {branch.address}
                           </p>
                           <p className="text-sm font-medium text-blue-600">
-                            {branch.phone}
+                            <a 
+                              href={`tel:${branch.phone}`}
+                              className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {branch.phone}
+                            </a>
                           </p>
                         </div>
                       </Popup>
@@ -130,8 +143,12 @@ const ContactBookingSection: React.FC<ContactBookingSectionProps> = ({
                   ))}
                 </MapContainer>
               ) : (
-                <div className="h-full bg-slate-800 rounded-b-2xl flex items-center justify-center">
-                  <div className="text-white">Loading map...</div>
+                <div className="h-full bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl animate-pulse flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-red-500/20 rounded-full mx-auto mb-4 animate-pulse"></div>
+                    <div className="h-4 bg-slate-700 rounded w-48 mx-auto mb-2"></div>
+                    <div className="h-3 bg-slate-700 rounded w-32 mx-auto"></div>
+                  </div>
                 </div>
               )}
             </div>
@@ -160,21 +177,20 @@ const ContactBookingSection: React.FC<ContactBookingSectionProps> = ({
           </div>
         </div>
 
-        {/* Branch Cards - Horizontal scroll on desktop, vertical on mobile */}
-        <div className="overflow-x-auto">
-          <div className="flex flex-col md:flex-row gap-4 md:gap-6 min-w-max md:min-w-0">
-            {branches.map((branch) => (
-              <div
-                key={branch.id}
-                onClick={() => handleBranchSelect(branch)}
-                className={`
-                  flex-shrink-0 w-full md:w-80 p-6 rounded-xl border cursor-pointer transition-all duration-300 hover:scale-105
-                  ${selectedBranch.id === branch.id
-                    ? 'bg-gradient-to-br from-red-500/20 to-orange-500/20 border-red-500/50 shadow-lg shadow-red-500/25'
-                    : 'bg-gradient-to-br from-slate-900/80 to-slate-800/80 border-slate-700/50 hover:border-slate-600/50'
-                  }
-                  backdrop-blur-sm
-                `}
+        {/* Branch Cards - Responsive grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {branches.map((branch) => (
+            <div
+              key={branch.id}
+              onClick={() => handleBranchSelect(branch)}
+              className={`
+                w-full p-6 rounded-xl border cursor-pointer transition-all duration-300 hover:scale-105
+                ${selectedBranch.id === branch.id
+                  ? 'bg-gradient-to-br from-red-500/20 to-orange-500/20 border-red-500/50 shadow-lg shadow-red-500/25'
+                  : 'bg-gradient-to-br from-slate-900/80 to-slate-800/80 border-slate-700/50 hover:border-slate-600/50'
+                }
+                backdrop-blur-sm
+              `}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
@@ -227,7 +243,6 @@ const ContactBookingSection: React.FC<ContactBookingSectionProps> = ({
                 </div>
               </div>
             ))}
-          </div>
         </div>
       </div>
     </div>
