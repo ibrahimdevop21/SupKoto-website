@@ -1,43 +1,36 @@
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 
-export type B2CFormProps = {
-  locale?: "en" | "ar";
-  branches: { id: string; name: string; market?: string }[];
-  defaultBranchId?: string;
+export interface B2CFormProps {
+  locale?: string;
   defaultService?: string;
-  onSuccessRedirect?: string;
+  onSuccessRedirect?: () => void;
 };
 
 interface FormData {
   fullName: string;
+  email: string;
   phone: string;
-  whatsappMe: boolean;
-  branchId: string;
   services: string[];
-  notes: string;
+  message: string;
 }
 
 const initialFormData: FormData = {
   fullName: '', 
+  email: '',
   phone: '', 
-  whatsappMe: false, 
-  branchId: '', 
   services: [],
-  notes: ''
+  message: ''
 };
 
 export default function B2CForm({
   locale = "en",
-  branches,
-  defaultBranchId,
   defaultService,
   onSuccessRedirect
 }: B2CFormProps) {
   const isRTL = locale === "ar";
   const [formData, setFormData] = useState<FormData>({
     ...initialFormData,
-    branchId: defaultBranchId || '',
     services: defaultService ? [defaultService] : []
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,8 +44,8 @@ export default function B2CForm({
     // Form fields
     fullName: isRTL ? "الاسم الكامل" : "Full Name",
     phone: isRTL ? "رقم الهاتف" : "Phone Number",
-    whatsappMe: isRTL ? "تواصل معي عبر واتساب" : "Contact me on WhatsApp",
-    branch: isRTL ? "الفرع المفضل" : "Preferred Branch",
+
+
     services: isRTL ? "الخدمات المطلوبة" : "Services of Interest",
     notes: isRTL ? "ملاحظات إضافية (اختياري)" : "Additional Notes (Optional)",
     
@@ -75,8 +68,7 @@ export default function B2CForm({
     { id: 'ppf', label: t.ppf },
     { id: 'windshield', label: t.windshield },
     { id: 'interior', label: t.interior },
-    { id: 'tint', label: t.tint },
-    { id: 'rims', label: t.rims }
+    { id: 'tint', label: t.tint }
   ];
 
   const validateForm = (): boolean => {
@@ -84,7 +76,7 @@ export default function B2CForm({
     
     if (!formData.fullName.trim()) newErrors.fullName = isRTL ? "الاسم مطلوب" : "Name is required";
     if (!formData.phone.trim()) newErrors.phone = isRTL ? "رقم الهاتف مطلوب" : "Phone is required";
-    if (!formData.branchId) newErrors.branchId = isRTL ? "اختر فرعاً" : "Select a branch";
+
     if (formData.services.length === 0) newErrors.services = isRTL ? "اختر خدمة واحدة على الأقل" : "Select at least one service";
     
     setErrors(newErrors);
@@ -130,7 +122,7 @@ export default function B2CForm({
       if (response.ok) {
         setIsSuccess(true);
         if (onSuccessRedirect) {
-          setTimeout(() => window.location.assign(onSuccessRedirect), 2000);
+          setTimeout(() => onSuccessRedirect(), 2000);
         }
       } else {
         throw new Error('Submission failed');
@@ -215,55 +207,30 @@ export default function B2CForm({
                 {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">{t.branch} *</label>
-                <select
-                  value={formData.branchId}
-                  onChange={(e) => setFormData(prev => ({ ...prev, branchId: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-red-500"
-                >
-                  <option value="">{isRTL ? "اختر فرعاً" : "Select a branch"}</option>
-                  {branches.map(branch => (
-                    <option key={branch.id} value={branch.id}>{branch.name}</option>
-                  ))}
-                </select>
-                {errors.branchId && <p className="text-red-400 text-sm mt-1">{errors.branchId}</p>}
-              </div>
+
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-3">{t.services} *</label>
-                <div className="grid grid-cols-1 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {serviceOptions.map(service => (
                     <label key={service.id} className={cn(
-                      "flex items-center cursor-pointer p-2 rounded-lg hover:bg-white/5 transition-colors",
+                      "flex items-center cursor-pointer p-3 rounded-lg hover:bg-white/5 transition-colors border border-transparent hover:border-white/10",
                       isRTL ? "space-x-reverse space-x-3" : "space-x-3"
                     )}>
                       <input
                         type="checkbox"
                         checked={formData.services.includes(service.id)}
                         onChange={() => handleServiceToggle(service.id)}
-                        className="w-4 h-4 text-red-500 bg-white/10 border-white/20 rounded focus:ring-red-500"
+                        className="w-4 h-4 text-red-500 bg-white/10 border-white/20 rounded focus:ring-red-500 focus:ring-2 flex-shrink-0"
                       />
-                      <span className="text-gray-300 text-sm">{service.label}</span>
+                      <span className="text-gray-300 text-sm leading-relaxed">{service.label}</span>
                     </label>
                   ))}
                 </div>
                 {errors.services && <p className="text-red-400 text-sm mt-1">{errors.services}</p>}
               </div>
 
-              <div className={cn(
-                "flex items-center cursor-pointer p-2 rounded-lg hover:bg-white/5 transition-colors",
-                isRTL ? "space-x-reverse space-x-3" : "space-x-3"
-              )}>
-                <input
-                  type="checkbox"
-                  id="whatsapp"
-                  checked={formData.whatsappMe}
-                  onChange={(e) => setFormData(prev => ({ ...prev, whatsappMe: e.target.checked }))}
-                  className="w-4 h-4 text-green-500 bg-white/10 border-white/20 rounded focus:ring-green-500"
-                />
-                <label htmlFor="whatsapp" className="text-gray-300 text-sm cursor-pointer">{t.whatsappMe}</label>
-              </div>
+
             </div>
 
             {/* Submit Button */}
